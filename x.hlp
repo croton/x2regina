@@ -1,0 +1,746 @@
+  X2 Editor Help
+  --------------
+  Page 1:    Invocation Syntax
+  Page 2:    Function Key Definitions
+  Page 3:    Special Key Definitions
+  Page 4:    Alt-key Definitions
+  Page 5:    Ctrl-key Function Summary
+  Page 6:    Altgr-key Function Summary
+  Page 7:    Locate and Change Commands
+  Page 8:    All Command
+  Page 9:    Error Flag
+  Page 10:   Command Quick Summary
+  Page 11:   Command Return Codes
+  Page 12:   Extract Options
+  Page 13:   ASCII Codepage
+
+  Use Alt-PgUp and Alt-PgDn to scroll between help pages, or Ctrl-F11 to see a
+  menu.
+
+--------------------------------------------------------------------------------
+  PgDn: (Invocation Syntax)                                             F3=Exit
+--------------------------------------------------------------------------------
+
+  X2 Editor Help             Invocation Syntax                          Page 1
+--------------------------------------------------------------------------------
+
+   <d:\path\>X <fn1 fn2... <-B> <-BIN> <-BINONLY> <-Ccmd>> <-ERR>
+                           <-NOPROF> <-NOTABS> <-NOUNDO> <-Pprofname>
+                           <-Q> <-S> <-T> <-TABS> <-TEn> <-TEXTONLY> <-TOP>
+
+  Options:
+
+    -B         - Load the file(s) in Browse mode.  No changes to the file are
+                 permitted when it is being browsed.  Browse mode is indicated
+                 by the text "Brw" on the status line instead of "Rep" when
+                 the cursor is in replace mode.
+    -BIN       - Load the file in Hexadecimal view.
+    -BINONLY   - Only load files that are recognised as containing binary
+                 data.
+    -Ccmd      - Execute the given cmd after the file(s) have been loaded.
+                 This can be any command which can be issued from the command
+                 line, including macros.  If parameters are required, the
+                 string may be enclosed in quotes, e.g. "-Ccmd parm1
+                 parm2...".
+    -ERR       - Load and parse a compiler error file fn.ERR.
+    -NOPROF    - Load the file without checking for and loading X.PRO.
+    -NOTABS    - Expand all embedded tab characters into blanks when the file
+                 is loaded.
+    -NOUNDO    - Suppress the undo stack - no file changes will be saved for
+                 possible restoration.
+    -Pprofname - Override the default profile name with the specified profile.
+    -Q         - Quiet mode.  All editor screen updates are withheld until the
+                 file(s) are loaded and any initial commands have been
+                 executed.
+    -S         - Search sub-directories.  Any files from the supplied
+                 directory and all its sub-directories that match the supplied
+                 specification will be loaded into the editor.  This option is
+                 only available in the OS/2 version.
+    -T         - View tabs.  No tab expansion will be performed for this file.
+    -TABS      - View tabs.  No tab expansion will be performed for this file.
+    -TEn       - Set number of characters to use for expanding tab characters.
+                 Automatically turns on -NOTABS flag.
+    -TEXTONLY  - Only load files that are recognised as containing text data.
+    -TOP       - Initialise the cursor to the top line of the file.
+
+  Note:  Options begin with a dash (-) for Unix compatibility.  On non-Unix
+         systems, a slash (/) may be used in place of the dash.
+
+--------------------------------------------------------------------------------
+  PgDn: (Function Keys)          PgUp: (Help Contents)                  F3=Exit
+--------------------------------------------------------------------------------
+
+  X2 Editor Help             Function Keys                              Page 2
+--------------------------------------------------------------------------------
+
+ ÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+  Key     ³   Command         ³  Function
+ ÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+  F1      ³ HELP              ³ Display help information
+  F2      ³ SPLITJOIN         ³ Split/Join text
+  F3      ³ QUIT              ³ Quit without save
+  F4      ³ SAVE              ³ Save & continue
+  F5      ³ RENAME            ³ Change filename
+  F6      ³ CMDTEXT EDIT      ³ Edit new file
+  F7      ³ PAGEUP            ³ Move up one page
+  F8      ³ PAGEDOWN          ³ Move down one page
+  F9      ³ UNDO              ³ Undo changes
+  F10     ³ REDO              ³ Redo undone changes
+  F11     ³ PREVIOUS_FILE     ³ Display previous file from ring
+  F12     ³ NEXT_FILE         ³ Display next file from ring
+ ÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+  a-F1    ³ NOP               ³ Undefined key
+  a-F2    ³ COMPARE           ³ Compare files
+  a-F3    ³ COMPARE SYNC      ³ Re-sync compare function
+  a-F4    ³ COMPARE MERGE     ³ Merge changes
+  a-F5    ³ NOP               ³ Undefined key
+  a-F6    ³ NOP               ³ Undefined key
+  a-F7    ³ NOP               ³ Undefined key
+  a-F8    ³ NOP               ³ Undefined key
+  a-F9    ³ DATE ORDERED      ³ Enter yy/mm/dd at cursor position
+  a-F10   ³ NOP               ³ Undefined key
+  a-F11   ³ NOP               ³ Undefined key
+  a-F12   ³ NOP               ³ Undefined key
+ ÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+  c-F1    ³ NOP               ³ Undefined key
+  c-F2    ³ NOP               ³ Undefined key
+  c-F3    ³ MARK UPPER        ³ Convert marked area to UPPER case
+  c-F4    ³ MARK MIXED        ³ Convert marked area to Mixed case
+  c-F5    ³ MARK LOWER        ³ Convert marked area to lower case
+  c-F6    ³ NOP               ³ Undefined key
+  c-F7    ³ MARK SHIFT LEFT   ³ Shift marked area left one column (truncation)
+  c-F8    ³ MARK SHIFT RIGHT  ³ Shift marked area right one column
+  c-F9    ³ DATE LONG         ³ Enter mmmmm dd, yyyy at cursor position
+  c-F10   ³ CASEWORD          ³ Rotate word case between UPPER, Mixed, lower
+  c-F11   ³ FUNCWIN           ³ Display function list window
+  c-F12   ³ RINGWIN           ³ Display file list window
+ ÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+  s-F1    ³ SCROLL LEFT       ³ Scroll screen left one column
+  s-F2    ³ SCROLL RIGHT      ³ Scroll screen right one column
+  s-F3    ³ SCROLL UP         ³ Scroll screen up one row
+  s-F4    ³ SCROLL DOWN       ³ Scroll screen down one row
+  s-F5    ³ CENTRELINE        ³ Position current line in middle of the screen
+  s-F6    ³ NOP               ³ Undefined key
+  s-F7    ³ NOP               ³ Undefined key
+  s-F8    ³ NOP               ³ Undefined key
+  s-F9    ³ NOP               ³ Undefined key
+  s-F10   ³ NOP               ³ Undefined key
+  s-F11   ³ NOP               ³ Undefined key
+  s-F12   ³ NOP               ³ Undefined key
+ ÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+--------------------------------------------------------------------------------
+  PgDn: (Special Keys)           PgUp: (Invocation Syntax)              F3=Exit
+--------------------------------------------------------------------------------
+
+  X2 Editor Help             Special Keys                               Page 3
+--------------------------------------------------------------------------------
+
+ ÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+  Key     ³   Command         ³  Function
+ ÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+  Enter   ³ CURSOR NEXTLINE   ³ Move to next line
+  Esc     ³ CURSOR TOGGLE     ³ Move cursor between command line and data
+  Backsp  ³ BACKSPACE         ³ Delete previous character, move backwards
+  Home    ³ CURSOR COL1       ³ Move to start of line
+  End     ³ CURSOR EOL        ³ Move to end of line
+  CsrLf   ³ CURSOR LEFT       ³ Move left 1 character
+  CsrRt   ³ CURSOR RIGHT      ³ Move right 1 character
+  CsrUp   ³ CURSOR UP         ³ Move up 1 line
+  CsrDn   ³ CURSOR DOWN       ³ Move down 1 line
+  PgUp    ³ PAGEUP            ³ Move up one page
+  PgDn    ³ PAGEDOWN          ³ Move down one page
+  Ins     ³ INSMODE           ³ Toggle insert mode on/off
+  Del     ³ DELCHAR           ³ Delete character at cursor position
+  Tab     ³ TAB               ³ Move to next tab position
+ ÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+  a-Home  ³ PREVIOUS_PARA     ³ Move to previous paragraph
+  a-End   ³ NEXT_PARA         ³ Move to next paragraph
+  a-CsrLf ³ PREVIOUS_SYM      ³ Move to previous symbol
+  a-CsrRt ³ NEXT_SYM          ³ Move to next symbol
+  a-CsrUp ³ TOPSCREEN         ³ Move to top of screen
+  a-CsrDn ³ BOTTOMSCREEN      ³ Move to end of screen
+  a-PgUp  ³ PREVIOUS_FUNC     ³ Move to previous function
+  a-PgDn  ³ NEXT_FUNC         ³ Move to next function
+  a-Tab   ³ NOP               ³ Undefined key
+ ÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+  c-Enter ³ INPUT             ³ Insert a new line
+  c-Backsp³ DELETE            ³ Delete the current line
+  c-Home  ³ TOP               ³ Move to top of file
+  c-End   ³ BOTTOM            ³ Move to end of file
+  c-CsrLf ³ PREVIOUS_WORD     ³ Move to previous word
+  c-CsrRt ³ NEXT_WORD         ³ Move to next blank-delimited word
+  c-CsrUp ³ CASECHAR UPPER    ³ Uppercase character
+  c-CsrDn ³ CASECHAR LOWER    ³ Lowercase character
+  c-PgUp  ³ TOPSCREEN         ³ Move to top of screen
+  c-PgDn  ³ BOTTOMSCREEN      ³ Move to end of screen
+  c-Ins   ³ NOP               ³ Undefined key
+  c-Del   ³ DELWORD           ³ Delete word at cursor position
+  c-Space ³ NOP               ³ Undefined key
+  c-Tab   ³ NOP               ³ Undefined key
+ ÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+  s-Home  ³ MARK COL1         ³ Mark from cursor to beginning of line
+  s-End   ³ MARK EOL          ³ Mark from cursor to end of line
+  s-CsrLf ³ MARK EXTEND LEFT  ³ Extend marked area left one column
+  s-CsrRt ³ MARK EXTEND RIGHT ³ Extend marked area right one column
+  s-CsrUp ³ MARK EXTEND UP    ³ Extend marked area up one row
+  s-CsrDn ³ MARK EXTEND DOWN  ³ Extend marked area down one line
+  s-PgUp  ³ NOP               ³ Undefined key
+  s-PgDn  ³ NOP               ³ Undefined key
+  s-Ins   ³ NOP               ³ Undefined key
+  s-Del   ³ NOP               ³ Undefined key
+  s-Tab   ³ BACKTAB           ³ Move to previous tab position
+ ÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+--------------------------------------------------------------------------------
+  PgDn: (Alt Keys)               PgUp: (Function Keys)                  F3=Exit
+--------------------------------------------------------------------------------
+
+  X2 Editor Help             Alt Keys                                   Page 4
+--------------------------------------------------------------------------------
+
+ ÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+  Key     ³   Command         ³  Function
+ ÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+  a-A     ³ MARK AREA         ³ Mark area based on indentation
+  a-B     ³ MARK BLOCK        ³ Start/end a block mark
+  a-C     ³ MARK COPY         ³ Copy marked area to cursor position
+  a-D     ³ MARK DELETE       ³ Delete marked area
+  a-E     ³ CURSOR ENDMARK    ³ Move cursor to end of mark
+  a-F     ³ MARK FILL         ³ Fill marked area with character
+  a-G     ³ NOP               ³ Undefined key
+  a-H     ³ HEX               ³ Toggle hexadecimal display of a file
+  a-I     ³ MARK INTEGERS     ³ Input integers in marked column
+  a-J     ³ JOIN              ³ Join with following line
+  a-K     ³ NOP               ³ Undefined key
+  a-L     ³ MARK LINE         ³ Start/end a line mark
+  a-M     ³ MARK MOVE         ³ Move marked area
+  a-N     ³ KEYIN_NAME        ³ Keyin file name at cursor
+  a-O     ³ MARK OVERLAY      ³ Overlay marked area
+  a-P     ³ REFORMAT          ³ Paragraph reformat
+  a-Q     ³ ERRORS SHOW       ³ Edit compiler error file
+  a-R     ³ MARK ALIGN        ³ Remove leading blanks from mark
+  a-S     ³ SPLIT             ³ Split line at cursor
+  a-T     ³ CENTRETEXT        ³ Centre text between comments/mark
+  a-U     ³ MARK CLEAR        ³ Unmark - clear the marking
+  a-V     ³ MARK VERTICAL     ³ Mark vertical column of data
+  a-W     ³ MARK WORD         ³ Mark word at cursor
+  a-X     ³ ASCII             ³ Escape (allow special chars)
+  a-Y     ³ CURSOR BEGMARK    ³ Move cursor to beginning of mark
+  a-Z     ³ MARK EOL          ³ Mark from cursor to end of line
+  a-1     ³ KEYIN À           ³ Enter "À" at cursor position
+  a-2     ³ KEYIN Á           ³ Enter "Á" at cursor position
+  a-3     ³ KEYIN Ù           ³ Enter "Ù" at cursor position
+  a-4     ³ KEYIN Ã           ³ Enter "Ã" at cursor position
+  a-5     ³ KEYIN Å           ³ Enter "Å" at cursor position
+  a-6     ³ KEYIN ´           ³ Enter "´" at cursor position
+  a-7     ³ COMMENTLINE EMPTY ³ Enter empty comment line
+  a-8     ³ COMMENTLINE FULL  ³ Enter solid line of stars
+  a-9     ³ KEYIN ¿           ³ Enter "¿" at cursor position
+  a-0     ³ CONDITIONAL IF    ³ Enter "conditional if" defined text
+  a--     ³ KEYIN Ä           ³ Enter "Ä" at cursor position
+  a-=     ³ EXPAND            ³ Expand current word
+  a-\     ³ KEYIN ³           ³ Enter "³" at cursor position
+  a-,     ³ MARK SHIFT LEFT   ³ Shift marked area left one column (truncation)
+  a-.     ³ MARK SHIFT RIGHT  ³ Shift marked area right one column
+  a-[     ³ NOP               ³ Undefined key
+  a-]     ³ NOP               ³ Undefined key
+  a-`     ³ NOP               ³ Undefined key
+  a-/     ³ NOP               ³ Undefined key
+  a-'     ³ NOP               ³ Undefined key
+  a-|     ³ NOP               ³ Undefined key
+ ÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+--------------------------------------------------------------------------------
+  PgDn: (Ctrl Keys)              PgUp: (Special Keys)                   F3=Exit
+--------------------------------------------------------------------------------
+
+  X2 Editor Help             Ctrl Keys                                  Page 5
+--------------------------------------------------------------------------------
+
+ ÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+  Key     ³   Command         ³  Function
+ ÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+  c-A     ³ EXCLUDE AREA      ³ Hide area based on indentation
+  c-B     ³ BOOKMARK SET      ³ Set bookmark position
+  c-C     ³ COMMENT_STYLE     ³ Toggle comment formatting
+  c-D     ³ DELWORD           ³ Delete word at cursor position
+  c-E     ³ ERASEEOL          ³ Erase from cursor to end of line
+  c-F     ³ REPEAT_FIND       ³ Repeat previous find command
+  c-G     ³ BOOKMARK GO       ³ Go to bookmark position
+  c-H     ³ NOP               ³ Undefined key
+  c-I     ³ NOP               ³ Undefined key
+  c-K     ³ COPYLINE          ³ Duplicate current line
+  c-L     ³ COPYTOCMD         ³ Copy file line to command line
+  c-M     ³ NOP               ³ Undefined key
+  c-N     ³ ERRORS NEXT       ³ Find next compile error
+  c-O     ³ ERRORS REMOVE     ³ Obliterate compile errors
+  c-P     ³ OPENFILE          ³ Open file from current line
+  c-Q     ³ NOP               ³ Undefined key
+  c-R     ³ KEYS_RECORD       ³ Record remembered key sequence
+  c-S     ³ SHADOW            ³ Toggle shadow setting
+  c-T     ³ KEYS_PLAY         ³ Play remembered key sequence
+  c-U     ³ ALL               ³ Show all lines & columns in the current file
+  c-V     ³ REVERSE_FIND      ³ Repeat find command in opposite direction
+  c-W     ³ FIND WORD         ³ Find word at cursor
+  c-X     ³ EXCLUDE TOGGLE    ³ Exclude/include line display
+  c-Y     ³ MATCH             ³ Move cursor to matching bracket
+  c-Z     ³ NOP               ³ Undefined key
+  c-[     ³ NOP               ³ Undefined key
+  c-]     ³ NOP               ³ Undefined key
+ ÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+--------------------------------------------------------------------------------
+  PgDn: (AltGr Keys)             PgUp: (Alt Keys)                       F3=Exit
+--------------------------------------------------------------------------------
+
+  X2 Editor Help             AltGr Keys                                 Page 6
+--------------------------------------------------------------------------------
+  AltGr keys are defined on NLS keyboards, but may be simulated by pressing
+  Ctrl and Alt concurrently.  Note that AltGr keys are only supported under
+  Windows.
+ ÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+  Key     ³   Command         ³  Function
+ ÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+  AltGr-C ³ NOP               ³ Undefined key
+  AltGr-E ³ NOP               ³ Undefined key
+  AltGr-M ³ NOP               ³ Undefined key
+  AltGr-Q ³ NOP               ³ Undefined key
+  AltGr-R ³ NOP               ³ Undefined key
+  AltGr-S ³ NOP               ³ Undefined key
+  AltGr-X ³ NOP               ³ Undefined key
+  AltGr-Z ³ NOP               ³ Undefined key
+  AltGr-0 ³ NOP               ³ Undefined key
+  AltGr-1 ³ NOP               ³ Undefined key
+  AltGr-2 ³ NOP               ³ Undefined key
+  AltGr-3 ³ NOP               ³ Undefined key
+  AltGr-4 ³ NOP               ³ Undefined key
+  AltGr-5 ³ NOP               ³ Undefined key
+  AltGr-6 ³ NOP               ³ Undefined key
+  AltGr-7 ³ NOP               ³ Undefined key
+  AltGr-8 ³ NOP               ³ Undefined key
+  AltGr-9 ³ NOP               ³ Undefined key
+  AltGr-; ³ NOP               ³ Undefined key
+  AltGr-= ³ NOP               ³ Undefined key
+  AltGr-/ ³ NOP               ³ Undefined key
+  AltGr-. ³ NOP               ³ Undefined key
+  AltGr-, ³ NOP               ³ Undefined key
+  AltGr-[ ³ NOP               ³ Undefined key
+  AltGr-\ ³ NOP               ³ Undefined key
+  AltGr-] ³ NOP               ³ Undefined key
+  AltGr-' ³ NOP               ³ Undefined key
+  AltGr-` ³ NOP               ³ Undefined key
+  AltGr-| ³ NOP               ³ Undefined key
+ ÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+--------------------------------------------------------------------------------
+  PgDn: (Locate/Change Commands) PgUp: (Ctrl Keys)                      F3=Exit
+--------------------------------------------------------------------------------
+
+  X2 Editor Help             Locate and Change Commands                 Page 7
+--------------------------------------------------------------------------------
+
+  Locate:   L [~] /target[/options]        options can be any of:
+         or /target[/options]                m - search marked lines only
+                                             e - match exact case
+                                             c - match any case
+                                             f - match only at beginning of
+                                                 line
+                                             l - match only at end of line
+                                             q - quiet, don't highlight result
+                                             s - symbol, target cannot be part
+                                                 of another word
+                                             - - backwards search
+                                             ~ - exclusion search
+
+  Change:   C /target[/replace[/options]]  options can be any of:
+                                             m - change in marked lines only
+                                             e - match exact case
+                                             c - match any case
+                                             f - match only at beginning of
+                                                 line
+                                             l - match only at end of line
+                                             p - preserve case
+                                             s - symbol, target cannot be part
+                                                 of another word
+                                             * - change all occurrences
+                                             N - change next N occurrences
+--------------------------------------------------------------------------------
+  PgDn: (All Command)            PgUp: (AltGr Keys)                     F3=Exit
+--------------------------------------------------------------------------------
+
+  X2 Editor Help             All Command                                Page 8
+--------------------------------------------------------------------------------
+  Esc   = toggle between command line and data area
+  Enter = execute command
+
+  ALL [~][/target[/options]  Display only lines containing the target
+                             options can be any of:
+                                             m - search in marked lines only
+                                             e - match exact case
+                                             c - match any case
+                                             f - match only at beginning of
+                                                 line
+                                             l - match only at end of line
+                                             s - symbol, target cannot be part
+                                                 of another word
+                                             + - Add matching lines to display
+                                             - - Subtract matching lines
+
+                             ~ parameter toggles current line exclusion
+
+
+  (note: '/' is a delimiter that can be any character not in 'target'
+
+--------------------------------------------------------------------------------
+  PgDn: (Error Flag)             PgUp: (Locate/Change Commands)         F3=Exit
+--------------------------------------------------------------------------------
+
+  X2 Editor Help             Error Flag                                 Page 9
+--------------------------------------------------------------------------------
+  The Error flag is used for controlling Recorded sequences.  If the flag is
+  set, a recorded sequence will terminate immediately instead of playing
+  through to completion.  The following event triggers the error flag:
+
+    -  Find command, text not found
+
+  Additionally, the error flag may be controlled by a macro through the
+  ERRORFLAG command.
+
+
+
+
+
+
+
+
+--------------------------------------------------------------------------------
+  PgDn: (Command Quick Summary)  PgUp: (All Command)                    F3=Exit
+--------------------------------------------------------------------------------
+
+  X2 Editor Help             Command Quick Summary                      Page 10
+--------------------------------------------------------------------------------
+  Command             ³ Parameters
+ ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+  ACCENT*             ³ ACUTE | CEDILLA | CIRCONFLEX | GRAVE | TILDE | TREMA
+  ADD                 ³ none
+  ALL                 ³ </text</ +-mecfls>
+  ALT                 ³ altcount <chgcount>
+  APPEND              ³ fn
+  ASCII               ³ none
+  AUTOBOOKMARK        ³ none
+  AUTOSAVE            ³ n | OFF
+  BACKSPACE           ³ <STAY>
+  BACKTAB             ³ none
+  BACKWARD            ³ none
+  BOOKMARK*           ³ <n1 <n2 <,n3>> | SET | GO | PUSH>
+  BOTTOM              ³ none
+  BOTTOMSCREEN        ³ none
+  BROWSE              ³ <ON | OFF>
+  C, CHANGE           ³ /from/to</ -mecflps*N>
+  CASECHAR*           ³ <UPPER | LOWER>
+  CASEWORD            ³ none
+  CD                  ³ <d:\path>
+  CENTRELINE          ³ <N>
+  CENTRETEXT          ³ none
+  CHANGES             ³ none
+  CLIP*               ³ <COPY | CUT | PASTE <BLOCK>> (N/A for OS/2 or DOS)
+  CMDLINE             ³ <TOP | BOTTOM>
+  CMDTEXT             ³ text
+  COMMAND*            ³ internal command
+  COMMENTLINE         ³ <FULL <c> | EMPTY> <INDENT>
+  COMMENT_STYLE       ³ <ALIGN_QUICK | COLSTART | CONVERT_ALLQUICK |
+                      ³  CONVERT_QUICK | CPP_CONDITIONAL | C_CONDITIONAL |
+                      ³  IF_MODIFIED | KEEP_BLANKS | LEFT | NO_BLOCKS |
+                      ³  RIGHT | UPPERCASE>
+  COMPARE*            ³ <DIFF | SYNC | MERGE>
+  CONDITIONAL         ³ <IF | ELSE | END>
+  COPYLINE            ³ none
+  COPYTOCMD           ³ none
+  COUNT*              ³ /text</< |/& /text2/> -mecfls>
+  CURR_ALT_PFLINE*    ³ text
+  CURR_CTRL_PFLINE*   ³ text
+  CURR_PFLINE*        ³ text
+  CURR_SHIFT_PFLINE*  ³ text
+  CURSOR              ³ <+|->row <<+|->col> | BEGMARK | CMDLINE |
+                      ³ COL1 <STAY> | DATA | DOWN | ENDMARK | EOL <STAY> |
+                      ³ LEFT | NEXTLINE | RIGHT | TOGGLE | UP
+  DATE                ³ EUROPEAN | LONG | ORDERED | SORTED | USA
+  DELCHAR             ³ none
+  DELDUPES            ³ <C | E>
+  DELSYM              ³ none
+  DELWORD             ³ none
+  DELETE*             ³ <N | *>
+  DLL*                ³ dllname <parameters>
+  DOWN*               ³ <N | *>
+  DUPLICATES          ³ <DELETE | ALL | EXCLUDE> <C | E>
+  E, EDIT, X          ³ <fn1 fn2...> <options>
+  EA*                 ³ <ON | OFF>
+  EOF_TEXT            ³ text
+  ERASEEOL            ³ none
+  ERRORFLAG           ³ <ON | OFF>
+  ERRORS              ³ <SHOW | NEXT | REMOVE>
+  EXCLUDE*            ³ <N | * | TOGGLE | AREA | LINE n>
+  EXIT*               ³ none
+  EXITRC*             ³ nnn
+  EXPAND              ³ none
+  EXT                 ³ <newext>
+  EXTRACT*            ³ /opt/
+  FFILE*              ³ <newname | -CR | -CRLF | -CRCRLF | -EXCLUDES | -LF |
+                      ³  -NOEA | -NOTABS | -SHOWALL | -T | -U>
+  FIELDTEMPLATE*      ³ <c1 [U | P]> <c2 [U | P]> ...
+  FILE                ³ <newname | -CR | -CRLF | -CRCRLF | -EXCLUDES | -LF |
+                      ³  -NOEA | -NOTABS | -SHOWALL | -T | -U>
+  FIND_WORD*          ³ <HISTORY> (deprecated)
+  FIND                ³ <REPEAT | RESTORE | REVERSE | SYMBOL <HISTORY>
+                      ³  | WORD <HISTORY>
+  FORWARD             ³ none
+  FT                  ³ ext
+  FUNCWIN             ³ none
+  GET                 ³ filename
+  HEX                 ³ <ON | OFF>
+  HIDEFILE            ³ <ON | OFF>
+  INLINE_COMMENT      ³ none
+  INPUT               ³ <text>
+  INPUT_ERRORLINE*    ³ text
+  INSMODE*            ³ <ON | OFF>
+  JOIN                ³ none
+  KEY*                ³ key = func
+  KEYIN               ³ text
+  KEYIN_NAME          ³ none
+  KEYS_PLAY*          ³ <N | *>
+  KEYS_RECORD         ³ none
+  KEYS_WRITE*         ³ fn.x
+  L, LOCATE           ³ /text</< |/& /text2/> -mecflqs>
+  LINECOLOUR*         ³ <c1 c2 [fg1 ON bg1 | /name] c3 c4 fg2 ON bg2 ...>
+  LINEFIELDS*         ³ <c1 [U | P]> <c2 [U | P]> ...
+  LINEMACRO*          ³ <MACRO whatever>
+  LINEND              ³ <ON | OFF <c>>
+  LINETEXT*           ³ n text
+  MA, MARGINS         ³ <n1 <n2 <n3 <n4>>>>
+  MACRO               ³ macroname <parms>
+  MARK                ³ <ADD | ALIGN <LEFT | RIGHT> | AREA | BLOCK <EXTEND>
+                      ³  | CLEAR | COL1 | COPY | DELETE | EOL
+                      ³  | EXTEND [LEFT | RIGHT | UP | DOWN] | FILL <c>
+                      ³  | INTEGERS | LINE <EXTEND> | LOWER | MERGE | MIXED
+                      ³  | MOVE | OVERLAY | RESTORE | SHIFT <LEFT | RIGHT>
+                      ³  | SYM | UPPER | VERTICAL | WORD>
+  MATCH               ³ none
+  MENU*               ³ caption
+  MENUITEM*           ³ caption, command
+  MESSAGEBOX*         ³ text
+  MSG*                ³ <text>
+  MSGMODE             ³ <ON | OFF>
+  NAME                ³ newname
+  NEXT                ³ none
+  NEXT_CHANGE*        ³ none
+  NEXT_ERROR          ³ none
+  NEXT_FILE           ³ none
+  NEXT_FUNC           ³ none
+  NEXT_PARA           ³ none
+  NEXT_SENTENCE       ³ none
+  NEXT_SYM            ³ none
+  NEXT_WORD           ³ none
+  NOP                 ³ none
+  NUMFILES*           ³ none
+  OPENFILE            ³ none
+  PAGEDOWN            ³ none
+  PAGEUP              ³ none
+  PASSWORD*           ³ text
+  PFLINE*             ³ text
+  PLAYBACK*           ³ <N | *>
+  PRESSKEY*           ³ keyname
+  PREVIOUS_CHANGE*    ³ none
+  PREVIOUS_FILE       ³ none
+  PREVIOUS_FUNC       ³ none
+  PREVIOUS_PARA       ³ none
+  PREVIOUS_SYM        ³ none
+  PREVIOUS_WORD       ³ none
+  PROMPT*             ³ text
+  PUT                 ³ fn </CR | /CRLF | /CRCRLF | /LF |
+                      ³  /NOEA | /NOTABS | /T | /U>
+  QQ, QQUIT           ³ none
+  QUIT                ³ none
+  REDO                ³ none
+  REFORMAT            ³ none
+  REFRESH             ³ none
+  RENAME              ³ none
+  REPEAT_FIND         ³ none (deprecated)
+  REPFIND             ³ none (deprecated)
+  REPLACE*            ³ text
+  RESOLVE_FN          ³ fn
+  RESTORE_FIND        ³ none (deprecated)
+  REVERSE_FIND        ³ none (deprecated)
+  RINGWIN             ³ none
+  SAVE                ³ <newname | -CR | -CRLF | -CRCRLF | -EXCLUDES | -LF |
+                      ³  -NOEA | -NOTABS | -SHOWALL | -T | -U>
+  SCROLL              ³ <UP | DOWN | LEFT | RIGHT>
+  SETRESULT*          ³ text
+  SHADOW              ³ <ON | OFF>
+  SHADOWTEXT*         ³ <text>
+  SHELL               ³ <Operating System command>
+  SHOW*               ³ <N | * | LINE n>
+  SHOWLINE            ³ <N>
+  SORT                ³ <A | D> <E | C> <N>
+  SPAN                ³ <ON | OFF>
+  SPLIT               ³ none
+  SPLITJOIN           ³ none
+  SSAVE               ³ <newname | -CR | -CRLF | -CRCRLF | -EXCLUDES | -LF |
+                      ³  -NOEA | -NOTABS | -SHOWALL | -T | -U>
+  STATUS*             ³ <ON | OFF>
+  STYLE*              ³ none
+  SYNTAX*             ³ <ON | OFF>
+  TAB*                ³ <MATCH>
+  TABLINE             ³ none
+  TABS*               ³ <n1 n2 n3...> <,m>
+  TIMER*              ³ <<<hh:>mm:>ss cmd>
+  TOFEOF*             ³ <ON | OFF>
+  TOF_TEXT            ³ text
+  TOP                 ³ none
+  TOPLINE             ³ <N>
+  TOPSCREEN           ³ none
+  UNDO                ³ <N | *>
+  UNDO_BLOCK          ³ none
+  UNDO_LIMIT          ³ N
+  UP*                 ³ <N | *>
+  WINCLEAR            ³ none
+  WINDOW              ³ [_RESET | rows cols maxlines title]
+  WINLINE             ³ linetext\nselcmd
+  WINSCROLL           ³ <UP | DOWN | LEFT | RIGHT>
+  WINSELECT           ³ <N>
+  WINSORT             ³ <A | D>
+  WINWAIT             ³ <GETKEY>
+  WRAP                ³ <ON | OFF>
+  nnn                 ³ none
+
+  * Not available in the DOS version
+--------------------------------------------------------------------------------
+  PgDn: (Command Return Codes)   PgUp: (Error Flag)                     F3=Exit
+--------------------------------------------------------------------------------
+
+  X2 Editor Help             Command Return Codes                       Page 11
+--------------------------------------------------------------------------------
+      Return Code     ³ Meaning
+ ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+         -1           ³ Insufficient memory
+         -2           ³ Error opening input file
+         -3           ³ Error reading input file
+         -4           ³ Error writing output file
+         -5           ³ Unknown command
+         -6           ³ Invalid parameters
+         -7           ³ File sharing violation
+         -8           ³ Error loading external procedure
+         -9           ³ Error loading external DLL
+        -10           ³ Path not found
+        -11           ³ Access denied (file attributes?)
+        -12           ³ File specified is a directory
+          0           ³ No Error
+          1           ³ New file
+          2           ³ Line(s) split at load time
+          6           ³ No mark is defined
+          7           ³ No match found for target
+          8           ³ Line is greater than maximum length
+          9           ³ We are at Top of File or End of File
+         10           ³ Couldn't move the cursor
+         11           ³ No file differences
+         12           ³ Line or file is read only
+         13           ³ File path not found
+         14           ³ Current line is blank
+         15           ³ No documents loaded
+         16           ³ Line is hidden from view
+         17           ³ User quit the function
+         18           ³ Unable to load DLL
+         19           ³ No data in clipboard
+         20           ³ End of undo stack
+         21           ³ No popup window defined
+         22           ³ No bookmarks defined
+         23           ³ Popup window already defined
+         24           ³ File already loaded into editor
+--------------------------------------------------------------------------------
+  PgDn: (Extract Options)        PgUp: (CMD Quick Summary)              F3=Exit
+--------------------------------------------------------------------------------
+
+  X2 Editor Help             Extract Options                            Page 12
+--------------------------------------------------------------------------------
+  Option              ³ Number of variables set
+ ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+  ALT                 ³ 2
+  APIFILE             ³ 1
+  AUTOSAVE            ³ 1
+  BOOKMARK            ³ One entry for each bookmark setting
+  CD                  ³ 1
+  CMDLINE             ³ 1
+  COLOUR              ³ 3
+  COLOURS             ³ One entry for each colour setting
+  COMMENTS            ³ 3
+  CURLINE             ³ 7
+  CURSOR              ³ 6
+  ESCAPE              ³ 1
+  EXT                 ³ 1
+  FILEINFO            ³ 17
+  FILENAME            ³ 1
+  FIND                ³ 6
+  FLSCREEN            ³ 2
+  FT                  ³ 1
+  FUNCTION            ³ 2
+  HELPFILE            ³ 1
+  INSERT              ³ 1
+  INSMODE             ³ 1
+  KEY keyname         ³ 1
+  KEYPRESS            ³ 1
+  LASTMSG             ³ 1
+  LINE <N>            ³ 5
+  LINECOLOUR          ³ One entry for each line segment
+  LINEFIELDS          ³ 1
+  LINEFLAGS           ³ One entry for each file line
+  LINEND              ³ 1
+  LINETEXT            ³ One entry for each file line
+  MARGINS             ³ 4
+  MARK                ³ 7
+  MARKTEXT            ³ One entry for each visible marked line
+  MSGMODE             ³ 1
+  NAME                ³ 1
+  OS                  ³ 4
+  PFLINE              ³ 1
+  POPUPINFO           ³ 6
+  RING                ³ 1
+  SCREEN              ³ 2
+  SHADOW              ³ 1
+  SHADOWTEXT          ³ 0/1
+  SIZE                ³ 1
+  STATUSTEXT          ³ 1
+  TABS                ³ 1
+  UNDO_LIMIT          ³ 1
+  VERSION             ³ 1
+  WRAP                ³ 1
+  X2PATH              ³ 1
+
+--------------------------------------------------------------------------------
+  PgDn: (ASCII Codepage)         PgUp: (Command Return Codes)           F3=Exit
+--------------------------------------------------------------------------------
+
+  X2 Editor Help             ASCII Codepage                             Page 13
+--------------------------------------------------------------------------------
+   DEC  ³  -    0 ³ 1 ³ 2 ³ 3 ³ 4 ³ 5 ³ 6 ³ 7 ³ 8 ³ 9 ³ 10³ 11³ 12³ 13³ 14³ 15
+       ³ HEX    0 ³ 1 ³ 2 ³ 3 ³ 4 ³ 5 ³ 6 ³ 7 ³ 8 ³ 9 ³ A ³ B ³ C ³ D ³ E ³ F
+--------Ø------Î---Ø---Ø---Ø---Ø---Ø---Ø---Ø---Ø---Ø---Ø---Ø---Ø---Ø---Ø---Ø----
+     0  ³  0_   NUL³  ³  ³  ³  ³  ³  ³  ³  ³ HT³ LF³  ³  ³ CR³  ³ 
+    16  ³  1_     ³  ³  ³  ³  ³  ³  ³  ³  ³  ³  ³  ³  ³  ³  ³ 
+    32  ³  2_      ³ ! ³ " ³ # ³ $ ³ % ³ & ³ ' ³ ( ³ ) ³ * ³ + ³ , ³ - ³ . ³ /
+    48  ³  3_    0 ³ 1 ³ 2 ³ 3 ³ 4 ³ 5 ³ 6 ³ 7 ³ 8 ³ 9 ³ : ³ ; ³ < ³ = ³ > ³ ?
+    64  ³  4_    @ ³ A ³ B ³ C ³ D ³ E ³ F ³ G ³ H ³ I ³ J ³ K ³ L ³ M ³ N ³ O
+    80  ³  5_    P ³ Q ³ R ³ S ³ T ³ U ³ V ³ W ³ X ³ Y ³ Z ³ [ ³ \ ³ ] ³ ^ ³ _
+    96  ³  6_    ` ³ a ³ b ³ c ³ d ³ e ³ f ³ g ³ h ³ i ³ j ³ k ³ l ³ m ³ n ³ o
+   112  ³  7_    p ³ q ³ r ³ s ³ t ³ u ³ v ³ w ³ x ³ y ³ z ³ { ³ | ³ } ³ ~ ³ 
+   128  ³  8_    € ³ ? ³ ‚ ³ ƒ ³ „ ³ … ³ † ³ ‡ ³ ˆ ³ ‰ ³ Š ³ ‹ ³ Œ ³ ? ³  ³ ?
+   144  ³  9_    ? ³ ‘ ³ ’ ³ “ ³ ” ³ • ³ – ³ — ³ ˜ ³ ™ ³ š ³ › ³ œ ³ ? ³  ³ Ÿ
+   160  ³  A_      ³ ¡ ³ ¢ ³ £ ³ ¤ ³ ¥ ³ ¦ ³ § ³ ¨ ³ © ³ ª ³ « ³ ¬ ³ ­ ³ ® ³ ¯
+   176  ³  B_    ° ³ ± ³ ² ³ ³ ³ ´ ³ µ ³ ¶ ³ · ³ ¸ ³ - ³   ³ » ³ ¼ ³ ½ ³ ¾ ³ ¿
+   192  ³  C_    À ³ Á ³ Â ³ Ã ³ Ä ³ Å ³ Æ ³ Ç ³ - ³ É ³ Ê ³ Ë ³ - ³ - ³ Î ³ Ï
+   208  ³  D_    Ğ ³ Ñ ³ Ò ³ Ó ³ Ô ³ Õ ³ Ö ³ × ³ Ø ³ Ù ³ Ú ³ Û ³ Ü ³ İ ³ Ş ³ ß
+   224  ³  E_    à ³ á ³ â ³ ã ³ ä ³ å ³ æ ³ ç ³ è ³ é ³ ê ³ ë ³ ì ³ í ³ î ³ ï
+   240  ³  F_    ğ ³ ñ ³ ò ³ ó ³ ô ³ õ ³ ö ³ ÷ ³ ø ³ ù ³ ú ³ û ³ ü ³ ı ³ ş ³DEL
+--------------------------------------------------------------------------------
+                                 PgUp: (Extract Options)                F3=Exit
+--------------------------------------------------------------------------------
+

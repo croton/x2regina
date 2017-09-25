@@ -1,0 +1,67 @@
+/* ------------------- CSS -------------------- */
+extension  = CSS,SCSS
+code_type  = CSS
+
+key a-0 = MSG 1=Hlp 2=Prof 3=Xpdr 4=XpList
+key a-1 = MSG Now using CSS profile
+key a-2 = EDIT C:\Users\fatxL7a\cjp\x2\css.prof
+key a-3 = MACRO chooser --c xs css --t Expanders
+key a-4 = MACRO cmdout xpdrCss.temp xs css
+
+a-PFLine = "1=Attr 2=Psdo 3=Btsp 4=? 5=? 6=? 7=? 8=Trout 9=? 10=? 11=? 12=?"
+key a-F1 = MACRO fnpick css @:
+key a-F2 = MACRO fnpick csspseudo :@
+key a-F3 = MACRO fnpick bootstrap
+key a-F4 = MSG Alt-F4 css
+key a-F5 = MSG Alt-F5 css
+key a-F6 = MSG Alt-F6 css
+key a-F7 = MSG Alt-F7 css
+key a-F8 = MACRO chooser rainbow brown brook cutthroat golden arctic-char --t Trout
+
+expand_keyword = @ \1
+expand_replace = '\1 {'
+expand_replace = '}'
+
+expand_keyword = tag
+expand_replace = '<style type="text/css">'
+expand_replace = "  \c { }"
+expand_replace = "</style>"
+
+expand_keyword = ref
+expand_replace = '<link rel="stylesheet" type="text/css" href="\c.css"/>'
+
+expand_keyword = bor
+expand_replace = 'border: 1px;'
+
+expand_keyword = bord
+expand_replace = 'border: 2px dotted;'
+
+expand_keyword = borde
+expand_replace = 'border: medium dashed green;'
+
+expand_keyword = pad
+expand_replace = 'padding: \c'
+
+expand_keyword = mar
+expand_replace = 'margin: \c'
+
+expand_keyword = all \1
+expand_replace = '\1: 2px;'
+
+expand_keyword = vh \1
+expand_replace = '\1: 2px 4px;'
+expand_replace = '/* top+bot R+L */'
+
+expand_keyword = thb \1
+expand_replace = '\1: 1px 2px 3px;'
+expand_replace = '/* top R+L bot*/'
+
+expand_keyword = each \1
+expand_replace = '\1: 2px 3px 1px 4px;'
+expand_replace = '/* top R bot L */'
+
+expand_keyword = box \1
+expand_replace = '  width: \1px;'
+expand_replace = '  height: \1px;'
+expand_replace = '  border\c'
+

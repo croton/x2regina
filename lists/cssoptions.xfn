@@ -1,0 +1,56 @@
+font font-family Georgia|Palatino Linotype|Book Antiqua|Times New Roman|Arial|Helvetica|Arial Black|Impact|Lucida Sans Unicode|Tahoma|Verdana|Lucida Console|Courier New
+font font-style normal|italic|oblique
+font font-variant normal|small-caps
+font font-weight normal|bold|bolder|lighter|700
+font font-size medium|xx-small|x-small|small|large|x-large|xx-large|smaller|larger|10px|100%
+font font style variant weight size family
+background background-color #ffffff|transparent
+background background-image url()|none
+background background-repeat repeat|repeat-x|repeat-y|no-repeat
+background background-attachment scroll|fixed|local
+background background-position 50% 50%|0px 0px|left top|left center|left bottom|right top|right center|right bottom|center top|center center|center bottom
+background background color image repeat attachment position
+text color #ffffff
+text word-spacing normal|2px
+text white-space normal|nowrap|pre|pre-line|pre-wrap
+text letter-spacing normal|0px
+text text-decoration none|underline|overline|line-through
+text vertical-align baseline|10px|10%|sub|super|top|text-top|middle|bottom|text-bottom
+text text-shadow 10px 10px 10px blue
+text text-transform none|capitalize|uppercase|lowercase
+text text-align left|right|center|justify
+text text-indent 10px|10%
+text line-height normal|2|10px|100%
+box margin-top auto|10px|10%
+box margin-right auto|10px|10%
+box margin-bottom auto|10px|10%
+box margin-left auto|10px|10%
+box margin auto|10px|10%|Tpx Rpx Bpx Lpx
+box padding-top 10px|10%
+box padding-right 10px|10%
+box padding-bottom 10px|10%
+box padding-left 10px|10%
+box padding 10px|10%|Tpx Rpx Bpx Lpx
+box border-top-width medium|thin|thick|10px
+box border-right-width medium|thin|thick|10px
+box border-bottom-width medium|thin|thick|10px
+box border-left-width medium|thin|thick|10px
+box border-width medium|thin|thick|10px|Tpx Rpx Bpx Lpx
+box border-color #ffffff|transparent
+box border-style none|hidden|dotted|dashed|solid|double|groove|ridge|inset|outset
+box border-top width style color
+box border-right width style color
+box border-bottom width style color
+box border-left width style color
+box border width style color
+box width auto|10px|10%
+box height auto|10px|10%
+box float none|left|right
+box clear none|left|right|both
+box clip auto|rect(Tpx Rpx Bpx Lpx)
+lists display inline|block|flex|inline-block|inline-flex|inline-table|list-item|run-in|table|table-caption|table-column-group|table-header-group|table-footer-group|table-row-group|table-cell|table-column|table-row|none
+lists list-style-type disc|circle|square|none|decimal|decimal-leading-zero|lower-alpha|upper-alpha
+lists list-style-image none|url()
+lists list-style-position inside|outside
+lists list-style type position image
+valid values for all properties: initial|inherit

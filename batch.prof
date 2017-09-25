@@ -1,0 +1,59 @@
+/* --------------- BATCH files ---------------- */
+extension      = CMD,BAT
+code_type      = batch
+comment_prefix = "REM "
+quick_comment  = "::"
+
+key a-0 = MSG 1=Hlp 2=Prof 3=Xpdr 4=Env 5=Var 6=NxtFn 7=AllFn 8=Keys 9=?
+key a-1 = MSG Now using BATCH profile
+key a-2 = EDIT C:\Users\fatxL7a\cjp\x2\batch.prof
+key a-3 = MACRO chooser --c xs batch --t Expanders
+key a-4 = MACRO chooser --c set |cut -d"=" -f1 --t Environment Variables
+key a-5 = MACRO instr /%~%/
+key a-6 = LOCATE /:/f
+key a-7 = ALL /:/f
+key a-8 = CMDTEXT SHELL xk batch
+key a-9 = MSG Alt-9
+
+expand_keyword = say
+expand_replace = 'echo \c'
+
+expand_keyword = ask
+expand_replace = 'set /p \c=""'
+
+expand_keyword = prn
+expand_replace = 'printf "\c"'
+
+expand_keyword = proc \1
+expand_replace = ':\1'
+expand_replace = 'echo \1'
+expand_replace = 'goto end'
+
+expand_keyword = v
+expand_replace = 'set \c='
+
+expand_keyword = gv \1
+expand_replace = '%\1%\c'
+
+expand_keyword = if \1
+expand_replace = 'IF "%\1"=="" \c'
+
+expand_keyword = ife
+expand_replace = 'IF \c ('
+expand_replace = ') ELSE ('
+expand_replace = ')'
+
+expand_keyword = exist \1
+expand_replace = 'IF EXIST "%\1"=="" \c'
+
+expand_keyword = def \1
+expand_replace = 'IF DEFINED \1 ('
+expand_replace = '\c'
+expand_replace = ') ELSE ('
+expand_replace = ')'
+
+expand_keyword = loc
+expand_replace = 'SETLOCAL'
+expand_replace = '\c'
+expand_replace = 'ENDLOCAL'
+

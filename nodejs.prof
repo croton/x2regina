@@ -1,0 +1,81 @@
+/* ------------------ Nodejs ------------------ */
+#include "jscript.prof"
+
+extension          = JS,JSON
+base_extension     = JS
+code_type          = nodejs
+
+key a-0 = MSG 1=Hlp 2=Prof 3=ProfP 4=Xpdr 5=App 6=Grunt 7=Gcfg 8=Gtag
+key a-1 = MSG Now using Nodejs profile
+key a-2 = EDIT C:\Users\fatxL7a\cjp\x2\nodejs.prof
+key a-3 = EDIT C:\Users\fatxL7a\cjp\x2\jscript.prof
+key a-4 = MACRO chooser --c xs nodejs --t Expanders
+key a-5 = CMDTEXT cmdout newapp.js merge %cjp%\snips\nodeapp.tmpl
+key a-6 = CMDTEXT cmdout Gruntfile.js merge %cjp%\snips\gruntfile.tmpl
+key a-7 = MACRO instr /grunt.config.get('~')/
+key a-8 = MACRO wrapmark /<%= / %>/
+
+expand_keyword = log
+expand_replace = "grunt.log.writeln('\c');"
+
+expand_keyword = warn
+expand_replace = "grunt.warn('\c');"
+
+expand_keyword = \1 -opt
+expand_replace = "\1 grunt.option('\c')"
+
+expand_keyword = regtask \1
+expand_replace = "grunt.registerTask('\1', ['\c']);"
+
+expand_keyword = reg \1
+expand_replace = "grunt.registerTask('\1', [], function() {"
+expand_replace = "  grunt.loadNpmTasks('\c');"
+expand_replace = '  grunt.task.run('
+expand_replace = "    a b c"
+expand_replace = "    '@',"
+expand_replace = "    ''"
+expand_replace = '  );'
+expand_replace = '});'
+
+expand_keyword = regmt \1
+expand_replace = "grunt.registerMultiTask('\1', '\c', function() {"
+expand_replace = "});"
+
+expand_keyword = load \1
+expand_replace = "grunt.loadNpmTasks('\1');"
+
+expand_keyword = cfg
+expand_replace = 'grunt.initConfig({'
+expand_replace = "  pkg: grunt.file.readJSON('package.json'),"
+expand_replace = "  \c: ''"
+expand_replace = '});'
+
+expand_keyword = gcfg
+expand_replace = "grunt.config.get('\c')"
+
+expand_keyword = files \1
+expand_replace = '{'
+expand_replace = '  expand: true,'
+expand_replace = "  cwd: '\1',"
+expand_replace = "  src: '**\c',"
+expand_replace = "  dest: 'target/dist/lib/'"
+expand_replace = '}'
+
+expand_keyword = each \1
+expand_replace = '\1.forEach(function(arg,i) {'
+expand_replace = '  \c'
+expand_replace = '});'
+
+expand_keyword = write
+expand_replace = "grunt.file.write(\c, '');"
+
+expand_keyword = read
+expand_replace = 'grunt.file.readJSON(\c);'
+
+expand_keyword = recurse
+expand_replace = 'grunt.file.recurse(\c, function(abspath, rootdir, subdir, filename) {'
+expand_replace = '});'
+
+expand_keyword = tmpl
+expand_replace = 'grunt.template.process(\c)'
+

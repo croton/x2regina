@@ -1,0 +1,104 @@
+/* ----------------- NetRexx ------------------ */
+extension      = NRX
+code_type      = netrexx
+comment_prefix = "/* "
+comment_suffix = "*/"
+quick_comment  = "--"
+margins        = 1 200 1 90
+brackets       = "{,};[,];(,);do,end;loop,end;select,end;/*,*/;push,pop;"
+
+key a-0 = MSG 1=Hlp 2=Prof 3=ProfP 4=Xpdr
+key a-1 = MSG Now using NETREXX profile
+key a-2 = EDIT C:\Users\fatxL7a\cjp\x2\nrx.prof
+key a-3 = EDIT C:\Users\fatxL7a\cjp\x2\rexx.prof
+key a-4 = MACRO cmdout xpdrsNRX.temp xs nrx
+
+expand_keyword = say
+expand_replace = "say '\c'"
+
+expand_keyword = sayn
+expand_replace = "say '\c \-'"
+
+expand_keyword = tr
+expand_replace = 'trace results'
+
+expand_keyword = trm
+expand_replace = 'trace methods'
+
+expand_keyword = tra
+expand_replace = 'trace all'
+
+expand_keyword = tro
+expand_replace = 'trace off'
+
+expand_keyword = cl \1
+expand_replace = 'class \1\c'
+
+expand_keyword = m
+expand_replace = 'method \c() returns'
+
+expand_keyword = pi
+expand_replace = 'properties private'
+expand_replace = '\c'
+
+expand_keyword = "\1 -pu"
+expand_replace = '\1 \cpublic'
+
+expand_keyword = "\1 -st"
+expand_replace = '\1 \cstatic'
+
+expand_keyword = loop, do
+expand_replace = 'loop \c'
+expand_replace = 'end'
+
+expand_keyword = if
+expand_replace = "if \c then"
+expand_replace = "else"
+
+expand_keyword = elsedo, edo
+expand_replace = 'else do \c'
+expand_replace = 'end'
+
+expand_keyword = "\1 -do"
+expand_replace = '\1 do\c'
+expand_replace = 'end'
+
+expand_keyword = select, sel
+expand_replace = "select"
+expand_replace = "  when \c then"
+expand_replace = "  otherwise"
+expand_replace = "end"
+
+expand_keyword = when
+expand_replace = "when \c then"
+
+expand_keyword = "\1++"
+expand_replace = "\1=\1+\c1"
+
+expand_keyword = "\1+"
+expand_replace = "\1=\1 \c"
+
+expand_keyword = "\1 -rt"
+expand_replace = '\1 returns \c'
+
+expand_keyword = ret, rt
+expand_replace = 'return \c'
+
+expand_keyword = pa
+expand_replace = 'parse arg \c'
+
+expand_keyword = catch \1
+expand_replace = 'do'
+expand_replace = 'catch \1Exception'
+expand_replace = 'end'
+
+expand_keyword = prog \1
+expand_replace = "/* \1 -- \c"
+expand_replace = "   Created \m-\d-\Y"
+expand_replace = "*/"
+expand_replace = "parse arg input"
+expand_replace = "if input='' then do"
+expand_replace = "  say 'Usage: \1'"
+expand_replace = "  exit 1"
+expand_replace = "end"
+

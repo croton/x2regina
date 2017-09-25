@@ -1,0 +1,200 @@
+/* ------------------- REXX ------------------- */
+extension          = RX,X
+code_type          = rexx
+comment_prefix     = "/* "
+comment_suffix     = "*/"
+quick_comment      = "--"
+margins            = 1 250 20 80
+split_align_paren  = on
+comment_formatting = IF_MODIFIED;
+comment_column     = 20,10
+APIFile            = RXAPIS.TXT
+function_header    = true
+function_id        = ":", END_OF_WORD, WORDNUM=1, NAME_OFFSET=-1;
+expand_keyword     = _RESET;
+highlight_keyword  = _RESET;
+alt_highlight_kw   = _RESET;
+
+key a-0 = MSG 1=Hlp 2=Prof 3=Xpdr 4=Key
+key a-1 = MSG Now using REXX profile
+key a-2 = EDIT C:\Users\fatxL7a\cjp\x2\rexx.prof
+key a-3 = MACRO cmdout xpdrsRX.temp xs rexx
+key a-4 = CMDTEXT SHELL xk rexx
+
+expand_keyword = say
+expand_replace = "say '\c'"
+
+expand_keyword = sayn
+expand_replace = "call charout , '\c'"
+
+expand_keyword = prn \1
+expand_replace = 'call lineout \1, \c'
+
+expand_keyword = if
+expand_replace = "if \c then"
+expand_replace = "else"
+
+expand_keyword = elsedo, edo
+expand_replace = 'else do \c'
+expand_replace = 'end'
+
+expand_keyword = "\1 -do"
+expand_replace = '\1 do'
+expand_replace = 'end'
+
+expand_keyword = do
+expand_replace = "do \c"
+expand_replace = "end"
+
+expand_keyword = dostem \1
+expand_replace = 'do i=1 to \1.0'
+expand_replace = '  \c-- \1.i'
+expand_replace = 'end i'
+
+expand_keyword = doword \1
+expand_replace = 'do w=1 to words(\1)'
+expand_replace = '  \cword(\1,w)'
+expand_replace = 'end w'
+
+expand_keyword = pp
+expand_replace = 'parse pull \c'
+
+expand_keyword = pa
+expand_replace = 'parse arg \c'
+
+expand_keyword = pv
+expand_replace = 'parse var \c'
+
+expand_keyword = pval
+expand_replace = 'parse value \c with'
+
+expand_keyword = psrc
+expand_replace = 'parse source \cos invoke sourcefn .'
+
+expand_keyword = pver
+expand_replace = 'parse version \clangproc langlvl rday rmon ryear .'
+
+expand_keyword = "\1:"
+expand_replace = "/* \c */"
+expand_replace = "\1: procedure"
+expand_replace = "  parse arg ?"
+expand_replace = "  return"
+
+expand_keyword = select, sel
+expand_replace = "select"
+expand_replace = "  when \c then"
+expand_replace = "  otherwise"
+expand_replace = "end"
+
+expand_keyword = when
+expand_replace = "when \c then"
+
+expand_keyword = "\1++"
+expand_replace = "\1=\1+\c1"
+
+expand_keyword = "\1+"
+expand_replace = "\1=\1 \c"
+
+expand_keyword = trace, tr
+expand_replace = "trace '\c'"
+
+expand_keyword = prog \1
+expand_replace = "/* \1 -- \c"
+expand_replace = "   Created \m-\d-\Y"
+expand_replace = "*/"
+expand_replace = "parse arg input"
+expand_replace = "if input='' then call help"
+expand_replace = ""
+expand_replace = "exit"
+expand_replace = ""
+expand_replace = "help:"
+expand_replace = "say '\1 - '"
+expand_replace = "say 'usage: \1'"
+expand_replace = "exit"
+
+expand_keyword = readf \1
+expand_replace = "do while lines(\1)<>0"
+expand_replace = "  data=linein(\1)"
+expand_replace = '  \c'
+expand_replace = 'end'
+expand_replace = 'call lineout \1 -- close the file'
+
+expand_keyword = envar
+expand_replace = "value('\c',,'ENVIRONMENT')"
+
+expand_keyword = envcmd
+expand_replace = "ADDRESS SYSTEM '\c'"
+
+expand_keyword = pipeq
+expand_replace = "ADDRESS SYSTEM '\c |RXQUEUE'"
+expand_replace = "if queued()>0 then pull entry"
+
+expand_keyword = pullq
+expand_replace = 'do while queued()>0'
+expand_replace = '  parse pull entry\c'
+expand_replace = 'end'
+
+expand_keyword = clq
+expand_replace = 'do queued(); \cpull . ; end'
+
+expand_keyword = q
+expand_replace = 'queue \c'
+
+expand_keyword = rq \1
+expand_replace = "\crxqueue('Create', '\1')"
+
+expand_keyword = setq \1
+expand_replace = "\crxqueue('Set', '\1')"
+
+expand_keyword = delq \1
+expand_replace = "\crxqueue('Delete', '\1')"
+
+/* check arguments for a switch */
+expand_keyword = cksw \1
+expand_replace = "w=wordpos('-\1',\coptions)"
+expand_replace = 'if w>0 then do; \1=1; options=delword(options,w,1); end; else \1=0'
+
+expand_keyword = cksw2 \1
+expand_replace = "w=wordpos('-\1',\coptions)"
+expand_replace = "if w>0 then do; \1=word(options,w+1); options=delword(options,w,2); end; else \1=''"
+
+expand_keyword = sig
+expand_replace = 'SIGNAL ON ERROR NAME \c'
+
+expand_keyword = sigf
+expand_replace = 'SIGNAL ON FAILURE NAME \c'
+
+expand_keyword = trap
+expand_replace = 'CALL ON ERROR NAME \c'
+
+expand_keyword = trapf
+expand_replace = 'CALL ON FAILURE NAME \c'
+
+expand_keyword = calltrap
+expand_replace = 'call on error'
+expand_replace = 'error:'
+expand_replace = "dashes=copies('=', 40)"
+expand_replace = 'say dashes'
+expand_replace = "say 'Error' rc 'at line' sigl"
+expand_replace = "say 'Instruction:' value(sourceline(sigl))"
+expand_replace = 'say dashes'
+expand_replace = 'return'
+
+expand_keyword = sfile
+expand_replace = "rc=SysFileTree('\c','files.','FO')"
+
+expand_keyword = fyes
+expand_replace = 'if SysFileExists(\c) then '
+
+expand_keyword = fyes2
+expand_replace = "if stream(\c,'c','query exists')=''"
+
+expand_keyword = fspec \1
+expand_replace = "filespec('\1', \c)"
+
+expand_keyword = ifnul \1
+expand_replace = "if \1='' then \1='\c'"
+
+expand_keyword = ifnum \1
+expand_replace = "if datatype(\1,'W') then \c"
+

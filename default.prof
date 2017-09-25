@@ -1,0 +1,1179 @@
+/***************************************************************************/
+/*                                                                         */
+/* IMPORTANT NOTE:  Do not change this file!  This file is a sample which  */
+/* is updated with each new release.  It contains default values for the   */
+/* editor.  Anything commented out is hardcoded into the editor, and       */
+/* uncommenting it without changing the value will unnecessarily slow down */
+/* your load time.  All settings can be overridden by creating a second    */
+/* file, e.g. XPROFILE.ADD.  Copy your changes to XPROFILE.ADD and         */
+/* generate X.PRO with:                                                    */
+/*                                                                         */
+/*   XPROFILE XPROFILE.DEF XPROFILE.ADD                                    */
+/*                                                                         */
+/***************************************************************************/
+
+
+/***************************************************************************/
+/*                                                                         */
+/* Available keys for remapping:                                           */
+/*                                                                         */
+/*   KEY       MEANING          DEFAULT FUNCTION                           */
+/*   end       End              Cursor EOL                                 */
+/*   enter     Enter            Cursor NextLine                            */
+/*   F1        F1               Help                                       */
+/*   F2        F2               SplitJoin                                  */
+/*   F3        F3               Quit                                       */
+/*   F4        F4               Save                                       */
+/*   F5        F5               Rename                                     */
+/*   F6        F6               "CmdText EDIT "                            */
+/*   F7        F7               PageUp                                     */
+/*   F8        F8               PageDown                                   */
+/*   F9        F9               Undo                                       */
+/*   F10       F10              Redo                                       */
+/*   F11       F11              Previous_File                              */
+/*   F12       F12              Next_File                                  */
+/*   backspc   Backspace        Backspace                                  */
+/*   delete    Delete           DelChar                                    */
+/*   home      Home             Cursor Col1                                */
+/*   padplus   Pad+             Keyin +                                    */
+/*   pgdn      PgDn             PageDown                                   */
+/*   pgup      PgUp             PageUp                                     */
+/*   tab       Tab              Tab                                        */
+/*                                                                         */
+/*   s-F1      Shift+F1         Scroll Left                                */
+/*   s-F2      Shift+F2         Scroll Right                               */
+/*   s-F3      Shift+F3         Scroll Up                                  */
+/*   s-F4      Shift+F4         Scroll Down                                */
+/*   s-F5      Shift+F5         CentreLine                                 */
+/*   s-F6      Shift+F6         Nop                                        */
+/*   s-F7      Shift+F7         Nop                                        */
+/*   s-F8      Shift+F8         Nop                                        */
+/*   s-F9      Shift+F9         Nop                                        */
+/*   s-F10     Shift+F10        Nop                                        */
+/*   s-F11     Shift+F11        Nop                                        */
+/*   s-F12     Shift+F12        Nop                                        */
+/*   s-del     Shift+Del        Nop                                        */
+/*   s-down    Shift+Down       Mark Extend Down                           */
+/*   s-end     Shift+End        Mark Eol                                   */
+/*   s-home    Shift+Home       Mark Col1                                  */
+/*   s-ins     Shift+Ins        Nop                                        */
+/*   s-left    Shift+Left       Mark Extend Left                           */
+/*   s-pgdn    Shift+PgDn       Nop                                        */
+/*   s-pgup    Shift+PgUp       Nop                                        */
+/*   s-right   Shift+Right      Mark Extend Right                          */
+/*   s-up      Shift+Up         Mark Extend Up                             */
+/*                                                                         */
+/*   c-a       Ctrl+A           Exclude Area                               */
+/*   c-b       Ctrl+B           Bookmark Set                               */
+/*   c-c       Ctrl+C           Comment_style                              */
+/*   c-d       Ctrl+D           DelWord                                    */
+/*   c-e       Ctrl+E           EraseEOL                                   */
+/*   c-f       Ctrl+F           Repeat_find                                */
+/*   c-g       Ctrl+G           Bookmark Go                                */
+/*   c-h       Ctrl+H           Nop                                        */
+/*   c-i       Ctrl+I           Nop                                        */
+/*   c-k       Ctrl+K           CopyLine                                   */
+/*   c-l       Ctrl+L           CopyToCmd                                  */
+/*   c-m       Ctrl+M           Nop                                        */
+/*   c-n       Ctrl+N           Errors Next                                */
+/*   c-o       Ctrl+O           Errors Remove                              */
+/*   c-p       Ctrl+P           OpenFile                                   */
+/*   c-q       Ctrl+Q           Nop                                        */
+/*   c-r       Ctrl+R           Keys_record                                */
+/*   c-s       Ctrl+S           Shadow                                     */
+/*   c-t       Ctrl+T           Keys_play                                  */
+/*   c-u       Ctrl+U           All                                        */
+/*   c-v       Ctrl+V           Reverse_find                               */
+/*   c-w       Ctrl+W           Find_word                                  */
+/*   c-x       Ctrl+X           Exclude Toggle                             */
+/*   c-y       Ctrl+Y           Match                                      */
+/*   c-z       Ctrl+Z           Nop                                        */
+/*   c-F1      Ctrl+F1          Nop                                        */
+/*   c-F2      Ctrl+F2          Nop                                        */
+/*   c-F3      Ctrl+F3          Mark Upper                                 */
+/*   c-F4      Ctrl+F4          Mark Lower                                 */
+/*   c-F5      Ctrl+F5          Mark Mixed                                 */
+/*   c-F6      Ctrl+F6          Nop                                        */
+/*   c-F7      Ctrl+F7          Mark Shift Left                            */
+/*   c-F8      Ctrl+F8          Mark Shift Right                           */
+/*   c-F9      Ctrl+F9          Date Long                                  */
+/*   c-F10     Ctrl+F10         CaseWord                                   */
+/*   c-F11     Ctrl+F11         FuncWin                                    */
+/*   c-F12     Ctrl+F12         RingWin                                    */
+/*   c-[       Ctrl+[           Nop                                        */
+/*   c-]       Ctrl+]           Nop                                        */
+/*   c-del     Ctrl+Del         DelWord                                    */
+/*   c-down    Ctrl+Down        CaseChar Lower                             */
+/*   c-end     Ctrl+End         Bottom                                     */
+/*   c-enter   Ctrl+Enter       Input                                      */
+/*   c-home    Ctrl+Home        Top                                        */
+/*   c-ins     Ctrl+Ins         Nop                                        */
+/*   c-left    Ctrl+Left        Previous_word                              */
+/*   c-pgdn    Ctrl+PgDn        BottomScreen                               */
+/*   c-pgup    Ctrl+PgUp        TopScreen                                  */
+/*   c-right   Ctrl+Right       Next_word                                  */
+/*   c-space   Ctrl+Space       Nop                                        */
+/*   c-tab     Ctrl+Tab         Nop                                        */
+/*   c-up      Ctrl+Up          CaseChar Upper                             */
+/*                                                                         */
+/*   a-a       Alt+A            Mark Area                                  */
+/*   a-b       Alt+B            Mark Block                                 */
+/*   a-c       Alt+C            Mark Copy                                  */
+/*   a-d       Alt+D            Mark Delete                                */
+/*   a-e       Alt+E            Cursor EndMark                             */
+/*   a-f       Alt+F            Mark Fill                                  */
+/*   a-g       Alt+G            Nop                                        */
+/*   a-h       Alt+H            Hex                                        */
+/*   a-i       Alt+I            Mark Integers                              */
+/*   a-j       Alt+J            Join                                       */
+/*   a-k       Alt+K            Nop                                        */
+/*   a-l       Alt+L            Mark Line                                  */
+/*   a-m       Alt+M            Mark Move                                  */
+/*   a-n       Alt+N            Keyin_name                                 */
+/*   a-o       Alt+O            Mark Overlay                               */
+/*   a-p       Alt+P            Reformat                                   */
+/*   a-q       Alt+Q            Errors Show                                */
+/*   a-r       Alt+R            Mark Align                                 */
+/*   a-s       Alt+S            Split                                      */
+/*   a-t       Alt+T            CentreText                                 */
+/*   a-u       Alt+U            Mark Clear                                 */
+/*   a-v       Alt+V            Mark Vertical                              */
+/*   a-w       Alt+W            Mark Word                                  */
+/*   a-x       Alt+X            ASCII                                      */
+/*   a-y       Alt+Y            Cursor BegMark                             */
+/*   a-z       Alt+Z            Mark EOL                                   */
+/*   a-1       Alt+1            Keyin À                                    */
+/*   a-2       Alt+2            Keyin Á                                    */
+/*   a-3       Alt+3            Keyin Ù                                    */
+/*   a-4       Alt+4            Keyin Ã                                    */
+/*   a-5       Alt+5            Keyin Å                                    */
+/*   a-6       Alt+6            Keyin ´                                    */
+/*   a-7       Alt+7            Commentline Empty                          */
+/*   a-8       Alt+8            Commentline Full                           */
+/*   a-9       Alt+9            Keyin ¿                                    */
+/*   a-0       Alt+0            Input #if 0                                */
+/*   a-F1      Alt+F1           Nop                                        */
+/*   a-F2      Alt+F2           Compare                                    */
+/*   a-F3      Alt+F3           Compare Sync                               */
+/*   a-F4      Alt+F4           Compare Merge                              */
+/*   a-F5      Alt+F5           Nop                                        */
+/*   a-F6      Alt+F6           Nop                                        */
+/*   a-F7      Alt+F7           Nop                                        */
+/*   a-F8      Alt+F8           Nop                                        */
+/*   a-F9      Alt+F9           Date Ordered                               */
+/*   a-F10     Alt+F10          Nop                                        */
+/*   a-F11     Alt+F11          Nop                                        */
+/*   a-F12     Alt+F12          Nop                                        */
+/*   a--       Alt+-            Keyin Ä                                    */
+/*   a-=       Alt+=            Expand                                     */
+/*   a-[       Alt+[            Nop                                        */
+/*   a-\       Alt+\            Keyin ³                                    */
+/*   a-]       Alt+]            Nop                                        */
+/*   a-down    Alt+Down         BottomScreen                               */
+/*   a-end     Alt+End          Next_para                                  */
+/*   a-home    Alt+Home         Previous_para                              */
+/*   a-pgdn    Alt+PgDn         Next_func                                  */
+/*   a-pgup    Alt+PgUp         Previous_func                              */
+/*   a-left    Alt+Left         Previous_sym                               */
+/*   a-right   Alt+Right        Next_sym                                   */
+/*   a-up      Alt+Up           TopScreen                                  */
+/*                                                                         */
+/* Additional functions:                                                   */
+/*   File                                                                  */
+/*   Macro xxxx                                                            */
+/*                                                                         */
+/* Finally, any internal command may be assigned to any of the above keys. */
+/*                                                                         */
+/***************************************************************************/
+
+* key s-F1    = Scroll Left
+* key s-F2    = Scroll Right
+* key s-F3    = Scroll Up
+* key s-F4    = Scroll Down
+* key s-F5    = CentreLine
+* key s-F6    = Nop
+* key s-F7    = Nop
+* key s-F8    = Nop
+* key s-F9    = Nop
+* key s-F10   = Nop
+* key s-F11   = Nop
+* key s-F12   = Nop
+* key s-del   = Nop
+* key s-down  = Mark Extend Down
+* key s-end   = Mark Eol
+* key s-home  = Mark Col1
+* key s-ins   = Nop
+* key s-left  = Mark Extend Left
+* key s-pgdn  = Nop
+* key s-pgup  = Nop
+* key s-right = Mark Extend Right
+* key s-up    = Mark Extend Up
+
+* key a-a     = Mark Area
+* key a-b     = Mark Block
+* key a-c     = Mark Copy
+* key a-d     = Mark Delete
+* key a-e     = Cursor EndMark
+* key a-f     = Mark Fill
+* key a-g     = Nop
+* key a-h     = Hex
+* key a-i     = Mark Integers
+* key a-j     = Join
+* key a-k     = Nop
+* key a-l     = Mark Line
+* key a-m     = Mark Move
+* key a-n     = Keyin_name
+* key a-o     = Mark Overlay
+* key a-p     = Reformat
+* key a-q     = Errors Show
+* key a-r     = Mark Align
+* key a-s     = Split
+* key a-t     = CentreText
+* key a-u     = Mark Clear
+* key a-v     = Mark Vertical
+* key a-w     = Mark Word
+* key a-x     = ASCII
+* key a-y     = Cursor BegMark
+* key a-z     = Mark EOL
+* key a-1     = Keyin À
+* key a-2     = Keyin Á
+* key a-3     = Keyin Ù
+* key a-4     = Keyin Ã
+* key a-5     = Keyin Å
+* key a-6     = Keyin ´
+* key a-7     = Commentline empty
+* key a-8     = Commentline full
+* key a-9     = Keyin ¿
+* key a-0     = Conditional if
+* key a-F1    = Nop
+* key a-F2    = Compare
+* key a-F3    = Compare Sync
+* key a-F4    = Compare Merge
+* key a-F5    = Nop
+* key a-F6    = Nop
+* key a-F7    = Nop
+* key a-F8    = Nop
+* key a-F9    = Date Ordered
+* key a-F10   = Nop
+* key a-F11   = Nop
+* key a-F12   = Nop
+* key a--     = Keyin Ä
+* key a-=     = Expand
+* key a-[     = Nop
+* key a-\     = Keyin ³
+* key a-]     = Nop
+* key a-down  = BottomScreen
+* key a-end   = Next_para
+* key a-home  = Previous_para
+* key a-pgdn  = Next_func
+* key a-pgup  = Previous_func
+* key a-left  = Previous_sym
+* key a-right = Next_sym
+* key a-up    = TopScreen
+
+* key c-a     = Exclude Area
+* key c-b     = Bookmark Set
+* key c-c     = Comment_style
+* key c-d     = DelWord
+* key c-e     = EraseEOL
+* key c-f     = Repeat_find
+* key c-g     = Bookmark Go
+* key c-h     = Nop
+* key c-i     = Nop
+* key c-k     = CopyLine
+* key c-l     = CopyToCmd
+* key c-m     = Nop
+* key c-n     = Errors Next
+* key c-o     = Errors Remove
+* key c-p     = OpenFile
+* key c-q     = Nop
+* key c-r     = Keys_record
+* key c-s     = Shadow
+* key c-t     = Keys_play
+* key c-u     = All
+* key c-w     = Find_word
+* key c-v     = Reverse_find
+* key c-x     = Exclude Toggle
+* key c-y     = Match
+* key c-z     = Nop
+* key c-[     = Nop
+* key c-]     = Nop
+* key c-F1    = Nop
+* key c-F2    = Nop
+* key c-F3    = Mark Upper
+* key c-F5    = Mark Mixed
+* key c-F4    = Mark Lower
+* key c-F6    = Nop
+* key c-F7    = Mark Shift Left
+* key c-F8    = Mark Shift Right
+* key c-F9    = Date Long
+* key c-F10   = CaseWord
+* key c-F11   = FuncWin
+* key c-F12   = RingWin
+* key c-del   = DelWord
+* key c-down  = CaseChar Lower
+* key c-end   = Bottom
+* key c-enter = Input
+* key c-home  = Top
+* key c-ins   = Nop
+* key c-left  = Previous_word
+* key c-pgdn  = BottomScreen
+* key c-pgup  = TopScreen
+* key c-right = Next_word
+* key c-space = Nop
+* key c-tab   = Nop
+* key c-up    = CaseChar Upper
+
+* key backspc = Backspace
+* key delete  = DelChar
+* key end     = Cursor EOL
+* key enter   = Cursor NextLine
+* key f1      = Help
+* key f2      = SplitJoin
+* key f3      = Quit
+* key f4      = Save
+* key f5      = Rename
+* key f6      = "CmdText EDIT "
+* key f7      = Pageup
+* key f8      = Pagedown
+* key f9      = Undo
+* key f10     = Redo
+* key f11     = Previous_File
+* key f12     = Next_File
+* key home    = Cursor Col1
+* key padplus = Keyin +
+* key pgdn    = Pagedown
+* key pgup    = Pageup
+* key tab     = Tab
+
+
+/***************************************************************************/
+/*                                                                         */
+/* User configurable strings.  Each starts with the keyword "string"       */
+/* followed by an identifier:                                              */
+/*                                                                         */
+/*   helpfile        - The help file location                              */
+/*   Msg_Error_Parse - The message displayed when error parsing is invoked */
+/*                                                                         */
+/***************************************************************************/
+
+* string helpfile        = x.hlp
+* string msg_error_parse = "Press C_N to find Next error; C_O to Obliterate ==> lines."
+
+
+/***************************************************************************/
+/*                                                                         */
+/* Available screen areas for setting the colour:                          */
+/*   alt_keywords, brackets, browse_data, browse_ind, command,             */
+/*   command_stack, comment, csr_line, data, error_line, filename,         */
+/*   function_name, highlight, keywords, mark, message, mod_filename,      */
+/*   pfline, popup_cursor, prompt, prompt_input, protected, quotes,        */
+/*   shadow, shadow_cursor, status, tofeof, window_bold, window_data,      */
+/*   window_emphasis, window_title, xwindows_cursor.                       */
+/*                                                                         */
+/* Available foreground colours:                                           */
+/*   Black, Blue, Brown, Cyan, Dark Grey*, Green, Light Blue*, Light       */
+/*   Cyan*, Light Green*, Light Grey, Light Magenta*, Light Red*, Magenta, */
+/*   Red, White*, and Yellow*.                                             */
+/*                                                                         */
+/*   * The foreground colours marked with an asterisk may cause a blinking */
+/*     display when switching to OS/2's window list and back.  If this     */
+/*     occurs, the blinking may be removed by issuing the REFRESH command. */
+/*                                                                         */
+/* Available background colours:                                           */
+/*   Black, Blue, Brown, Cyan, Dark Grey, Green, Light Blue, Light Cyan,   */
+/*   Light Green, Light Grey, Light Magenta, Light Red, Magenta, Red,      */
+/*   White, and Yellow.                                                    */
+/*                                                                         */
+/* The special colour Reverse is applicable only to the popup_cursor and   */
+/* csr_line colour areas.                                                  */
+/*                                                                         */
+/* The special colour None is applicable only to the brackets colour area. */
+/*                                                                         */
+/***************************************************************************/
+
+* colour alt_keywords    = Yellow on Black
+* colour brackets        = Light Green on Light Grey
+* colour browse_data     = Green on Light Grey
+* colour browse_ind      = Blue on Light Grey
+* colour command         = Blue on Cyan
+* colour command_stack   = Blue on Cyan
+* colour comment         = Blue on Light Grey
+* colour csr_line        = Black on Light Grey
+* colour data            = Black on Light Grey
+* colour error_line      = Magenta on Light Grey
+* colour filename        = Magenta on Light Grey
+* colour function_name   = Magenta on Light Grey
+* colour highlight       = Yellow on Magenta
+* colour keywords        = Red on Light Grey
+* colour mark            = Light Grey on Black
+* colour message         = Yellow on Magenta
+* colour mod_filename    = Light Red on Light Grey
+* colour pfline          = Black on Light Grey
+* colour popup_cursor    = Reverse
+* colour prompt          = Yellow on Black
+* colour prompt_input    = Black on Yellow
+* colour protected       = Green on Light Grey
+* colour quotes          = Brown on Light Grey
+* colour shadow          = Light Blue on Light Grey
+* colour shadow_cursor   = Black on Cyan
+* colour status          = Blue on Light Grey
+* colour tofeof          = Black on Light Grey
+* colour window_bold     = Black on Cyan
+* colour window_data     = Blue on Cyan
+* colour window_emphasis = Light Red on Cyan
+* colour window_title    = Yellow on Magenta
+
+
+/***************************************************************************/
+/*                                                                         */
+/* Colour setup for X-Windows.  These settings are only applicable to the  */
+/* X-Windows versions on Linux and AIX, although they will be accepted by  */
+/* the user profile generator on all systems.  The format is               */
+/*                                                                         */
+/*   x-colour colour = xcolour                                             */
+/*                                                                         */
+/* where colour is the X2 Editor colour area name, and xcolour is an       */
+/* X-Windows colour name, which can be chosen from one of the entries in   */
+/* /usr/lib/X11/rgb.txt on most systems.  Note that xcolour is case        */
+/* sensitive!                                                              */
+/*                                                                         */
+/* Available colours:                                                      */
+/*   Black, Blue, Brown, Cyan, Dark Grey, Green, Light Blue, Light Cyan,   */
+/*   Light Green, Light Grey, Light Magenta, Light Red, Magenta, Red,      */
+/*   White, and Yellow.                                                    */
+/*                                                                         */
+/* Only the foreground colour is used from the xwindows_cursor colour,     */
+/* even though both foreground and background colours must be specified.   */
+/*                                                                         */
+/***************************************************************************/
+
+* colour xwindows_cursor = Light Red on Light Grey
+
+* x-colour Black         = black
+* x-colour Blue          = DarkSlateBlue
+* x-colour Brown         = brown
+* x-colour Cyan          = cyan
+* x-colour Dark Grey     = DarkSlateGrey
+* x-colour Green         = green
+* x-colour Light Blue    = Blue
+* x-colour Light Cyan    = LightCyan4
+* x-colour Light Green   = LightSeaGreen
+* x-colour Light Grey    = LightGrey
+* x-colour Light Magenta = magenta
+* x-colour Light Red     = red
+* x-colour Magenta       = magenta4
+* x-colour Red           = red4
+* x-colour White         = white
+* x-colour Yellow        = yellow
+
+
+/***************************************************************************/
+/*                                                                         */
+/* User synonyms.  These are useful for overriding internal editor         */
+/* functions.  The available keywords are:                                 */
+/*                                                                         */
+/*   BEEP        - executed when the editor issues an alarm, i.e. when a   */
+/*                 Locate command wraps around the file, or when error     */
+/*                 parsing is being performed through the /Q edit switch   */
+/*   CHANGE      - executed whenever a change command is issued from the   */
+/*                 command line, i.e. not from a macro                     */
+/*   EDIT        - executed when a file is about to be added to the editor */
+/*   ERROR_PARSE - executed when error information is to be added to a     */
+/*                 file                                                    */
+/*   EXIT        - executed when the editor is terminating, i.e. after the */
+/*                 last file has been quit                                 */
+/*   LOAD        - executed when a file has just been added to the editor  */
+/*   LOCATE      - executed whenever a locate/find command is issued from  */
+/*                 the command line, i.e. not from a macro                 */
+/*   NEWFILE     - executed when a new file has just been added to the     */
+/*                 editor                                                  */
+/*   QUIT        - executed when a file is being removed from the editor   */
+/*   SAVE        - executed when a file is to be saved to disk             */
+/*   STARTUP     - executed when the editor is starting                    */
+/*                                                                         */
+/* The HOSTEDIT.X synonym is available from X2 PROCS on IBMPC.  To install */
+/* it, copy and download it to a directory on your PATH, copy the relevant */
+/* synonym lines to your XPROFILE.ADD, and uncomment them by deleting the  */
+/* leading asterisks.                                                      */
+/*                                                                         */
+/***************************************************************************/
+
+* synonym beep        = macro whatever
+* synonym change      = macro whatever
+* synonym edit        = macro hostedit edit
+* synonym error_parse = macro whatever
+* synonym exit        = macro whatever
+* synonym load        = macro whatever
+* synonym locate      = macro whatever
+* synonym newfile     = macro whatever
+* synonym quit        = macro whatever
+* synonym save        = macro hostedit save
+* synonym startup     = macro whatever
+
+
+/***************************************************************************/
+/*                                                                         */
+/* Bracket matching character pairs.  Each string is separated from its    */
+/* matching string by a comma, and pairs are separated by semi-colons.     */
+/* The leading string identifies the bracket or string that will be found  */
+/* first in the sequence.  To enter a comma or a semi-colon, prefix it     */
+/* with a backslash (\) character.                                         */
+/*                                                                         */
+/***************************************************************************/
+
+brackets = "{,};[,];(,);<,>;do,end;select,end;/*,*/;push,pop;"
+
+
+/***************************************************************************/
+/*                                                                         */
+/* Initial editor settings.  These flags are global to every file in the   */
+/* ring.  Each is implemented as a flag which can be either ON or OFF.     */
+/* The available settings are:                                             */
+/*                                                                         */
+/*   SETTING        DEFAULT VALUE   MEANING                                */
+/*   cursor_insert       MEDIUM     Specify the size of cursor cursor to   */
+/*                                  use when in Insert mode.  Options are  */
+/*                                  SMALL, MEDIUM, and LARGE.              */
+/*   cursor_replace      SMALL      Specify the size of cursor cursor to   */
+/*                                  use when in Replace mode.  Options are */
+/*                                  SMALL, MEDIUM, and LARGE.              */
+/*   ea                  ON         Save cursor position data with the     */
+/*                                  file as an extended attribute          */
+/*   enter_insert        OFF        Should Enter insert a new line if      */
+/*                                  insert is on?  By default, Enter       */
+/*                                  always moves to the next line of the   */
+/*                                  file.                                  */
+/*   insert              OFF        Initial Insert state                   */
+/*   insert_eof          OFF        Insert a new line when ENTER is        */
+/*                                  pressed from the last line of a file   */
+/*   linend              ON         Initial Linend setting                 */
+/*   popup_wrap          OFF        Wrap around popup windows when         */
+/*                                  reaching top or end of list            */
+/*   quickmarks          OFF        Quick setting of bookmarks (without a  */
+/*                                  popup window)                          */
+/*   status              ON         Status line display                    */
+/*   tab_insert          ON         Controls the insertion of spaces when  */
+/*                                  the tab key is pressed and Insert mode */
+/*                                  is on.  By default, spaces are         */
+/*                                  inserted up to the next tab stop.      */
+/*   wrap_beep           OFF        Controls beeping with search command   */
+/*                                  wrapping                               */
+/*                                                                         */
+/* The following global settings can take numeric or string arguments.     */
+/* They control how the editor looks and behaves.                          */
+/*                                                                         */
+/*   auto_bookmarks      n,m        The number of automatic bookmarks      */
+/*                                  desired, and the minimum number of     */
+/*                                  rows before a bookmark is saved.       */
+/*   bookmarks           1          The number of bookmarks desired.       */
+/*   cmdline             TOP        The default command line location.     */
+/*                                  Valid options are TOP and BOTTOM.      */
+/*   cmd_windowsize      10         The maximum number of rows to display  */
+/*                                  when showing the command stack.  Valid */
+/*                                  values are 0-20.                       */
+/*   cmd_windowwidth     30         The number of columns to display when  */
+/*                                  showing the command stack.             */
+/*   default_ext         ""         The default extension(s) to use if a   */
+/*                                  file is specified without an extension */
+/*                                  and it doesn't exist on disk.  The     */
+/*                                  list of extensions are separated by    */
+/*                                  commas, and the first extension found  */
+/*                                  will be the one used.                  */
+/*   default_list        ""         The default list of files to load if   */
+/*                                  no files were specified on the         */
+/*                                  original file line.                    */
+/*   default_newline     CRLF       Characters to insert in a newly        */
+/*                                  created file to indicate a line break. */
+/*                                  To use just line feed for a newline,   */
+/*                                  specify LF for this value.  For        */
+/*                                  existing files, the value found at the */
+/*                                  first line break will be used for all  */
+/*                                  inserted lines.                        */
+/*   escape_char         `          The escape character for popup window  */
+/*                                  highlighting                           */
+/*   fn_completion       n          When using filename completion from    */
+/*                                  the command line, if more than n       */
+/*                                  matches are found a window will be     */
+/*                                  displayed showing all the matches.  If */
+/*                                  n or less matches are found the tab    */
+/*                                  key will cycle through all the matches */
+/*                                  on the command line.  The default for  */
+/*                                  n is 1, i.e. if 2 or more matches are  */
+/*                                  found a window will show.              */
+/*   linend_char         ^          The linend character to separate       */
+/*                                  multiple commands                      */
+/*   null_char           ?          The character to represent null bytes  */
+/*                                  in text mode                           */
+/*   paths               ""         Set of environment variables used to   */
+/*                                  scan for files when opening a file.    */
+/*   popup_height        10         The maximum number of rows to use for  */
+/*                                  displaying ringwin, funcwin,           */
+/*                                  autobookmark, or bookmark windows.     */
+/*   popup_width         70         The maximum number of columns to use   */
+/*                                  for displaying ringwin, funcwin,       */
+/*                                  autobookmark, or bookmark windows.     */
+/*   quit_modresponse    "charkeys" Controls the available responses when  */
+/*                                  the QUIT command is issued for a       */
+/*                                  modified file.  By default, the        */
+/*                                  characters Y, N, and W and any keys    */
+/*                                  that have been set to the FILE, SAVE,  */
+/*                                  or QUIT commands are acceptable        */
+/*                                  responses.  If this option is set to   */
+/*                                  "charonly", only the characters Y, N,  */
+/*                                  and W will be accepted.                */
+/*   shell_prompt        "(x)"      The string that is prefixed to the     */
+/*                                  default prompt string to indicate a    */
+/*                                  shell from within the editor.          */
+/*   xwindows_font       "fixed"    The font to use for drawing the screen */
+/*                                  in the X-Windows (Unix only) versions. */
+/*                                  This option has no effect in any other */
+/*                                  version.                               */
+/*                                                                         */
+/***************************************************************************/
+
+* cursor_insert      = medium
+* cursor_replace     = small
+* ea                 = on
+* enter_insert       = off
+* insert             = off
+* insert_eof         = off
+* linend             = on
+* popup_wrap         = off
+* quickmarks         = off
+* status             = on
+* tab_insert         = on
+* wrap_beep          = off
+
+* auto_bookmarks     = 0,0
+* bookmarks          = 1
+* cmdline            = TOP
+* cmd_windowsize     = 10
+* cmd_windowwidth    = 30
+* default_ext        = ""
+* default_list       = ""
+* default_newline    = CRLF
+* escape_char        = `
+* fn_completion      = 1
+* linend_char        = ^
+* null_char          = ?
+* paths              = ""
+* popup_height       = 10
+* popup_width        = 70
+* quit_modresponse   = "charkeys"
+* shell_prompt       = "(x)"
+* xwindows_font      = "fixed"
+
+
+/***************************************************************************/
+/*                                                                         */
+/* Disk-specific settings.  For each disk listed, the linend and tab       */
+/* settings will be used to save a file.                                   */
+/*                                                                         */
+/* The following settings are available:                                   */
+/*                                                                         */
+/*   disk:               Specifies the disk(s) to which the following      */
+/*                       settings apply.  Disks may only one character in  */
+/*                       length, and may be separated by spaces or commas. */
+/*                       The special disk * may be used to specify all     */
+/*                       disks.                                            */
+/*   disk_ea:            Controls saving of file information with a file   */
+/*                       as extended attributes (EAs).  ON saves the       */
+/*                       information, OFF discards it.  Overridden by the  */
+/*                       EA command.                                       */
+/*   disk_linend:        Specifies the forced linend character(s) to be    */
+/*                       used when saving the file.  Accepted values are   */
+/*                       CR, LF, CRLF, and ASIS, where ASIS will save the  */
+/*                       file with the linend characters found when the    */
+/*                       file was read.                                    */
+/*   disk_tabs:          If ON, specifies that all occurrences of 8 or     */
+/*                       more blanks should be replaced by tab characters. */
+/*                       If OFF or ASIS, no tab alteration will be         */
+/*                       performed on the file.                            */
+/*                                                                         */
+/***************************************************************************/
+
+* disk               = *
+* disk_ea            = on
+* disk_linend        = asis
+* disk_tabs          = asis
+
+
+/***************************************************************************/
+/*                                                                         */
+/* File type-specific settings.  Each file type is identified by an        */
+/* extension/file_pattern keyword, which specifies a list of file          */
+/* extensions.  The special file extension * is supported.  It allows you  */
+/* to specify default settings for any file extension.  Note that if a     */
+/* specific file extension list is provided, it overrides ALL of the *     */
+/* extension settings.                                                     */
+/*                                                                         */
+/* The following settings all apply to the previously defined file         */
+/* extension(s).                                                           */
+/*                                                                         */
+/*   alt_highlight_kw:   Defines an alternate list of keywords which will  */
+/*                       be highlighted with the ALT_KEYWORDS colour.  If  */
+/*                       equal to the special value _RESET, any previous   */
+/*                       alternate highlight keyword settings will be      */
+/*                       removed from the profile.                         */
+/*   APIFile:            Allows you to specify a file which contains APIs  */
+/*                       for the API expansion macro                       */
+/*   autosave:           The alteration threshold for automatically saving */
+/*                       to a temporary disk file                          */
+/*   base_extension:     Identifies the previously defined extension data  */
+/*                       that should be used as the initial data for the   */
+/*                       current extension.  This statement should be      */
+/*                       located immediately after the extension keyword.  */
+/*   code_indent:        The indentation for new lines                     */
+/*   code_type:          Identifies the type of source code contained in   */
+/*                       the file.  Any text is valid; NONE is the         */
+/*                       default.                                          */
+/*   comment_column:     Defines the desired comment starting column       */
+/*                       number for left-aligned inline comments, and the  */
+/*                       tab amount if the text in a line is too long to   */
+/*                       accommodate a comment starting in comment_column. */
+/*   comment_escape:     If the comment_prefix string is prefixed by this  */
+/*                       character, the string is NOT treated as a comment */
+/*                       but as part of the regular text.                  */
+/*   comment_formatting: Comment formatting flags:                         */
+/*                       LEFT:              Format the comment to the left */
+/*                                          comment margin                 */
+/*                       RIGHT:             Format the comment to the      */
+/*                                          right comment margin           */
+/*                       ALIGN_QUICK:       Align (without converting)     */
+/*                                          quick_comments to the current  */
+/*                                          margins according to the left/ */
+/*                                          right settings                 */
+/*                       C_CONDITIONAL:     Use C formatting rules to      */
+/*                                          determine left/right alignment */
+/*                       CPP_CONDITIONAL:   Use C++ formatting rules to    */
+/*                                          determine left/right alignment */
+/*                       COLSTART:          Only align comments starting   */
+/*                                          in comment_column              */
+/*                       CONVERT_QUICK:     Convert occurrences of         */
+/*                                          quick_comment into             */
+/*                                          comment_prefix and             */
+/*                                          comment_suffix strings         */
+/*                       CONVERT_ALLQUICK:  Convert all occurrences of     */
+/*                                          quick_comment into             */
+/*                                          comment_prefix and             */
+/*                                          comment_suffix strings, even   */
+/*                                          if no code precedes the        */
+/*                                          comment                        */
+/*                       IF_MODIFIED:       Only align comments on lines   */
+/*                                          that have been altered         */
+/*                       KEEP_BLANKS:       Keep leading and trailing      */
+/*                                          blanks in right aligned        */
+/*                                          comments                       */
+/*                       KEEP_TRAILSPACE:   If comment_prefix contains one */
+/*                                          or more trailing spaces, then  */
+/*                                          those spaces must be found in  */
+/*                                          the input text for it to be    */
+/*                                          recognised as a comment.       */
+/*                       NO_BLOCKS:         Don't add comment prefix and   */
+/*                                          suffix strings to block        */
+/*                                          reformat output                */
+/*                       NONE:              Make no changes to comments.   */
+/*                                          Useful to turn off previously  */
+/*                                          set commenting flags.          */
+/*                       UPPERCASE:         Convert code portion of code   */
+/*                                          to upper case, if it doesn't   */
+/*                                          begin with the                 */
+/*                                          conditional_prefix string      */
+/*   comment_prefix:     The string which marks the beginning of a comment */
+/*   comment_suffix:     The comment terminator (if any)                   */
+/*   conditional_prefix: A common identifier that starts all conditional   */
+/*                       strings                                           */
+/*   conditionals:       Defines strings which are to be used with the     */
+/*                       CONDITIONALS command to input conditional         */
+/*                       compilation IF, ELSE, and END commands.           */
+/*   end_blanks:         Allows trailing blanks on the end of any line     */
+/*   eof_text:           The text to be displayed to mark the end of the   */
+/*                       file data                                         */
+/*   expand_keyword:     Text that must match at the beginning of a line,  */
+/*                       to cause the line to be replaced by succeeding    */
+/*                       expand_replace text lines or expand_macro macros. */
+/*                       If the value is equal to the special value        */
+/*                       _RESET, any previous expansion keyword settings   */
+/*                       will be removed from the profile.  To specify     */
+/*                       multiple keywords that have the same expansion,   */
+/*                       separate them with commas.  To include a comma in */
+/*                       the keyword text, prefix it with a backslash.     */
+/*   expand_macro:       The name of a macro to receive control when an    */
+/*                       expand_keyword is being processed                 */
+/*   expand_replace:     Text line(s) to replace the expand_keyword line   */
+/*   expand_tabs:        Controls expansion of tab characters to blanks.   */
+/*                       By default, any tab characters found will be      */
+/*                       changed to the number of spaces required to move  */
+/*                       the text so it begins on a multiple of 8 bytes.   */
+/*                       Valid values are ON and OFF, and any number       */
+/*                       between 1 and 16.  If a number is specified, the  */
+/*                       text will be aligned on a multiple of that number */
+/*                       instead of 8.                                     */
+/*   fieldtemplate       A default field template for use with this file   */
+/*                       type                                              */
+/*   findword_anycase:   Allow finding the word under the cursor in mixed  */
+/*                       case with the FIND_WORD function.  The default    */
+/*                       value of OFF forces an exact case search.         */
+/*   flowtonew:          If ON, flowed text is inserted as a new line; if  */
+/*                       OFF (the default), flowed text is inserted at the */
+/*                       beginning of the next line.                       */
+/*   funcname_chars:     Defines additional set of characters that are to  */
+/*                       be treated as valid parts of a function name, for */
+/*                       function recognition and highlighting.            */
+/*   function_header:    If TRUE, scrolling to the next or previous        */
+/*                       function will move to possible header text above  */
+/*                       the actual header definition line.  If set to the */
+/*                       default of FALSE, function scrolling will move    */
+/*                       directly to the function definition line.         */
+/*   function_id:        Defines keywords and flags to identify functions. */
+/*                       The parameters are:                               */
+/*                       "keyword", flags, <WORDNUM=w,> <MAXLINES=m,>      */
+/*                                         <STARTLINE=s,>                  */
+/*                                         <COLUMN=c< &|- c2>,             */
+/*                                         <NAME_OFFSET=n>,                */
+/*                                         <NAME_LENGTH=l>>                */
+/*                       where flags can be any of:                        */
+/*                       ANY:            A placeholder option, meaning no  */
+/*                                       restrictions on the placement of  */
+/*                                       the keyword information.          */
+/*                       CANCEL:         If found, cancels a search for a  */
+/*                                       required keyword                  */
+/*                       IGNORE:         If found on a line, it is         */
+/*                                       definitely NOT a function, no     */
+/*                                       matter what other keywords are    */
+/*                                       found.                            */
+/*                       END_OF_WORD:    The keyword must be located at    */
+/*                                       the end of a word, i.e. there is  */
+/*                                       non-blank text before the         */
+/*                                       keyword, and the keyword is       */
+/*                                       either at the end of the line or  */
+/*                                       it is followed by a blank         */
+/*                                       character.                        */
+/*                       MATCH:          Once the given text is found, use */
+/*                                       bracket matching rules to find    */
+/*                                       the corresponding character       */
+/*                                       before identifying a function.    */
+/*                       NO_DUPES:       Indicates that the keyword string */
+/*                                       must NOT be found before the next */
+/*                                       REQUIRED keyword.                 */
+/*                       OPTIONAL:       If found under the specified      */
+/*                                       conditions, implies that the      */
+/*                                       previously found string is        */
+/*                                       definitely to be treated as a     */
+/*                                       function.  This is designed to    */
+/*                                       work with C++ constructors to     */
+/*                                       stop initialisers from inhibiting */
+/*                                       the constructor line recognition. */
+/*                       PREVIOUS:       Starting from the current         */
+/*                                       position, scan backwards for the  */
+/*                                       supplied text.                    */
+/*                       REQUIRED:       Together with the MAXLINES        */
+/*                                       parameter, indicates that the     */
+/*                                       keyword must be found within the  */
+/*                                       next m lines, or the current line */
+/*                                       is not a function.                */
+/*                       REQUIRED_SET:   The keyword is part of a set of   */
+/*                                       words that may indicate a         */
+/*                                       function.  One or more of the     */
+/*                                       required_set keywords must be     */
+/*                                       found on the current line.        */
+/*                       START_OF_WORD:  The keyword string must be found  */
+/*                                       at the beginning of a word, i.e.  */
+/*                                       it must be preceded with a blank  */
+/*                                       character.                        */
+/*   helpfile:           Defines an override for the global default help   */
+/*                       file string.                                      */
+/*   highlight_keyword:  Defines a list of keywords which will be          */
+/*                       highlighted with the KEYWORDS colour.  If equal   */
+/*                       to the special value _RESET, any previous         */
+/*                       highlight keyword settings will be removed from   */
+/*                       the profile.                                      */
+/*   highlight_quotes:   Specifies whether quoted strings should be        */
+/*                       highlighted with the QUOTES colour                */
+/*   highlight_tags:     Specifies a list of tag prefix and suffix         */
+/*                       strings, separated by commas and semi-colons.     */
+/*                       Everything found between the prefix and suffix    */
+/*                       strings will be highlighted with KEYWORDS         */
+/*                       emphasis.  To enter a comma or a semi-colon,      */
+/*                       prefix it with a backslash (\) character.  To     */
+/*                       allow any alphabetic character to be contained in */
+/*                       a prefix string, use the special character        */
+/*                       sequence "a-z" (see TEX file extension).          */
+/*   indent_keywords:    Defines a set of comma-delimited words which      */
+/*                       cause the cursor to be indented by the            */
+/*                       code_indent number of spaces, if it is moved to a */
+/*                       blank line and the previous line begins with one  */
+/*                       of the specified keywords.                        */
+/*   input_keywords:     A set of keywords, delimited by commas, which     */
+/*                       trigger the input_macro if found at the beginning */
+/*                       of a line when a new line is input.               */
+/*   input_macro:        The name of the macro to be executed if a new     */
+/*                       line is added and the current line begins with    */
+/*                       one of the input_keywords.                        */
+/*   keyword_case:       If exact, highlight keywords must be found        */
+/*                       exactly as typed to be highlighted; if any, a     */
+/*                       case-insensitive search will be used to find      */
+/*                       highlight keywords on a line.                     */
+/*   keyword_trans:      Controls keyword translation.  Possible values    */
+/*                       are UPPER, lower, Mixed, AsProfile, and AsIs,     */
+/*                       where AsIs is the default.  Any changed lines     */
+/*                       containing keywords will have the keywords        */
+/*                       translated into the specified case.  The          */
+/*                       AsProfile option translates all keywords on a     */
+/*                       line to be exactly as they were entered into the  */
+/*                       profile.                                          */
+/*   margins:            Defines the left and right file margins, and the  */
+/*                       left and right block comment margins, in that     */
+/*                       order.                                            */
+/*   openfile_id:        Keywords to provide a filename for the OPENFILE   */
+/*                       function, with the format:                        */
+/*                       "keyword", WORDNUM=w, <PATH=p,> <NO_BLANKS,>      */
+/*                       <PATHSEARCH=ps,> <DEFAULT_EXT=xxx>;               */
+/*                       where "keyword" contains the special string \f to */
+/*                       indicate the start of the filename, and           */
+/*                       optionally \r and \c to indicate the desired row  */
+/*                       and column number, respectively.                  */
+/*   PFLine              The help line when no shift keys are pressed      */
+/*   c-PFLine            The help line when either Ctrl key is pressed and */
+/*                       held                                              */
+/*   s-PFLine            The help line when either Shift key is pressed    */
+/*                       and held                                          */
+/*   a-PFLine            The help line when either Alt key is pressed and  */
+/*                       held                                              */
+/*   quick_comment:      A string which can be used to indicate the start  */
+/*                       of an inline comment                              */
+/*   save_options:       Provides default options to be used with the SAVE */
+/*                       and FILE commands.  Any combination of valid save */
+/*                       options may be specified, but command line        */
+/*                       options will override these defaults.             */
+/*   shadow:             The initial value for the SHADOW setting, which   */
+/*                       can be ON or OFF                                  */
+/*   sort_funclist:      Whether the function list should be sorted.  The  */
+/*                       default value is ON                               */
+/*   split_align_paren:  By default, splitting a line will bypass a check  */
+/*                       for open parentheses "(", but if set to ON, split */
+/*                       text will be aligned beneath an open parenthesis  */
+/*                       from the previous line, if found.                 */
+/*   statustext:         The template to use when drawing the status line  */
+/*   styleword:          Keyword used for formatting code with the STYLE   */
+/*                       command.  The format is keyword, flag1 | flag2    */
+/*                       ... flagN; The style formatting flags are:        */
+/*                       INDENTTHIS:   Indent code starting with the line  */
+/*                                     beginning with the styleword        */
+/*                       INDENTNEXT:   Indent the code following a line    */
+/*                                     beginning with the styleword        */
+/*                       INDENTNEXT1:  Indent just one line following a    */
+/*                                     line beginning with the styleword   */
+/*                       INDENTNEXT2:  Indent the next two lines following */
+/*                                     a line beginning with the styleword */
+/*                       UNDENTTHIS:   Undent lines beginning with the     */
+/*                                     line that begins with the styleword */
+/*                       UNDENTNEXT:   Undent lines beginning with the     */
+/*                                     line after the line that begins     */
+/*                                     with the styleword                  */
+/*                       UNDENTDBL:    Double the normal undent, i.e.      */
+/*                                     undent twice the code_indent value  */
+/*                       PUSH:         Save the current indentation on a   */
+/*                                     LIFO stack                          */
+/*                       POP:          Restore the indentation to the      */
+/*                                     previously PUSHed value             */
+/*                       ALIGN:        Save the first entry's indentation  */
+/*                                     values and restore the indentation  */
+/*                                     for each successive occurrence of   */
+/*                                     the keyword.  ALIGN indentation is  */
+/*                                     re-set whenever a POP keyword is    */
+/*                                     found.                              */
+/*   syntax:             The initial value for the SYNTAX setting, which   */
+/*                       can be ON or OFF                                  */
+/*   tabs:               The initial tab settings.  2 formats are          */
+/*                       recognised:                                       */
+/*                         n               - Tab every n spaces from       */
+/*                                           column 1                      */
+/*                         t1 t2 t3...,m   - Specific tab stops, followed  */
+/*                                           by a tab every m spaces from  */
+/*                                           the last specified tab        */
+/*                                           position                      */
+/*   tag_end:            The string that indicates the end of a            */
+/*                       highlight_tag.  For example, for HTML markup, a   */
+/*                       beginning tag is indicated with <tag>, and the    */
+/*                       corresponding ending tag is </tag>.  For this     */
+/*                       filetype, the tag_end string will be "/".         */
+/*   tof_text:           The text to be displayed to mark the beginning    */
+/*                       of the file data                                  */
+/*   undent_keywords:    Defines a set of comma-delimited words which      */
+/*                       cause the cursor to be undented by the            */
+/*                       code_indent number of spaces, if it is moved to a */
+/*                       blank line and the previous line begins with one  */
+/*                       of the specified keywords.                        */
+/*   undo_limit:         Maximum number of undo lines to save.  -1 means   */
+/*                       save all changes until the file is saved to disk. */
+/*                       0 means save no undo lines.  N means save the     */
+/*                       previous N changed lines.                         */
+/*   wrap:               Controls file wrapping during searches            */
+/*                                                                         */
+/*                                                                         */
+/* Defaults:                                                               */
+/*   alt_highlight_kw:   ""                                                */
+/*   APIFile:            ""                                                */
+/*   autosave:           0                                                 */
+/*   base_extension:     "*"                                               */
+/*   code_indent:        2                                                 */
+/*   code_type:          NONE                                              */
+/*   comment_column:     40,8                                              */
+/*   comment_escape:     ""                                                */
+/*   comment_formatting: none                                              */
+/*   comment_prefix:     ""                                                */
+/*   comment_suffix:     ""                                                */
+/*   conditional_prefix: ""                                                */
+/*   conditionals:       "#if 0,#else,#endif"                              */
+/*   end_blanks:         off                                               */
+/*   eof_text            "==== End Of File ===="                           */
+/*   expand_keyword:     ""                                                */
+/*   expand_macro:       ""                                                */
+/*   expand_replace:     ""                                                */
+/*   expand_tabs:        on                                                */
+/*   fieldtemplate:      ""                                                */
+/*   findword_anycase:   off                                               */
+/*   flowtonew:          off                                               */
+/*   funcname_chars      ""                                                */
+/*   function_header     false                                             */
+/*   function_id         _RESET                                            */
+/*   helpfile:           ""                                                */
+/*   highlight_keyword:  ""                                                */
+/*   highlight_quotes:   true                                              */
+/*   highlight_tags:     ""                                                */
+/*   indent_keywords:    ""                                                */
+/*   input_keywords:     ""                                                */
+/*   input_macro:        ""                                                */
+/*   keyword_case:       any                                               */
+/*   keyword_trans:      asis                                              */
+/*   margins:            1 100 1 77                                        */
+/*   openfile_id:        _RESET                                            */
+/*   quick_comment:      ""                                                */
+/*   save_options        ""                                                */
+/*   shadow:             on                                                */
+/*   sort_funclist:      on                                                */
+/*   split_align_paren:  off                                               */
+/*   statustext          "'\x'x Col=\c Row=\r of \t Alt=\a "               */
+/*   styleword:          undefined                                         */
+/*   syntax:             on                                                */
+/*   tabs:               8                                                 */
+/*   tag_end:            ""                                                */
+/*   tof_text            "==== End Of File ===="                           */
+/*   undent_keywords:    ""                                                */
+/*   undo_limit:         -1                                                */
+/*   wrap:               on                                                */
+/*                                                                         */
+/***************************************************************************/
+
+/***************************************************************************/
+/*                                                                         */
+/* Default settings.  These are hard-coded in the program, so you only     */
+/* need to specify the settings you want to override.                      */
+/*                                                                         */
+/***************************************************************************/
+
+* file_pattern       = *
+* autosave           = 0
+* code_indent        = 2
+* comment_prefix     = ""
+* comment_suffix     = ""
+* comment_column     = 40,8
+* comment_escape     = ""
+* comment_formatting = none
+* conditional_prefix = ""
+* conditionals       = "#if 0,#else,#endif"
+* end_blanks         = off
+* eof_text           = "==== End Of File ===="
+* expand_keyword     = ""
+* expand_macro       = ""
+* expand_replace     = ""
+* expand_tabs        = on
+* fieldtemplate      = ""
+* findword_anycase   = off
+* flowtonew          = off
+* funcname_chars     = ""
+* function_header    = false
+* function_id        = _RESET
+* helpfile           = ""
+* highlight_keyword  = ""
+* highlight_quotes   = true
+* highlight_tags     = ""
+* indent_keywords    = ""
+* input_keywords     = ""
+* input_macro        = ""
+* keyword_case       = any
+* keyword_trans      = asis
+* margins            = 1 100 1 77
+* openfile_id        = _RESET
+* PFLine             = "F1=Hlp 2=SpJn 3=Quit 4=Sav 5=Nm 6=New 7=PgUp 8=PgDn 9=Undo 10=Redo 11=Prv 12=Nxt"
+* s-PFLine           = "F1=ScrL 2=ScrR 3=Scr 4=Scr 5=CtrLnVrt                                         "
+* c-PFLine           = "            3=UC/m 4=LC/m 5=MC/m       7=ShLf 8=ShRt 9=YMD 10=C/Wd 11=Fnc 12=Rng"
+* a-PFLine           = "        2=Comp 3=Sync 4=Merge                           9=MDY                   "
+* quick_comment      = ""
+* save_options       = ""
+* shadow             = on
+* sort_funclist      = on
+* split_align_paren  = off
+* statustext         = "'\x'x Col=\c Row=\r of \t Alt=\a "
+* tabs               = 8
+* tag_end            = ""
+* tof_text           = "==== Top Of File ===="
+* undent_keywords    = ""
+* undo_limit         = -1
+* wrap               = on
+* APIFile            = ""
+
+
+/* Syntax expansion for C, C++, and Java #include "cpp.xprofile" */
+/* Syntax expansion for Rexx and NetRexx #include "rexx.xprofile" */
+/* Syntax expansion for HTML Javascript  #include "html.xprofile" */
+
+/***************************************************************************/
+/*                                                                         */
+/* Output from the DIR command                                             */
+/*                                                                         */
+/***************************************************************************/
+
+extension          = DIR
+  openfile_id        = "\f", wordnum=last, pathsearch="Directory of ";
+
+
+/***************************************************************************/
+/*                                                                         */
+/* I tend to use X.HLP (via PF1) quite a lot and have been using the       */
+/* following snippet in XPROFILE.ADD in order to make X.HLP more           */
+/* colourful (and therefore more fun to use).                              */
+/*                                                                         */
+/* Contributed by Roger Spencer, REXX compiler team, on November 8, 1999   */
+/*                                                                         */
+/***************************************************************************/
+
+file_pattern       = HLP
+  code_type          = help
+  comment_formatting = NONE
+  font data          = terminal.10
+  margins            = 1 80 1 80
+  highlight_quotes   = false
+  keyword_case       = exact
+
+*  function_id        = "Page", REQUIRED_SET, COLUMN=73,  NAME_OFFSET=0
+  function_id        = " X2 Editor Help", REQUIRED_SET, COLUMN=2, NAME_OFFSET=2, NAME_LENGTH=31;
+
+
+/***************************************************************************/
+/*                                                                         */
+/* Default extension, supplied in case user adds extension specific        */
+/* settings to their profile addition file without first specifying an     */
+/* extension.                                                              */
+/*                                                                         */
+/* Note that the clip functions are supplied in the XUTILS extension       */
+/* library.                                                                */
+/*                                                                         */
+/***************************************************************************/
+
+extension          = *
+  key c-ins          = clip copy
+
+  key s-ins          = clip paste

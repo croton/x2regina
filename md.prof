@@ -1,0 +1,62 @@
+/* --- Readme.MD --- */
+extension      = MD
+code_type      = readme-md
+comment_prefix = "/* "
+comment_suffix = "*/"
+quick_comment  = "--"
+margins        = 1 200 1 90
+
+key a-0 = MSG 1=Hlp 2=Prof 3=Tmpf 4=Shel 5=Xpdr
+key a-1 = MSG Now using README profile
+key a-2 = EDIT C:\Users\fatxL7a\cjp\x2\md.prof
+key a-3 = EDIT tmp0.md
+key a-4 = CMDTEXT SHELL
+key a-5 = MACRO chooser --c xs md --t ReadMe
+
+expand_keyword = link \1
+expand_replace = '[\1](http://\c)'
+
+expand_keyword = p
+expand_replace = '## \c'
+
+expand_keyword = i
+expand_replace = '> \c'
+
+expand_keyword = b
+expand_replace = '**\c**'
+
+expand_keyword = \1 b
+expand_replace = '\1 **\c**'
+
+expand_keyword = \1 bo
+expand_replace = '\1 **\c**'
+
+expand_keyword = \1 .nl
+expand_replace = '\1 <br/>\c'
+
+expand_keyword = code
+expand_replace = '```'
+expand_replace = '\c'
+expand_replace = '```'
+
+expand_keyword = icode
+expand_replace = '`\c`'
+
+expand_keyword = toc \1
+expand_replace = '## Table of Contents'
+expand_replace = '- [\1](#\1)'
+expand_replace = '- [section 2](#section2)'
+expand_replace = '## \1'
+
+expand_keyword = new
+expand_replace = '# \c'
+expand_replace = '> This is introduction.'
+expand_replace = '## TOC'
+expand_replace = '- [Install](#install)'
+expand_replace = '- [Usage](#usage)'
+expand_replace = '## Install'
+expand_replace = '## Usage'
+expand_replace = '```'
+expand_replace = 'run'
+expand_replace = '```'
+

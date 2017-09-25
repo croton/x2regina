@@ -1,0 +1,172 @@
+/* ----------------- Angular ------------------ */
+#include "jscript.prof"
+
+extension          = JS,JSON,HTML,TPL.HTML
+base_extension     = JS
+code_type          = NG
+highlight_tags     = "<,>;"
+tag_end            = "/"
+margins            = 1 120 20 80
+split_align_paren  = off
+
+key a-0 = MSG 1=Hlp 2=Prof 3=ProfP 4=App 5=Xpdr 6=TagLn 7=TagBlk 8=? 9=Cls
+key a-1 = MSG Now using Angular profile
+key a-2 = EDIT C:\Users\fatxL7a\cjp\x2\ng.prof
+key a-3 = EDIT C:\Users\fatxL7a\cjp\x2\jscript.prof
+key a-4 = CMDTEXT cmdin merge %cjp%\snips\ngpage.tmpl
+key a-5 = MACRO cmdout xpdrNg.temp xs ng
+key a-6 = CMDTEXT wraptag LINE
+key a-7 = CMDTEXT wraptag
+key a-8 = MSG Alt-8
+key a-9 = MACRO fnpick bootstrap
+
+a-PFLine = "1=AllFn 2=Xpdr 3=Key 4=? 5=Dirv 6=Fn 7=Svc 8=Fltr 9=Tmp1 10=Tmp2 11=FsCfg 12=IndBlk"
+key a-F4 = MSG Alt-F4 ng
+key a-F5 = MACRO fnpick ngdir ng-@=""
+key a-F6 = MACRO fnpick ngfn angular.@();
+key a-F7 = MACRO fnpick ngsvc $@
+key a-F8 = MACRO chooser currency date filter json limitTo lowercase number orderBy uppercase --t Filters
+key a-F9  = MACRO fsattribalign
+key a-F10 = MACRO fsattribalign 2
+key a-F11 = MACRO fssrc2cfg
+key a-F12 = MACRO hiliteblock INDENT
+
+expand_keyword = boot
+expand_replace = '(function() {'
+expand_replace = "  'use strict';"
+expand_replace = '  \c'
+expand_replace = '})();'
+
+expand_keyword = modd \1
+expand_replace = "angular.module('ecsui.views.\1.module', ["
+expand_replace = "  '\c'"
+expand_replace = "]);"
+
+expand_keyword = mod \1
+expand_replace = "angular.module('\1',[])\c"
+
+expand_keyword = part \1
+expand_replace = ".\1('\c\1', function() {"
+expand_replace = '});'
+
+expand_keyword = di \1
+expand_replace = ".\1('my\1', ['\c', function() {"
+expand_replace = '}]);'
+
+expand_keyword = comp \1
+expand_replace = ".component('\1', {"
+expand_replace = "  templateUrl: '\1.tpl.html',"
+expand_replace = "  controller: function($http, SessionService) {"
+expand_replace = '    var ctrl = this;'
+expand_replace = '  }'
+expand_replace = '}); // end component'
+
+expand_keyword = cfg
+expand_replace = ".config(["
+expand_replace = '  \cfunction Config() {'
+expand_replace = '  }'
+expand_replace = ']);'
+
+expand_keyword = ctrlf \1
+expand_replace = "\c.controller('\1', function() {"
+expand_replace = '});'
+
+expand_keyword = ctrl
+expand_replace = "controller: function() {"
+expand_replace = '  var ctrl = this;'
+expand_replace = '}'
+
+expand_keyword = dir \1
+expand_replace = "\c.directive('\1', function() {"
+expand_replace = '  return {'
+expand_replace = "    restrict: 'E',"
+expand_replace = "    template: ''"
+expand_replace = '  };'
+expand_replace = '});'
+
+expand_keyword = cls
+expand_replace = '.class({'
+expand_replace = '  constructor: function() {\c}'
+expand_replace = '});'
+
+expand_keyword = state \1
+expand_replace = ".state('\c', {"
+expand_replace = "  url: '/\1',"
+expand_replace = "  template: '<\1></\1>',"
+expand_replace = '  data: {'
+expand_replace = '    requiresLogin: true'
+expand_replace = '  }'
+expand_replace = '});'
+
+expand_keyword = rest \1
+expand_replace = '// $http().then().finally();'
+expand_replace = '$http({'
+expand_replace = " url: '/fdinet/fs/\c/v4/\1',"
+expand_replace = " method: 'POST',"
+expand_replace = " data: {"
+expand_replace = "   selectFields: ctrl.selectfields,"
+expand_replace = "   odsNaming: false"
+expand_replace = " },"
+expand_replace = " headers: {'Content-Type': 'application/json'}"
+expand_replace = '}).then(function success(response) {'
+expand_replace = '  ctrl.values = response.data.accounts[0];'
+expand_replace = '}, function error(err) {'
+expand_replace = '  ctrl.error = response;'
+expand_replace = '}).finally(function() {'
+expand_replace = '});'
+
+expand_keyword = copy
+expand_replace = 'angular.copy(\c);'
+
+expand_keyword = fjson
+expand_replace = 'angular.fromJson(\c);'
+
+expand_keyword = sfy
+expand_replace = 'angular.toJson(\c)'
+
+expand_keyword = datef
+expand_replace = "$filter('date')(new Date(), '\cdd-MMM-yyyy hh:mm:ss a')"
+
+expand_keyword = @
+expand_replace = '<!-- \c -->'
+
+expand_keyword = \1 -v
+expand_replace = '\1 {{ \c }}'
+
+expand_keyword = loop \1
+expand_replace = 'angular.forEach(\c, function(value,key) { });'
+
+expand_keyword = "~\1"
+expand_replace = '<\1\c>'
+expand_replace = '</\1>'
+
+expand_keyword = "\1 !>"
+expand_replace = '\1 \c="">'
+
+expand_keyword = "\1 !c>"
+expand_replace = '\1 class="\c">'
+
+expand_keyword = "\1 !n>"
+expand_macro = xpandbstrap
+
+expand_keyword = div \1
+expand_replace = '<div class="\1"\c>'
+expand_replace = '</div>'
+
+expand_keyword = xs \1
+expand_replace = '<\1\c/>'
+
+expand_keyword = x \1
+expand_replace = "<\1>\c</\1>"
+
+expand_keyword = rp \1
+expand_replace = '<\1 ng-repeat="it in \c">'
+expand_replace = '</\1>'
+
+expand_keyword = opt \1
+expand_replace = '<select ng-model="\1" ng-options="it.\c for it in \1">'
+expand_replace = '</select>'
+
+expand_keyword = ref \1
+expand_replace = '<script src="\1"></script>'
+

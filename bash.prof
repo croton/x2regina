@@ -1,0 +1,21 @@
+extension      = SH,BASH
+code_type      = bash
+comment_prefix = "# "
+quick_comment  = "--"
+margins        = 1 200 1 90
+highlight_keyword = echo
+
+key a-1 = MSG Now using bash profile
+
+expand_keyword = say
+expand_replace = 'echo'
+
+expand_keyword = if
+expand_replace = '# -adefs FILE | -nz STR | -eq -ne -lt -le -gt -ge'
+expand_replace = 'if [ \c ]; then'
+expand_replace = 'fi'
+
+expand_keyword = new
+expand_replace = '#!/bin/bash'
+expand_replace = '\c'
+

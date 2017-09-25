@@ -1,0 +1,33 @@
+/* ------------------- SVG -------------------- */
+extension          = SVG,XML
+code_type          = SVG
+highlight_tags     = "<,>;"
+tag_end            = "/"
+
+key a-0 = MSG 1=Hlp 2=Prof
+key a-1 = MSG Now using svg profile
+key a-2 = EDIT C:\Users\fatxL7a\cjp\x2\svg.prof
+
+expand_keyword = "~\1"
+expand_replace = '<\1\c>'
+expand_replace = '</\1>'
+
+expand_keyword = "\1 !>"
+expand_replace = '\1 \c="">'
+
+expand_keyword = "\1 !c>"
+expand_replace = '\1 class="\c">'
+
+expand_keyword = div \1
+expand_replace = '<div class="\1"\c>'
+expand_replace = '</div>'
+
+expand_keyword = xs \1
+expand_replace = '<\1\c/>'
+
+expand_keyword = x \1
+expand_replace = "<\1>\c</\1>"
+
+expand_keyword = @
+expand_replace = '<!-- \c -->'
+

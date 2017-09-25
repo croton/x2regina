@@ -1,0 +1,79 @@
+/* ----------------- jasmine ------------------ */
+#include "jscript.prof"
+
+extension          = JS
+base_extension     = JS
+code_type          = jasmine
+comment_formatting = NONE;
+split_align_paren  = off
+
+key a-0 = MSG 1=Hlp 2=Prof 3=ProfP 4=Xpdr 5=XpdP 6=Test
+key a-1 = MSG Now using Jasmine profile
+key a-2 = EDIT C:\Users\fatxL7a\cjp\x2\jasmine.prof
+key a-3 = EDIT C:\Users\fatxL7a\cjp\x2\jscript.prof
+key a-4 = MACRO cmdout xpdrsJas.temp xs jasmine
+key a-5 = MACRO cmdout xpdrsJs.temp xs jscript
+key a-6 = ALL /it(/
+
+expand_keyword = desc
+expand_replace = "describe('\c', function() {"
+expand_replace = '});'
+
+expand_keyword = it
+expand_replace = "it('should \c', function() {"
+expand_replace = '});'
+
+expand_keyword = iit
+expand_replace = "it('should \c', inject(function() {"
+expand_replace = '}));'
+
+expand_keyword = be \1
+expand_replace = 'expect(\1).toBe(\c);'
+
+expand_keyword = tru
+expand_replace = 'expect(\c).toBeTruthy();'
+
+expand_keyword = fal
+expand_replace = 'expect(\c).toBeFalsy();'
+
+expand_keyword = eq \1
+expand_replace = 'expect(\1).toEqual(\c);'
+
+expand_keyword = def
+expand_replace = 'expect(\c).toBeDefined();'
+
+expand_keyword = undef
+expand_replace = 'expect(\c).toBeUndefined();'
+
+expand_keyword = nul
+expand_replace = 'expect(\c).toBeNull();'
+
+expand_keyword = has \1
+expand_replace = 'expect(\1).toContain(\c);'
+
+expand_keyword = lt \1
+expand_replace = 'expect(\1).toBeLessThan(\c);'
+
+expand_keyword = gt \1
+expand_replace = 'expect(\1).toBeGreaterThan(\c);'
+
+expand_keyword = call
+expand_replace = 'expect(\c).toHaveBeenCalled();'
+
+expand_keyword = callw \1
+expand_replace = 'expect(\1).toHaveBeenCalledWith(\c);'
+
+expand_keyword = spy \1
+expand_replace = 'spyOn(\1, '\c').and.returnValue(q.defer().promise);'
+
+expand_keyword = bef
+expand_replace = 'beforeEach(\c);'
+
+expand_keyword = before
+expand_replace = 'beforeEach(function() {\c'
+expand_replace = '});'
+
+expand_keyword = after
+expand_replace = 'afterEach(function() {\c'
+expand_replace = '});'
+

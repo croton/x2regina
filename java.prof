@@ -1,0 +1,162 @@
+/* --------------- Java profile --------------- */
+extension      = JAVA
+code_type      = java
+comment_prefix = "/* "
+comment_suffix = "*/"
+quick_comment  = "//"
+margins        = 1 200 1 90
+
+key a-0 = MSG 1=Hlp 2=Prof
+key a-1 = MSG Now using java profile
+key a-2 = EDIT c:\users\fatxl7a\cjp\x2\java.prof
+
+expand_keyword = say
+expand_replace = 'System.out.println("\c");'
+
+expand_keyword = pri
+expand_replace = 'private \c'
+
+expand_keyword = pro
+expand_replace = 'protected \c'
+
+expand_keyword = .cl \1
+expand_replace = 'public class \1 {'
+expand_replace = '\CP Created \m-\d-\Y \CS'
+expand_replace = '} // \1'
+
+expand_keyword = .m \1
+expand_replace = 'public \c \1() {'
+expand_replace = '}'
+
+expand_keyword = .mp \1
+expand_replace = 'private \c \1() {'
+expand_replace = '}'
+
+expand_keyword = ctor \1
+expand_replace = 'public \1(\c) {'
+expand_replace = '}'
+
+expand_keyword = tostr
+expand_replace = 'public String toString() { return "\c"; }'
+
+expand_keyword = main
+expand_replace = 'public static void main(String[] args) {'
+expand_replace = '\c}'
+
+expand_keyword = imp
+expand_replace = "import \c;"
+
+expand_keyword = .i \1
+expand_replace = 'int \1\c;'
+
+expand_keyword = .lo \1
+expand_replace = 'long \1\c;'
+
+expand_keyword = .d \1
+expand_replace = 'double \1\c;'
+
+expand_keyword = .f \1
+expand_replace = 'float \1\c;'
+
+expand_keyword = .b \1
+expand_replace = 'boolean \1\c;'
+
+expand_keyword = .c \1
+expand_replace = 'char \1\c;'
+
+expand_keyword = .s \1
+expand_replace = 'String \1\c;'
+
+expand_keyword = .arr \1
+expand_replace = 'String[] \1={"\c",""};'
+
+expand_keyword = # \1
+expand_replace = '\1 \c=new \1();'
+
+expand_keyword = #r \1
+expand_replace = '\1[] \c=new \1[];'
+
+expand_keyword = if
+expand_replace = 'if (\c)'
+
+expand_keyword = ife
+expand_replace = 'if (\c) {'
+expand_replace = '} else if () {'
+expand_replace = '} else {'
+expand_replace = '}'
+
+expand_keyword = iff
+expand_replace = 'if (\c)'
+expand_replace = 'else if ()'
+expand_replace = 'else'
+
+expand_keyword = while, wh
+expand_replace = 'while (\c)'
+
+expand_keyword = loop
+expand_replace = 'for (int i=0; i<\c; i++) {'
+expand_replace = '}'
+
+expand_keyword = do
+expand_replace = 'for (\c; ; ) { }'
+
+expand_keyword = doarray \1
+expand_replace = 'for (\c \1idx: \1) {'
+expand_replace = '\1idx'
+expand_replace = '}'
+
+expand_keyword = doarr \1
+expand_replace = 'for (int i=0; i<\1.length; i++) {'
+expand_replace = '  \c\1[i]'
+expand_replace = '}'
+
+expand_keyword = .it \1
+expand_replace = 'Iterator<\c> it=\1.iterator();'
+expand_replace = 'while (it.hasNext()) {'
+expand_replace = '  // it.next()'
+expand_replace = '}'
+
+expand_keyword = genc \1
+expand_replace = 'ArrayList<\1> \c=new ArrayList<\1>();'
+
+expand_keyword = mainarg
+expand_replace = 'if (args.length==0) {'
+expand_replace = '  System.out.println("\c");'
+expand_replace = '  return;'
+expand_replace = '}'
+
+expand_keyword = try
+expand_replace = 'try {'
+expand_replace = '} catch (\cException e) {'
+expand_replace = '}'
+
+expand_keyword = tryx \1
+expand_replace = 'try {'
+expand_replace = '} catch (\1Exception e) {'
+expand_replace = '}'
+
+expand_keyword = catch \1
+expand_replace = 'catch (\1Exception e) {'
+expand_replace = '  System.out.println("Error: \c");'
+expand_replace = '}'
+
+expand_keyword = \1 .exc
+expand_replace = "\1 throws \cException"
+
+expand_keyword = fin
+expand_replace = "finally {"
+expand_replace = "} //"
+
+expand_keyword = sync \1
+expand_replace = 'synchronized (\1) {'
+expand_replace = '}'
+
+expand_keyword = sleep \1
+expand_replace = "try { Thread.sleep(\1); } catch (InterruptedException e) {\c}"
+
+expand_keyword = wait
+expand_replace = "try { wait(); } catch (InterruptedException e) {\c}"
+
+expand_keyword = exit \1
+expand_replace = "System.exit(\1);"
+
