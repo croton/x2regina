@@ -78,9 +78,9 @@ key a-F9  = Scroll Right
 key a-F10 = Scroll Left
 key a-F11 = CMDTEXT SHELL
 key a-F12 = CMDTEXT keyqry
-key a-0 = MSG 1=Hlp 2=Fn
+key a-0 = MSG 1=Hlp 2=Date
 key a-1 = MSG Now using Default profile
-key a-2 = FuncWin
+key a-2 = MACRO ipt left(date('w'),3) space(date(),1,'-')
 key a-3 = MSG Alt-3
 key a-4 = MSG Alt-4
 key a-5 = MSG Alt-5
