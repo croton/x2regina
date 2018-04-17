@@ -21,6 +21,8 @@ key a-2 = EDIT C:\Users\fatxL7a\cjp\x2\rexx.prof
 key a-3 = MACRO cmdout xpdrsRX.temp xs rexx
 key a-4 = CMDTEXT SHELL xk rexx
 
+key a-F1 = MACRO fnpick rexx
+
 expand_keyword = say
 expand_replace = "say '\c'"
 

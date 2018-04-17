@@ -1,0 +1,23 @@
+/* --------------------------------- admin ---------------------------------- */
+extension  = json
+code_type  = admin
+
+key a-0 = MSG 1=Hlp 2=Prof
+key a-1 = MSG Now using Admin profile
+
+expand_keyword = prop \1
+expand_replace = '\1: {'
+expand_replace = "  description: '\c\1',"
+expand_replace = "  type: 'parameter',"
+expand_replace = "  defaultInitial: ''"
+expand_replace = '}'
+
+expand_keyword = props \1
+expand_replace = '\1: {'
+expand_replace = "  description: '\1',"
+expand_replace = "  type: 'list model',"
+expand_replace = "  fieldMap: {"
+expand_replace = 'prop \c'
+expand_replace = '  }'
+expand_replace = '}'
+

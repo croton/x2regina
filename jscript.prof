@@ -8,14 +8,14 @@ comment_formatting = NONE;
 split_align_paren  = on
 margins            = 1 200 20 80
 
-a-PFLine = "1=AllFn 2=Xpdr 3=Key 4=? 5=? 6=? 7=Attr 8=Jq 9=ScrL 10=ScrR 11=Shel 12=KeyQry"
+a-PFLine = "1=AllFn 2=Xpdr 3=Key 4=UpJson 5=LkJson 6=? 7=? 8=Jq 9=ScrL 10=ScrR 11=Shel 12=KeyQry"
 key a-F1 = ALL /function/
 key a-F2 = MACRO chooser --c xs jscript --t Expanders
 key a-F3 = MACRO chooser --c xk jscript --t JS Keys
-key a-F4 = MSG Alt-F4
-key a-F5 = MSG Alt-F5
+key a-F4 = MACRO navIndent F
+key a-F5 = MACRO navIndent C
 key a-F6 = MSG Alt-F6
-key a-F7 = MACRO instr /="~"/
+key a-F7 = MSG Alt-F7
 key a-F8 = MACRO instr /$(~)/
 
 key a-0 = MSG 1=Hlp 2=Prof
@@ -33,11 +33,18 @@ key a-` = MACRO instr /="~"/
 expand_keyword = say
 expand_replace = "console.log('\c');"
 
-expand_keyword = insp
-expand_replace = "console.dir(\c);"
-
 expand_keyword = v \1
 expand_replace = 'var \1 = \c'
+
+expand_keyword = vo \1
+expand_replace = "var \1 = {\c: ''};"
+
+expand_keyword = va \1
+expand_replace = "var \1 = ['\c', ''];"
+
+expand_keyword = @ \1
+expand_replace = '\1: {\c'
+expand_replace = '}'
 
 expand_keyword = fn
 expand_replace = "function \c() { }"
@@ -73,8 +80,9 @@ expand_keyword = "\1 -);"
 expand_replace = '\1 function() {\c'
 expand_replace = '});'
 
-expand_keyword = ob \1
-expand_replace = "var \1 = {\c: ''};"
+expand_keyword = bookmk \1
+expand_replace = 'javascript:(function (){'
+expand_replace = '})();'
 
 expand_keyword = ofy
 expand_replace = 'JSON.parse(\c);'
@@ -82,21 +90,8 @@ expand_replace = 'JSON.parse(\c);'
 expand_keyword = sfy
 expand_replace = 'JSON.stringify(\c);'
 
-expand_keyword = has \1
-expand_replace = "if (\1.hasOwnProperty('\c'))"
-
-expand_keyword = is \1
-expand_replace = "if (\1 instanceof \c)"
-
-expand_keyword = type \1
-expand_replace = "if (typeof \1==='\c')"
-
 expand_keyword = rem \1
 expand_replace = "delete \1['\c'];"
-
-expand_keyword = @ \1
-expand_replace = '\1: {'
-expand_replace = '}'
 
 expand_keyword = "\1["
 expand_replace = '\1[\c]'
@@ -112,8 +107,14 @@ expand_keyword = arg \1
 expand_replace = 'if (!\1) var \1=\c;'
 expand_replace = "if (typeof \1=='undefined') var \1=\c;"
 
-expand_keyword = arr \1
-expand_replace = "var \1 = ['\c', ''];"
+expand_keyword = has \1
+expand_replace = "if (\1.hasOwnProperty('\c'))"
+
+expand_keyword = is \1
+expand_replace = "if (\1 instanceof \c)"
+
+expand_keyword = type \1
+expand_replace = "if (typeof \1==='\c')"
 
 expand_keyword = isarr \1
 expand_replace = "if (Array.isArray(\1)) \c"
@@ -171,28 +172,24 @@ expand_replace = '} catch (e) {'
 expand_replace = '  console.log(e.message);'
 expand_replace = '}'
 
+expand_keyword = \1 -then
+expand_replace = '\1.then(function(response) {\c'
+expand_replace = '}, function(error) {'
+expand_replace = '});'
+
+expand_keyword = \1 -thenc
+expand_replace = '\1.then(function(response) {\c'
+expand_replace = '}).catch(function(error) {'
+expand_replace = '});'
+
 expand_keyword = newjs \1
 expand_replace = "var \1=(function () {"
 expand_replace = "  var author='cjp';"
 expand_replace = "  return {"
 expand_replace = "    run:function() {"
-expand_replace = "      alert('Running \1, by'+author);"
+expand_replace = "      console.log('Running \1, by'+author);"
 expand_replace = "    }"
 expand_replace = "  };"
-expand_replace = "})();"
-
-expand_keyword = singl
-expand_replace = "var \c = (function (){"
-expand_replace = "  var name='Salvelinus arcticus';"
-expand_replace = "  function createInstance(){"
-expand_replace = "   var obj=new Object('I am an Arctic Char');"
-expand_replace = "   return obj;"
-expand_replace = "  }"
-expand_replace = "  return { getInstance:function(){"
-expand_replace = "    if (!name) name=createInstance();"
-expand_replace = "    return name;"
-expand_replace = "  }"
-expand_replace = "};"
 expand_replace = "})();"
 
 expand_keyword = us
@@ -204,11 +201,6 @@ expand_replace = 'module.exports=\c;'
 expand_keyword = req \1
 expand_replace = "var \1=require('\c\1');"
 
-expand_keyword = \1 -then
-expand_replace = '\1.then(function(response) {\c'
-expand_replace = '}, function(error) {'
-expand_replace = '});'
-
 expand_keyword = $ \1
 expand_replace = "var \c=document.getElementById('\1');"
 
@@ -217,4 +209,7 @@ expand_replace = "var \c=document.createElement('\1');"
 
 expand_keyword = tnode \1
 expand_replace = "var \c=document.createTextNode('\1');"
+
+expand_keyword = qsel \1
+expand_replace = "var \c=document.querySelector('\1');"
 

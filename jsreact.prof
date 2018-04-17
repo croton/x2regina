@@ -1,0 +1,77 @@
+/* ------------------ react ------------------- */
+#include "jscript.prof"
+
+extension          = JS,JSON,HTML
+base_extension     = JS
+code_type          = ReactJS
+highlight_tags     = "<,>;"
+tag_end            = "/"
+
+key a-0 = MSG 1=Hlp 2=Prof 3=ProfP 4=Xpdr 5=App 6=TagLn 7=TagBlk 8=Jq 9=Cls
+key a-1 = MSG Now using ReactJS profile
+key a-2 = EDIT C:\Users\fatxL7a\cjp\x2\jsreact.prof
+key a-3 = EDIT C:\Users\fatxL7a\cjp\x2\jscript.prof
+key a-4 = MACRO cmdout xpdrReact.temp xs jsreact
+key a-5 = CMDTEXT cmdin merge %cjp%\snips\reactApp.tmpl
+key a-6 = CMDTEXT wraptag LINE
+key a-7 = CMDTEXT wraptag
+key a-8 = MSG Alt-8 reactJS
+key a-9 = MACRO fnpick bootstrap
+
+a-PFLine = "1=AllFn 2=Xpdr 3=Key 4=ProjFd 5=? 6=? 7=Attr 8=Elem 9=FdCfg 10=? 11=? 12=?"
+key a-F4 = CMDTEXT pjfind
+key a-F5 = MSG Alt-F5
+key a-F6 = MSG Alt-F6
+key a-F7 = MACRO instr /="~"/
+key a-F8 = MACRO instr /$(~)/
+key a-F9  = MACRO pjsrc2cfg
+key a-F10 = MSG A-F10 reactJS
+key a-F11 = MSG A-F11 reactJS
+key a-F12 = MSG A-F12 reactJS
+
+expand_keyword = vc \1
+expand_replace = 'const \1 = \c;'
+
+expand_keyword = vl \1
+expand_replace = 'let \1 = \c;'
+
+expand_keyword = cls \1
+expand_replace = 'class \1 extends React.Component {'
+expand_replace = '  render() {'
+expand_replace = '    return ('
+expand_replace = '      <p className="\1">\c'
+expand_replace = '      </p>'
+expand_replace = '    );'
+expand_replace = '  }'
+expand_replace = '}'
+
+expand_keyword = m \1
+expand_replace = '\1(\c) {'
+expand_replace = '}'
+
+expand_keyword = @
+expand_replace = '<!-- \c -->'
+
+expand_keyword = \1 -v
+expand_replace = '\1 { \c }'
+
+expand_keyword = "~\1"
+expand_replace = '<\1\c>'
+expand_replace = '</\1>'
+
+expand_keyword = "\1 !>"
+expand_replace = '\1 class="\c">'
+
+expand_keyword = "\1 !!>"
+expand_macro = xpandbstrap
+
+expand_keyword = div \1
+expand_replace = '<div class="\1"\c>'
+expand_replace = '</div>'
+
+expand_keyword = xs \1
+expand_replace = '<\1\c/>'
+
+expand_keyword = x \1
+expand_replace = "<\1>\c</\1>"
+

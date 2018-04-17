@@ -9,7 +9,7 @@ tag_end            = "/"
 margins            = 1 120 20 80
 split_align_paren  = off
 
-key a-0 = MSG 1=Hlp 2=Prof 3=ProfP 4=Xpdr 5=App 6=TagLn 7=TagBlk 8=? 9=Cls
+key a-0 = MSG 1=Hlp 2=Prof 3=ProfP 4=Xpdr 5=App 6=TagLn 7=TagBlk 8=Jq 9=Cls
 key a-1 = MSG Now using Angular profile
 key a-2 = EDIT C:\Users\fatxL7a\cjp\x2\ng.prof
 key a-3 = EDIT C:\Users\fatxL7a\cjp\x2\jscript.prof
@@ -17,18 +17,17 @@ key a-4 = MACRO cmdout xpdrNg.temp xs ng
 key a-5 = CMDTEXT cmdin merge %cjp%\snips\ngpage.tmpl
 key a-6 = CMDTEXT wraptag LINE
 key a-7 = CMDTEXT wraptag
-key a-8 = MSG Alt-8
+key a-8 = MACRO fnpick ngjq @()
 key a-9 = MACRO fnpick bootstrap
 
-a-PFLine = "1=AllFn 2=Xpdr 3=Key 4=ProjFd 5=Dirv 6=Fn 7=Svc 8=Fltr 9=FdCfg 10=? 11=? 12=?"
-key a-F4 = CMDTEXT pjfind
+a-PFLine = "1=AllFn 2=Xpdr 3=Key 4=UpJson 5=Dirv 6=Fn 7=Svc 8=Fltr 9=FdCfg 10=ProjFd 11=LookUp 12=?"
 key a-F5 = MACRO fnpick ngdir ng-@=""
 key a-F6 = MACRO fnpick ngfn angular.@();
 key a-F7 = MACRO fnpick ngsvc $@
 key a-F8 = MACRO chooser currency date filter json limitTo lowercase number orderBy uppercase --t Filters
 key a-F9  = MACRO pjsrc2cfg
-key a-F10 = MSG A-F10 ng
-key a-F11 = MSG A-F11 ng
+key a-F10 = CMDTEXT pjfind
+key a-F11 = MACRO searchFileAtCursor
 key a-F12 = MSG A-F12 ng
 
 expand_keyword = boot
@@ -143,7 +142,7 @@ expand_replace = '</\1>'
 expand_keyword = "\1 !>"
 expand_replace = '\1 \c="">'
 
-expand_keyword = "\1 !c>"
+expand_keyword = "\1 !!>"
 expand_replace = '\1 class="\c">'
 
 expand_keyword = "\1 !n>"
@@ -169,4 +168,7 @@ expand_replace = '</select>'
 
 expand_keyword = ref \1
 expand_replace = '<script src="\1"></script>'
+
+expand_keyword = $a
+expand_replace = '$element(\c)'
 

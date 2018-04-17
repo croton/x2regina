@@ -50,8 +50,7 @@
 .checkbox-inline        Inputs Makes multiple checkboxes appear on the same line
 .clearfix       Helpers Clears floats
 .close  Helpers Indicates a close icon
-.col-*-*        Grid Responsive grid (span 1-12 column). Extra small devices Phones (< 768px), Small devices Tablets (=768px), Medium devices Desktops (=992px), Large devices Desktops (=1200px).
-Column 1-12. values can be
+.col-*-*        Grid Responsive grid (span 1-12 column). Extra small devices Phones (< 768px), Small devices Tablets (=768px), Medium devices Desktops (=992px), Large devices Desktops (=1200px). Column 1-12. values can be
 .col-*-offset-* Grid Move columns to the right. These classes increase the left margin of a column by * columns
 .col-*-pull-*   Grid Changes the order of the grid columns
 .col-*-push-*   Grid Changes the order of the grid columns
@@ -112,8 +111,7 @@ Column 1-12. values can be
 .input-sm       Input-Sizing Small input field
 .invisible      Helpers Makes an element invisible (visibility:hidden). Note: Even though the element is invisible, it will take up space on the page
 .item   Carousel Class added to each carousel item. May be text or images
-.jumbotron      information Jumbotron Creates a padded grey box with rounded corners that enlarges the font sizes of the text inside it. Creates a big box for calling extra attention to some special
-content or
+.jumbotron      Jumbotron Creates a padded grey box with rounded corners that enlarges the font sizes of the text inside it. Creates a big box for calling extra attention to some special content or
 .label  Labels Adds a grey rounded box to an element. Provides additional information about something (e.g. "New")
 .label-danger   Labels Red label
 .label-info     Labels Light-blue label
@@ -132,11 +130,11 @@ content or
 .list-inline    Tabs Places all list items on a single line (horizontal menu)
 .list-unstyled  Typography Removes all default list-style (bullets, left margin, etc.) styling from a <ul> or <ol> list
 .mark   Typography Highlights text: Highlighted text
-.media  Objects Aligns media objects (like images or videos - often used for comments in a blog post etc)       Media
-.media-body     Objects Text that should appear next to a media object  Media
-.media-heading  Objects Creates a heading inside the media object       Media
-.media-list     Objects Nested media lists      Media
-.media-object   Objects Indicates a media object (image or video)       Media
+.media  Objects Aligns media objects (like images or videos - often used for comments in a blog post etc)
+.media-body     Objects Text that should appear next to a media object
+.media-heading  Objects Creates a heading inside the media object
+.media-list     Objects Nested media lists
+.media-object   Objects Indicates a media object (image or video)
 .modal  Modals Identifies the content as a modal and brings focus to it
 .modal-body     Modals Defines the style for the body of the modal. Add any HTML markup here (p, img, etc)
 .modal-content  Modals Styles the modal (border, background-color, etc). Inside this, add the modal's header, body and footer, if needed
@@ -164,8 +162,7 @@ content or
 .navbar-header  Navbar Added to a container element that contains the link/element that represent a logo or a header
 .navbar-inverse Navbar Creates a black navigation bar (instead of light-grey)
 .navbar-left    Navbar Aligns nav links, forms, buttons, or text, in the navbar to the left
-.navbar-link    Navbar Styles an element to look like a link inside the navbar (anchors get proper padding and an underline on hover, while other elements like p or span gets a default hover effect -
-white navbar) color in an inversed navbar and a black color in a default
+.navbar-link    Navbar Styles an element to look like a link inside the navbar (anchors get proper padding and an underline on hover, while other elements like p or span gets a default hover effect - white navbar) color in an inversed navbar and a black color in a default
 .navbar-nav     Navbar Used on a <ul> container that contains the list items with links inside a navigation bar
 .navbar-right   Navbar Aligns nav links, forms, buttons, or text in the navbar to the right.
 .navbar-static-top      Navbar Removes left, top and right borders (rounded corners) from the navbar (default navbar has a gray border and a 4px border-radius by default)
