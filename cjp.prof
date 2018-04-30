@@ -37,7 +37,7 @@ c-PFLine = "F1=Cmd 2=Var 3=Val 4=FdFile 5=SetBk 6=cTop 7=Hil{} 8=HidBlk 9=MkLnX 
 key c-F1 = MACRO x2cmds
 key c-F2 = MACRO x2cmds VAR
 key c-F3 = MACRO x2cmds VAR MSG
-key c-F4 = CMDTEXT ufind . -type f -iname
+key c-F4 = CMDTEXT cmdout findfiles.txt ufind . -type f -iname
 key c-F5 = CMDTEXT setbookmark
 key c-F6 = MACRO nav SCROLLTOP
 key c-F7 = MACRO hiliteblock TAG
@@ -101,7 +101,7 @@ key a-k = MACRO cmt B
 key a-m = CMDTEXT dir %X2HOME%\macros
 key a-n = CMDTEXT keys_write tmpkeys.x
 key a-o = MACRO wrapblock /* */
-key a-p = MACRO listprofs
+key a-p = CMDTEXT dir %X2HOME%\*.prof
 key a-q = MACRO wrapit '
 key a-s = MACRO copyword2cmd
 key a-t = MACRO opensearch A

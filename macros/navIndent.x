@@ -9,7 +9,6 @@ select
   otherwise
     'MSG navIndent [C | F]'
 end
-'MSG collapse unlike indents'
 exit
 
 findCurrIndent: procedure

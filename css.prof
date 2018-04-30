@@ -100,3 +100,7 @@ expand_replace = 'width: \1px;'
 expand_replace = 'height: \1px;'
 expand_replace = 'border\c'
 
+expand_keyword = font \1
+expand_replace = '<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=\1">'
+expand_replace = '<!-- family=Name+With+Spaces" -->'
+
