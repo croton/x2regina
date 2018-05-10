@@ -1,14 +1,18 @@
 /* xpandmac.x - template for expand macros. */
 parse arg indent argval
--- For expand_keyword of "/1 -v", matching pattern is "-v"
-pattern_len=3
--- Extract part of argument which will be re-output
-prefix=left(argval,length(argval)-pattern_len)
-newpattern='class="'
-endtag='">'
-
-'INPUT' prefix newpattern
-'MACRO fnpick bootstrap'
-'INPUT' endtag
--- 'NEXT_WORD'
+call expandText indent, argval
 exit
+
+expandText: procedure
+  parse arg indent, argval
+  -- For expand_keyword of "/1 -v", matching pattern is "-v"
+  -- Remove character 'trigger' from argument
+  currtext=delword(argval, words(argval))
+  prefix='class="'
+  suffix='">'
+
+  'INPUT' currtext||prefix
+  'CURSOR EOL'
+  'MACRO fnpick bootstrap'
+  'KEYIN' suffix
+  return

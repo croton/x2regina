@@ -7,22 +7,30 @@ tag_end        = "/"
 key a-/ = MACRO wrapit {
 key a-` = MACRO instr /="~"/
 
-key a-0 = MSG 1=Hlp 2=Prof 3=Xpdr 4=XpList 5=Page
+key a-0 = MSG 1=Hlp 2=Prof 3=Xpdr 4=XpList 5=Page 6=? 7=? 8=? 9=?
 key a-1 = MSG Now using CSS profile
 key a-2 = EDIT C:\Users\fatxL7a\cjp\x2\css.prof
 key a-3 = MACRO chooser --c xs css --t Expanders
-key a-4 = MACRO cmdout xpdrCss.temp xs css
-key a-5 = CMDTEXT cmdout merge C:\Users\fatxL7a\cjp\snips\bootstrap.tmpl
+key a-4 = MACRO cmdout xpdr.css xs css
+key a-5 = CMDTEXT cmdin merge C:\Users\fatxL7a\cjp\snips\bootstrap.tmpl
+key a-6 = MSG Alt-6
+key a-7 = MSG Alt-7
+key a-8 = MSG Alt-8
+key a-9 = MSG Alt-9
 
-a-PFLine = "1=Attr 2=Psdo 3=Btsp 4=Font 5=? 6=? 7=? 8=Trout 9=? 10=? 11=? 12=?"
+a-PFLine = "1=Attr 2=Psdo 3=Btsp 4=Font 5=WTag 6=? 7=? 8=Trout 9=? 10=? 11=? 12=?"
 key a-F1 = MACRO fnpick css @:
 key a-F2 = MACRO fnpick csspseudo :@
 key a-F3 = MACRO fnpick bootstrap
 key a-F4 = MACRO fnpick fontfamily font-family: @;
-key a-F5 = MSG Alt-F5 css
+key a-F5 = CMDTEXT wraptag
 key a-F6 = MSG Alt-F6 css
 key a-F7 = MSG Alt-F7 css
 key a-F8 = MACRO chooser rainbow brown brook cutthroat golden arctic-char --t Trout
+key a-F9 = MSG Alt-F9 css
+key a-F10 = MSG Alt-F10 css
+key a-F11 = MSG Alt-F11 css
+key a-F12 = MSG Alt-F12 css
 
 expand_keyword = tag
 expand_replace = '<style type="text/css">'
@@ -75,13 +83,15 @@ expand_keyword = mar
 expand_replace = 'margin: \c'
 
 expand_keyword = fl
-expand_replace = 'float left;'
+expand_replace = 'float: left;'
 
 expand_keyword = bg
 expand_replace = 'background-color: \c'
 
 expand_keyword = all \1
-expand_replace = '\1: 2px;'
+expand_replace = '\1: Vpx Hpx;'
+expand_replace = '\1: Tpx Hpx Bpx;'
+expand_replace = '\1: Tpx Rpx Bpx Lpx;'
 
 expand_keyword = vh \1
 expand_replace = '\1: 2px 4px;'
