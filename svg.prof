@@ -6,7 +6,7 @@ tag_end            = "/"
 
 key a-0 = MSG 1=Hlp 2=Prof
 key a-1 = MSG Now using svg profile
-key a-2 = EDIT C:\Users\fatxL7a\cjp\x2\svg.prof
+key a-2 = EDIT C:\Users\cjp\x2\svg.prof
 
 expand_keyword = "~\1"
 expand_replace = '<\1\c>'

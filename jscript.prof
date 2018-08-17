@@ -24,7 +24,7 @@ key a-F12= MSG Alt-F12 js
 
 key a-0 = MSG 1=Hlp 2=Prof
 key a-1 = MSG Now using Javascript profile
-key a-2 = EDIT C:\Users\fatxL7a\cjp\x2\jscript.prof
+key a-2 = EDIT C:\Users\cjp\x2\jscript.prof
 
 key a-- = MACRO instr /: {~}/
 key a-= = MACRO instr /: [~]/

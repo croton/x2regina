@@ -8,7 +8,7 @@ margins        = 1 200 1 90
 
 key a-0 = MSG 1=Hlp 2=Prof
 key a-1 = MSG Now using java profile
-key a-2 = EDIT c:\users\fatxl7a\cjp\x2\java.prof
+key a-2 = EDIT c:\users\cjp\x2\java.prof
 
 expand_keyword = say
 expand_replace = 'System.out.println("\c");'

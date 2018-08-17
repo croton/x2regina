@@ -17,8 +17,8 @@ alt_highlight_kw   = _RESET;
 
 key a-0 = MSG 1=Hlp 2=Prof 3=Xpdr 4=Key
 key a-1 = MSG Now using REXX profile
-key a-2 = EDIT C:\Users\fatxL7a\cjp\x2\rexx.prof
-key a-3 = MACRO cmdout xpdrsRX.temp xs rexx
+key a-2 = EDIT C:\Users\cjp\x2\rexx.prof
+key a-3 = MACRO cmdout xpdrs.rex xs rexx
 key a-4 = CMDTEXT SHELL xk rexx
 
 key a-F1 = MACRO fnpick rexx

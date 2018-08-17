@@ -9,10 +9,10 @@ key a-` = MACRO instr /="~"/
 
 key a-0 = MSG 1=Hlp 2=Prof 3=Xpdr 4=XpList 5=Page 6=? 7=? 8=? 9=?
 key a-1 = MSG Now using CSS profile
-key a-2 = EDIT C:\Users\fatxL7a\cjp\x2\css.prof
+key a-2 = EDIT C:\Users\cjp\x2\css.prof
 key a-3 = MACRO chooser --c xs css --t Expanders
 key a-4 = MACRO cmdout xpdr.css xs css
-key a-5 = CMDTEXT cmdin merge C:\Users\fatxL7a\cjp\snips\bootstrap.tmpl
+key a-5 = CMDTEXT cmdin merge C:\Users\cjp\snips\bootstrap.tmpl
 key a-6 = MSG Alt-6
 key a-7 = MSG Alt-7
 key a-8 = MSG Alt-8

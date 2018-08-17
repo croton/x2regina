@@ -9,9 +9,9 @@ brackets       = "{,};[,];(,);do,end;loop,end;select,end;/*,*/;push,pop;"
 
 key a-0 = MSG 1=Hlp 2=Prof 3=ProfP 4=Xpdr
 key a-1 = MSG Now using NETREXX profile
-key a-2 = EDIT C:\Users\fatxL7a\cjp\x2\nrx.prof
-key a-3 = EDIT C:\Users\fatxL7a\cjp\x2\rexx.prof
-key a-4 = MACRO cmdout xpdrsNRX.temp xs nrx
+key a-2 = EDIT C:\Users\cjp\x2\nrx.prof
+key a-3 = EDIT C:\Users\cjp\x2\rexx.prof
+key a-4 = MACRO cmdout xpdrs.nrx xs nrx
 
 expand_keyword = say
 expand_replace = "say '\c'"

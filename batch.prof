@@ -6,7 +6,7 @@ quick_comment  = "::"
 
 key a-0 = MSG 1=Hlp 2=Prof 3=Xpdr 4=Env 5=Var 6=NxtFn 7=AllFn 8=Keys 9=?
 key a-1 = MSG Now using BATCH profile
-key a-2 = EDIT C:\Users\fatxL7a\cjp\x2\batch.prof
+key a-2 = EDIT C:\Users\cjp\x2\batch.prof
 key a-3 = MACRO chooser --c xs batch --t Expanders
 key a-4 = MACRO chooser --c set |cut -d"=" -f1 --t Environment Variables
 key a-5 = MACRO instr /%~%/
