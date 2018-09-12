@@ -20,8 +20,7 @@ key a-7 = CMDTEXT wraptag
 key a-8 = MACRO fnpick ngjq @()
 key a-9 = MACRO fnpick bootstrap
 
-a-PFLine = "1=AllFn 2=Xpdr 3=Key 4=UpJson 5=LkJson 6=Dirv 7=Fn 8=Svc 9=Fltr 10=FdCfg 11=ProjFd 12=LookUp"
-key a-F5 = MACRO navIndent C
+a-PFLine = "1=AllFn 2=Xpdr 3=Key 4=Par 5=Sib 6=Dirv 7=Fn 8=Svc 9=Fltr 10=FdCfg 11=ProjFd 12=LookUp"
 key a-F6 = MACRO fnpick ngdir ng-@=""
 key a-F7 = MACRO fnpick ngfn angular.@();
 key a-F8 = MACRO fnpick ngsvc $@

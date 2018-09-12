@@ -1,47 +1,34 @@
 /* navIndent - Navigate or filter file by indentation.
-  C = Collapse all lines that are indented differently than current one
-  F = Find line whose indent is less than that of current one
+  [S]ibling = Collapse all lines that are indented differently than current one
+  [P]arent = Find line whose indent is less than that of current one
 */
 arg option .
 select
-  when option='C' then call findCurrIndent
-  when option='F' then call findupLesserIndent
-  otherwise
-    'MSG navIndent [C | F]'
+  when option='' then call help
+  when abbrev('SIBLING', option) then call findCurrIndent
+  when abbrev('PARENT', option) then call findupLesserIndent
+  otherwise call help
 end
 exit
 
 findCurrIndent: procedure
-  arg ?
+  'EXTRACT /CURLINE/'
+  'EXTRACT /CURSOR/'
+  'EXTRACT /MARK/'
+  if mark.0=0 then opt='/f'
+  else             opt='/fm'
+  -- Go to col 1 if not already there
+  if CURSOR.2>1 then 'CURSOR COL1'
   'NEXT_WORD'
-  'MARK COL1'
-  'CopyToCmd'
-  'KEYIN ALL/'
-  'CURSOR EOL'
-  'KEYIN /f'
-  'Mark clear'
-  -- 'CURSOR COL1'
-  -- 'NEXT_WORD'
-  return
-
-collapseUnlikeIndent: procedure
-  'CURSOR DATA'
-  'INSMODE ON'
-  'NEXT_WORD'
-  'MARK COL1'
-  'CopyToCmd'
-  'all/'
-  'CURSOR EOL'
-  '/f'
+  'EXTRACT /CURSOR/'
   'CURSOR TOGGLE'
-  'Mark clear'
-  'NEXT_WORD'
+  'KEYIN ALL/'left(CURLINE.1, CURSOR.2)||opt
   return
 
-findUpLesserIndent: procedure
+findupLesserIndent: procedure
    'EXTRACT /CURSOR/'
    row=CURSOR.1
-   if CURSOR.1=1 then do
+   if row=1 then do
      'MSG Already at top line.'
      return
    end
@@ -75,4 +62,8 @@ moveToFirstChar: procedure
      'CURSOR +0 'firstCharPos
    -- 'MSG First char at col' firstCharPos 'line len='length(CURLINE.1)
    return firstCharPos
+
+help:
+  'MSG navIndent [SIBLING | PARENT]'
+  return
 

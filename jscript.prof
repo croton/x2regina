@@ -8,19 +8,19 @@ comment_formatting = NONE;
 split_align_paren  = on
 margins            = 1 200 20 80
 
-a-PFLine = "1=AllFn 2=Xpdr 3=Key 4=UpJson 5=LkJson 6=Jq 7=? 8=? 9=? 10=? 11=? 12=?"
+a-PFLine = "1=AllFn 2=Xpdr 3=Key 4=Par 5=Sib 6=Sel 7=? 8=? 9=? 10=? 11=? 12=?"
 key a-F1 = ALL /function/
 key a-F2 = MACRO chooser --c xs jscript --t Expanders
 key a-F3 = MACRO chooser --c xk jscript --t JS Keys
-key a-F4 = MACRO navIndent F
-key a-F5 = MACRO navIndent C
+key a-F4 = MACRO navIndent PARENT
+key a-F5 = MACRO navIndent SIBLING
 key a-F6 = MACRO instr /$(~)/
 key a-F7 = MSG Alt-F7
 key a-F8 = MSG Alt-F8
-key a-F9 = MSG Alt-F9 js
-key a-F10= MSG Alt-F10 js
-key a-F11= MSG Alt-F11 js
-key a-F12= MSG Alt-F12 js
+key a-F9 = MSG Alt-F9
+key a-F10 = MSG Alt-F10
+key a-F11 = MSG Alt-F11
+key a-F12 = MSG Alt-F12
 
 key a-0 = MSG 1=Hlp 2=Prof
 key a-1 = MSG Now using Javascript profile
@@ -132,6 +132,9 @@ expand_keyword = doarr \1
 expand_replace = 'for (var i=0, len=\1.length; i<len; i++) {'
 expand_replace = '\c\1[i];'
 expand_replace = '}'
+
+expand_keyword = dokey \1
+expand_replace = '\cObject.keys(\1)'
 
 expand_keyword = dodir \1
 expand_replace = 'for (var key in \1) {'
