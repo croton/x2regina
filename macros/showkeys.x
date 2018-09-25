@@ -1,6 +1,6 @@
 /* showkeys -- Show key assignments by meta key. */
 arg metakey
-if metakey='-?' then do; 'MSG showkeys [A|C|S|L|LA]'; exit; end
+if metakey='-?' then do; 'MSG showkeys [A|AL|C|CL|S]'; exit; end
 
 'EXTRACT /ESCAPE/'
 NL=ESCAPE.1||'N'
@@ -8,7 +8,7 @@ select
   when metakey='A' then mykeys=altfn()
   when metakey='C' then mykeys=ctrlfn()
   when metakey='S' then mykeys=shiftfn()
-  when left(metakey,1)='L' then mykeys=letterkeys(metakey)
+  when substr(metakey,2,1)='L' then mykeys=letterkeys(metakey)
   otherwise mykeys=numkeys()
 end
 'MESSAGEBOX' mykeys
@@ -52,20 +52,19 @@ return msgtxt
 
 /* Ctrl or Alt-A through Z */
 letterkeys: procedure expose NL
-arg metakey +1 meta
-if abbrev('CTRL', meta) then do
+arg metakey +1 .
+if metakey='C' then do
   msgtxt='Ctrl Keys A to Z'NL
-  meta='C'
 end
 else do
   msgtxt='Alt Keys A to Z'NL
-  meta='A'
+  metakey='A'
 end
 letters=xrange('A','Z')
 do k=1 to length(letters)
   ch=substr(letters,k,1)
-  'EXTRACT /KEY' meta'-'ch'/'
-  msgtxt=msgtxt meta'-'ch ':' KEY.1||NL
+  'EXTRACT /KEY' metakey'-'ch'/'
+  msgtxt=msgtxt metakey'-'ch ':' KEY.1||NL
 end k
 return msgtxt
 

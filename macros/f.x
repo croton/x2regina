@@ -9,6 +9,6 @@ if searchString='' then do
 end
 else do
   call value 'X2LATESTSEARCH', searchString, 'ENVIRONMENT'
-  'MACRO cmdout findInFiles.txt ff' fspec searchString
+  'MACRO cmdout findInFiles.txt f' fspec searchString
 end
 exit

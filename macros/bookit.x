@@ -1,8 +1,8 @@
-/* setbookmark -- Set bookmarks based on a given search string. */
+/* bookit -- Set bookmarks based on a given search string. */
 parse arg searchstr
-if searchstr='' then do; 'MSG setbookmark searchstr [-c]'; exit; end
+if searchstr='' then do; 'MSG bookit searchstr [CLEAR]'; exit; end
 
-if translate(searchstr)='-C' then do
+if abbrev('CLEAR', translate(searchstr)) then do
   call clearbkmarks
   'MSG Bookmarks cleared'
   exit
@@ -12,7 +12,7 @@ end
 'EXTRACT /CURSOR/' -- restore cursor
 'WRAP OFF'
 ctr=0
-'LOCATE /'searchstr'/s'
+'LOCATE' searchstr
 do while rc=0
   ctr=ctr+1
   'BOOKMARK SET'
@@ -22,8 +22,8 @@ end
 -- Restore previous settings
 'WRAP' WRAP.1
 'CURSOR' CURSOR.1 CURSOR.2
--- 'MSG Set' ctr 'bookmarks.'
-'BOOKMARK GO'
+'MSG Set' ctr 'bookmarks.'
+-- 'BOOKMARK GO'
 exit
 
 clearbkmarks: procedure

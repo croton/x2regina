@@ -2,7 +2,7 @@
 INSERT       = ON
 ENTER_INSERT = ON
 INSERT_EOF   = ON
-BOOKMARKS = 10
+BOOKMARKS = 20
 MARGINS   = 1 200 1 80
 
 PFLine = "F1=SpJn 2=Sav 3=Quit 4=File 5=RptFind 6=New 7=MkClr 8=MkMv 9=MkCp 10=Undo 11=Prv 12=Nxt"
@@ -33,17 +33,18 @@ key s-Del = MACRO deleter
 key s-PgUp = MACRO nav ENDUP
 key s-PgDn = MACRO marker CURR
 
-c-PFLine = "F1=Cmd 2=Var 3=Val 4=FdFile 5=SetBk 6=cTop 7=Hil{} 8=HidBlk 9=MkLnX 10=Case 11=FdRestore 12=Ring"
+c-PFLine = "F1=Cmd 2=Var 3=Val 4=SwFn 5=TglFn 6=TopLn 7=Hil{} 8=HidBlk 9=? 10=Case 11=FdRestore 12=Ring"
 key c-F1 = MACRO x2cmds
 key c-F2 = MACRO x2cmds VAR
 key c-F3 = MACRO x2cmds VAR MSG
-key c-F4 = CMDTEXT cmdout findfiles.txt ufind . -type f -iname
-key c-F5 = CMDTEXT setbookmark
-key c-F6 = MACRO nav SCROLLTOP
+key c-F4 = MACRO togglefile 1
+key c-F5 = MACRO togglefile
+key c-F6 = TOPLINE
 key c-F7 = MACRO hiliteblock TAG
 key c-F8 = MACRO hiliteblock HIDE
-key c-F9 = Mark LINE EXTEND
+key c-F9 = MSG c-F9
 key c-F11 = Find restore
+key c-F12 = MACRO ringfil
 key c-Tab  = MACRO expandword
 key c-Space = Expand
 key c-Ins  = Clip copy
@@ -60,7 +61,7 @@ key c-f = MACRO clipper FILE
 key c-h = Help
 key c-i = MACRO marker INT
 key c-l = Mark Lower
-key c-m = MACRO listmacros RUN
+key c-m = CMDTEXT cmdin merge
 key c-n = keyin_name
 key c-o = MACRO cmt B 0
 key c-p = MACRO opensearch
@@ -78,13 +79,13 @@ key a-F9  = Scroll Right
 key a-F10 = Scroll Left
 key a-F11 = CMDTEXT SHELL
 key a-F12 = CMDTEXT keyqry
-key a-0 = MSG 1=Hlp 2=Date
+key a-0 = MSG 1=Hlp 2=Date 3=Show 4=RingP 5=Ring 6=MkLnX
 key a-1 = MSG Now using Default profile
 key a-2 = MACRO ipt left(date('w'),3) space(date(),1,'-')
-key a-3 = MSG Alt-3
-key a-4 = MSG Alt-4
-key a-5 = MSG Alt-5
-key a-6 = MSG Alt-6
+key a-3 = show
+key a-4 = MACRO ringfil PARTIAL
+key a-5 = ringwin
+key a-6 = Mark LINE EXTEND
 key a-7 = MSG Alt-7
 key a-8 = MSG Alt-8
 key a-9 = MSG Alt-9
@@ -94,17 +95,17 @@ key a-a = MACRO nav HOME
 key a-b = Cursor begmark
 key a-c = MACRO cmt C
 key a-f = MACRO wrapit [
-key a-g = CMDTEXT cmdin merge
+key a-g = CMDTEXT toggleline
 key a-h = MACRO hiliteblock
-key a-i = MACRO marker BRACKET
+key a-i = MACRO toggleline
 key a-k = MACRO cmt B
 key a-m = CMDTEXT dir %X2HOME%\macros
 key a-n = CMDTEXT keys_write tmpkeys.x
-key a-o = MACRO wrapblock /* */
-key a-p = CMDTEXT dir %X2HOME%\*.prof
+key a-o = CMDTEXT wrapblock
+key a-p = MACRO opensearch A
 key a-q = MACRO wrapit '
 key a-s = MACRO copyword2cmd
-key a-t = MACRO opensearch A
+key a-t = CMDTEXT dir %X2HOME%\*.prof
 key a-u = MACRO underline
 key a-v = split
 key a-x = EXCLUDE TOGGLE

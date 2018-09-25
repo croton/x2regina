@@ -17,7 +17,6 @@ select
   when input='FWD' then call endwordFwd
   when input='REV' then call endwordRev
   when input='HOME' then call homechar
-  when input='SCROLLTOP' then call scroll2top
   otherwise
     'TOP'
     'CURSOR COL1'

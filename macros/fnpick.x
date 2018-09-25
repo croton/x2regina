@@ -27,21 +27,6 @@ insertFn: procedure
       if tmpl='' then 'KEYIN' ans
       else            'KEYIN' changestr('@', tmpl, ans)
     end
-    -- 'KEYIN ng-'ans'=""'
-  end
-  return
-
-/* Load items from specified file and keyin the selected one. */
-insertFn1: procedure
-  arg filestem
-  fnfile=getFunctionFile(filestem)
-  if fnfile='' then 'MSG Function file not found:' filestem
-  else do
-    ans=getchoice(fnfile, filestem)
-    if ans='' then
-      'MSG Selection cancelled'
-    else
-      'KEYIN' ans
   end
   return
 
