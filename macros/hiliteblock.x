@@ -1,33 +1,18 @@
-/* hiliteblock -- Mark the current block, or paragraph. */
+/* hilite -- Mark a paragraph or block. */
 arg input
-if input='-?' then do; 'MSG hiliteblock [HIDE | BRACKET | TAG | INDENT]'; exit; end
+if input='-?' then do; 'MSG hiliteblock [BL | BB | HIDE | INDENT]'; exit; end
 
 select
+  when input='BL' then call markbrackets
+  when input='BB' then call markbrackets 'block'
   when input='HIDE' then call hideblock
-  when input='BRACKET' then call hilitebracket
-  when word(input,1)='TAG' then call hilitetag input
   when input='INDENT' then call indentblock
-  otherwise call hiliteblock
+  otherwise call markparag
 end
 exit
 
-hideblock: procedure
-  if \hasmark() then call hiliteblock
-  'CURSOR BEGMARK'
-  'EXTRACT /CURLINE/'
-  'ALL /'CURLINE.1'/m'
-  'MARK CLEAR'
-  return
-
-hilitebracket: procedure
-  'CURSOR DATA'
-  'INSMODE ON'
-  'MARK EXTEND RIGHT'
-  'MATCH'
-  'Mark BLOCK EXTEND'
-  return
-
-hiliteblock: procedure
+/* Mark a paragraph, a block of text delimited by blank line */
+markparag: procedure
   'CURSOR DATA'
   'INSMODE ON'
   'MARK LINE'
@@ -36,17 +21,25 @@ hiliteblock: procedure
   'MARK EXTEND UP'
   return
 
-hilitetag: procedure
-  arg . blockstart .
+/* Mark a block within brackets with a line mark (default) or block mark */
+markbrackets: procedure
+  arg marktype
+  linemark=abbrev('LINE', marktype)
+  if linemark then xcmd='MARK LINE'
+  else             xcmd='MARK BLOCK EXTEND'  -- may also use 'MARK EXTEND RIGHT'
   'CURSOR DATA'
   'INSMODE ON'
-  if blockstart<>'' then do
-    -- 'CURSOR TOGGLE'
-    'LOCATE |'blockstart'|'
-  end
-  'MARK LINE'
+  xcmd
   'MATCH'
-  'MARK LINE'
+  xcmd
+  return
+
+hideblock: procedure
+  if \hasmark() then call markparag
+  'CURSOR BEGMARK'
+  'EXTRACT /CURLINE/'
+  'ALL /'CURLINE.1'/m'
+  'MARK CLEAR'
   return
 
 /* With cursor on opening tag, create a column mark extending to closing tag indented by 2 */

@@ -39,9 +39,14 @@ else do
   choice=choose(title)
   if choice='' then 'MSG No choice made'
   else do
+    xcmd='KEYIN'
+    if wordpos('--CT', paramsUC)>0 then do
+      parse var params '--ct' cmdtxtArgs '--'
+      xcmd='CMDTEXT' cmdtxtArgs
+    end
     if wordpos('--Q', paramsUC)>0 then push choice
     else do
-      'KEYIN' choice
+      xcmd choice
       -- Uncomment to place cursor at beginning of entry
       -- 'CURSOR +0 -'length(choice)
     end

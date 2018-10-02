@@ -2,9 +2,10 @@
    Usage - wrapline |before|after|options
            wrapline |before|options
 */
-parse arg delim +1 input
-if input='' then do; 'MSG wrapline /prefix[/suffix/options]'; exit; end
-parse var input before (delim) after (delim) +0 options
+parse arg input
+if input='' | input='-?' then call help
+
+parse var input delim +1 before (delim) after (delim) +0 options
 -- To specify suffix, must include third delim, otherwise taken as options
 if options='' then do; options=after; after=''; end
 else                   options=substr(options,2)
@@ -95,3 +96,7 @@ leadingBlanks: procedure
    else return ctr        -- return counter at first non-blank
   end i
   return strlen
+
+help: procedure
+  'MSG wrapline /prefix[/suffix/options]'
+  exit

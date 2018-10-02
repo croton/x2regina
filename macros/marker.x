@@ -1,10 +1,9 @@
 /*  marker -- Shortcuts for marking commands. */
 arg input
-if input='-?' then do; 'MSG marker [INT | BRACKET]'; exit; end
+if input='-?' then do; 'MSG marker [INT | CURR | TOP]'; exit; end
 
 select
   when input='INT' then call markintegerplus
-  when input='BRACKET' then call markbracket
   otherwise call markfile input
 end
 exit
@@ -27,10 +26,3 @@ markintegerplus: procedure
   'INSMODE' orig
   return
 
-/* Highlight bracketed text */
-markbracket: procedure
-  -- 'MARK SHIFT RIGHT'
-  'MARK BLOCK EXTEND'
-  'MATCH'
-  'MARK BLOCK EXTEND'
-  return

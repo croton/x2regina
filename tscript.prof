@@ -1,0 +1,298 @@
+/* ------------------------------- Typescript ------------------------------- */
+extension          = TS,JSON,HTML
+code_type          = typescript
+highlight_tags     = "<,>;"
+tag_end            = "/"
+comment_prefix     = "/* "
+comment_suffix     = "*/"
+quick_comment      = "//"
+comment_formatting = NONE;
+margins            = 1 200 20 80
+split_align_paren  = on
+bookmarks          = 30
+
+key c-HOME = MACRO tshome
+
+a-PFLine = "1=Pub 2=Pri 3=Search 4=Par 5=Sib 6=DirList 7=ShowDir 8=FilList 9=LayOut 10=Dirv 11=Fn 12=Tag"
+key a-F1 = ALL /public /
+key a-F2 = ALL /private /
+key a-F3 = MACRO searchFileAtCursor
+key a-F4 = MACRO navIndent PARENT
+key a-F5 = MACRO navIndent SIBLING
+key a-F6 = MACRO dirlist
+key a-F7 = MACRO chooser --c dir /a:d /s /b |repf --ct dir --t Directories
+key a-F8 = CMDTEXT cmdout projfiles.txt ff
+key a-F9 = MACRO fnpick ngmat @=""
+key a-F10 = MACRO fnpick ngdir ng-@=""
+key a-F11 = MACRO fnpick ngfn angular.@();
+key a-F12 = MACRO fnpick tags ~@
+
+key a-0 = MSG 1=Hlp 2=Prof 3=Xpdr 4=Key 5=State 6=TagMk 7=TagBlk 8=Type 9=KeyW
+key a-1 = MSG Now using Typescript profile
+key a-2 = EDIT C:\cjp\x2\tscript.prof
+key a-3 = MACRO chooser --c xs tscript --t Expanders
+key a-4 = MACRO chooser --c xk tscript --t TS Keys
+key a-5 = CMDTEXT merge %cjp%\snips\vebd-state.tmpl
+key a-6 = CMDTEXT wraptag -mark
+key a-7 = CMDTEXT wraptag
+key a-8 = MACRO chooser boolean function number object string symbol undefined --t Types
+key a-9 = MACRO chooser private public readonly static --t Keywords
+
+key a-` = MACRO instr /() => {~}/
+key a-- = MACRO instr /$(~)/
+key a-= = MACRO instr /{{ ~ }}/
+key a-; = MACRO instr /`${~}`/
+key a-' = MACRO instr /="~"/
+key a-\ = MACRO wrapblock { }
+key a-/ = MACRO wrapit {
+
+expand_keyword = say
+expand_replace = "console.log('\c');"
+
+expand_keyword = b
+expand_replace = 'const \c: boolean = false;'
+
+expand_keyword = bb
+expand_replace = 'let \c: boolean = false;'
+
+expand_keyword = n
+expand_replace = 'const \c: number = 1;'
+
+expand_keyword = nn
+expand_replace = 'let \c: number = 1;'
+
+expand_keyword = s
+expand_replace = "const \c: string = '';"
+
+expand_keyword = ss
+expand_replace = "let \c: string = '';"
+
+expand_keyword = t
+expand_replace = "const \c: [,] = [,];"
+
+expand_keyword = e \1
+expand_replace = "enum \1 {\c, }"
+
+expand_keyword = v \1
+expand_replace = 'let \1: \c'
+
+expand_keyword = vp \1
+expand_replace = 'private \1: \c'
+
+expand_keyword = vo \1
+expand_replace = "const \1 = {\c: ''};"
+
+expand_keyword = va \1
+expand_replace = "const \1: \c[] = [];"
+
+expand_keyword = @ \1
+expand_replace = '\1: {\c'
+expand_replace = '}'
+
+expand_keyword = fh
+expand_replace = "/**"
+expand_replace = '* @brief \c.'
+expand_replace = '*'
+expand_replace = '* @param'
+expand_replace = '* @return'
+expand_replace = '* @return <tt>true</tt> if .. ; otherwise <tt>false</tt>.'
+expand_replace = '*/'
+
+expand_keyword = fn
+expand_replace = "/**"
+expand_replace = '* @brief .'
+expand_replace = '*'
+expand_replace = '* @param'
+expand_replace = '* @return'
+expand_replace = '*/'
+expand_replace = "private \c(): void"
+expand_replace = "{"
+expand_replace = "}"
+
+expand_keyword = fnp \1
+expand_replace = 'public \1(): \c'
+expand_replace = '{'
+expand_replace = '}'
+
+expand_keyword = fng \1
+expand_replace = 'public get \1(): \c'
+expand_replace = '{'
+expand_replace = '  return this.\1;'
+expand_replace = '}'
+
+expand_keyword = "\1 -);"
+expand_replace = '\1 function() {\c'
+expand_replace = '});'
+
+expand_keyword = cl \1
+expand_replace = 'export class \1'
+expand_replace = '{\c'
+expand_replace = '}'
+
+expand_keyword = ifc \1
+expand_replace = 'interface \1'
+expand_replace = '{\c'
+expand_replace = '}'
+
+expand_keyword = iffc \1
+expand_replace = 'interface \1'
+expand_replace = '{'
+expand_replace = '  (\c): ;'
+expand_replace = '}'
+
+expand_keyword = inj
+expand_replace = 'static $inject = ["\c"];'
+
+expand_keyword = keys
+expand_replace = 'Object.keys(\c)'
+
+expand_keyword = ofy
+expand_replace = 'JSON.parse(\c);'
+
+expand_keyword = sfy
+expand_replace = 'JSON.stringify(\c);'
+
+expand_keyword = rem \1
+expand_replace = "delete \1['\c'];"
+
+expand_keyword = "\1["
+expand_replace = '\1[\c]'
+
+expand_keyword = "\1("
+expand_replace = '\1(\c)'
+
+expand_keyword = "\1{"
+expand_replace = '\1\c{'
+expand_replace = '}'
+
+expand_keyword = arg \1
+expand_replace = 'if (!\1) var \1=\c;'
+expand_replace = "if (typeof \1==='undefined') var \1=\c;"
+
+expand_keyword = has \1
+expand_replace = "if (\1.hasOwnProperty('\c'))"
+
+expand_keyword = is \1
+expand_replace = "if (\1 instanceof \c)"
+
+expand_keyword = type \1
+expand_replace = "if (typeof \1==='\c')"
+
+expand_keyword = isarr \1
+expand_replace = "if (Array.isArray(\1)) \c"
+
+expand_keyword = do \1
+expand_replace = "for (var i=1; i<=\1; i=i+1) {"
+expand_replace = "  \c"
+expand_replace = "}"
+
+expand_keyword = doarr \1
+expand_replace = '\1.forEach((obj, index) =>'
+expand_replace = '{\c'
+expand_replace = '});'
+
+expand_keyword = dodir \1
+expand_replace = 'for (var key in \1) {'
+expand_replace = '  // key \1[key]'
+expand_replace = '}'
+
+expand_keyword = dodirx \1
+expand_replace = 'for (var i=0, key; key=\1[i]; i++) {'
+expand_replace = '  \c'
+expand_replace = '} // loop till null found'
+
+expand_keyword = ret, r
+expand_replace = 'return \c;'
+
+expand_keyword = if
+expand_replace = "if (\c) ;"
+
+expand_keyword = iff
+expand_replace = "if (\c)"
+expand_replace = "{"
+expand_replace = "}"
+
+expand_keyword = ife
+expand_replace = "if (\c)"
+expand_replace = "{"
+expand_replace = "} else"
+expand_replace = "{"
+expand_replace = "}"
+
+expand_keyword = wh
+expand_replace = "while (\c) {"
+expand_replace = "}"
+
+expand_keyword = sw \1
+expand_replace = 'switch (\1)'
+expand_replace = '{'
+expand_replace = '  case "\c":'
+expand_replace = '    break;'
+expand_replace = '  default:'
+expand_replace = '} // \1'
+
+expand_keyword = try
+expand_replace = 'try'
+expand_replace = '{'
+expand_replace = "  if (1) throw new Error('Oops');"
+expand_replace = '} catch (e)'
+expand_replace = '{'
+expand_replace = '  console.log(e.message);'
+expand_replace = '}'
+
+expand_keyword = \1 -then
+expand_replace = '\1.then(function(response) {\c'
+expand_replace = '}, function(error) {'
+expand_replace = '});'
+
+expand_keyword = \1 -thenc
+expand_replace = '\1.then(function(response) {\c'
+expand_replace = '}).catch(function(error) {'
+expand_replace = '});'
+
+expand_keyword = exp
+expand_replace = 'module.exports=\c;'
+
+expand_keyword = req \1
+expand_replace = 'import { \1 } from "\c\1";'
+expand_replace = "const \1=require('\c\1');"
+expand_replace = 'import * as \1 from "\c\1";'
+
+expand_keyword = #
+expand_replace = '<!-- \c -->'
+
+expand_keyword = "~\1"
+expand_replace = '<\1\c>'
+expand_replace = '</\1>'
+
+expand_keyword = "\1 !>"
+expand_replace = '\1 \c="">'
+
+expand_keyword = "\1 !!>"
+expand_replace = '\1 class="\c">'
+
+expand_keyword = "\1 !n>"
+expand_macro = xpandbstrap
+
+expand_keyword = div \1
+expand_replace = '<div class="\1"\c>'
+expand_replace = '</div>'
+
+expand_keyword = xs \1
+expand_replace = '<\1\c/>'
+
+expand_keyword = x \1
+expand_replace = "<\1>\c</\1>"
+
+expand_keyword = $ \1
+expand_replace = "const \c=document.getElementById('\1');"
+
+expand_keyword = elem \1
+expand_replace = "const \c=document.createElement('\1');"
+
+expand_keyword = tnode \1
+expand_replace = "const \c=document.createTextNode('\1');"
+
+expand_keyword = qsel \1
+expand_replace = "const \c=document.querySelector('\1');"
+
