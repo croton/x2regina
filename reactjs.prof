@@ -1,0 +1,91 @@
+/* ----------------- reactJS ------------------ */
+#include "jscript.prof"
+
+extension          = JS,JSON,HTML,TPL.HTML
+base_extension     = JS
+code_type          = reactJS
+highlight_tags     = "<,>;"
+tag_end            = "/"
+margins            = 1 120 20 80
+split_align_paren  = off
+
+key a-0 = MSG 1=Hlp 2=Prof 3=ProfP 4=Xpdr 5=App 6=TagLn 7=TagBlk 8=? 9=?
+key a-1 = MSG Now using ReactJS profile
+key a-2 = EDIT C:\cjp\x2\reactjs.prof
+key a-3 = EDIT C:\cjp\x2\jscript.prof
+key a-4 = MACRO cmdout xpdr.js xs reactjs
+key a-5 = CMDTEXT cmdin merge %cjp%\snips\rjspage.tmpl
+key a-6 = CMDTEXT wraptag LINE
+key a-7 = CMDTEXT wraptag
+key a-8 = MSG Alt-8
+key a-9 = MSG Alt-9
+
+expand_keyword = comp \1
+expand_replace = 'class \1 extends React.Component {'
+expand_replace = '  render() {'
+expand_replace = '    return ('
+expand_replace = '      <div className="\c">'
+expand_replace = '      </div>'
+expand_replace = '    );'
+expand_replace = '  }'
+expand_replace = '}'
+
+expand_keyword = compfn \1
+expand_replace = 'function \1(props) {'
+expand_replace = '  return <div>\1 {props}</div>;'
+expand_replace = '}'
+
+expand_keyword = ctor \1
+expand_replace = 'constructor(props) {'
+expand_replace = '  super(props);'
+expand_replace = '  this.state = {\1: \c};'
+expand_replace = '}'
+
+expand_keyword = state \1
+expand_replace = 'this.setState({\1: \c});'
+
+expand_keyword = statefn
+expand_replace = 'this.setState((\c) => {});'
+
+expand_keyword = map \1
+expand_replace = '.map(\1 => \c'
+expand_replace = ')'
+
+expand_keyword = fil \1
+expand_replace = '.filter(\1 => \c'
+expand_replace = ')'
+
+expand_keyword = red \1
+expand_replace = '.reduce((orig, \1) => {'
+expand_replace = '  }, \c'
+expand_replace = ')'
+
+expand_keyword = v
+expand_replace = 'let const \c'
+
+expand_keyword = ts
+expand_replace = '`${\c}`'
+
+expand_keyword = fn
+expand_replace = '(\c) => {}'
+
+expand_keyword = "~\1"
+expand_replace = '<\1\c>'
+expand_replace = '</\1>'
+
+expand_keyword = "\1 !>"
+expand_replace = '\1 \c="">'
+
+expand_keyword = "\1 !!>"
+expand_replace = '\1 class="\c">'
+
+expand_keyword = div \1
+expand_replace = '<div class="\1"\c>'
+expand_replace = '</div>'
+
+expand_keyword = xs \1
+expand_replace = '<\1\c/>'
+
+expand_keyword = x \1
+expand_replace = "<\1>\c</\1>"
+

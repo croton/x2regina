@@ -1,32 +1,32 @@
-/* cmt -- Comment out the current line. */
-arg input
+/* cmt -- Comment out the current line or block. */
+arg type params
 select
-  when input='-?' then do; 'MSG cmt [B col|C col|Q|QA]'; exit; end
-  when word(input,1)='C' then call singleLineComment input
-  when left(input,1)='Q' then call cmt2quick input
-  when word(input,1)='B' then call cmtBlock input
-  otherwise
-    call singleLineComment input
+  when type='-?' then do; 'MSG cmt [B col | C col | O | Q ]'; exit; end
+  when type='B' then call cmtBlock params
+  when type='C' then call centeredComment params
+  when type='O' then 'MACRO wrapblock /* */'
+  when type='Q' then call cmt2quick params
+  otherwise          call samelineComment input
 end
 exit
 
-singleLineComment: procedure
-  arg opt pad .
+sameLineComment: procedure
+  'EXTRACT /CURLINE/'
+  posFirstChar=leadingBlanks(CURLINE.1)
+  currline=CURLINE.1 '*/'
+  'REPLACE' insert('/* ', currline, posFirstChar)
+  'CURSOR COL1'
+  return
+
+centeredComment: procedure
+  arg pad .
+  if \datatype(pad,'W') then pad='80'
   'EXTRACT /CURLINE/'
   'EXTRACT /CURSOR/'
-  select
-    when opt='C' then do
-      comment=strip(CURLINE.1)
-      if \datatype(pad,'W') then pad='80'
-      -- Minimum for centering pad must be at least length of line + 10
-      if length(comment)>(pad-10) then newline='/*' comment '*/'
-      else                             newline='/*' center(' 'comment' ',pad-6,'-') '*/'
-    end
-    when input='S' then
-      newline='/*' strip(CURLINE.1) '*/'  -- Strip leading blanks
-    otherwise
-      newline=copies(' ',leadingBlanks(CURLINE.1))||'/*' strip(CURLINE.1) '*/'
-  end
+  comment=strip(CURLINE.1)
+  -- Minimum for centering pad must be at least length of line + 10
+  if pad>=(length(comment)+10) then newline='/*' center(' 'comment' ',pad-6,'-') '*/'
+  else                              newline='/*' comment '*/'
   'REPLACE' newline
   'CURSOR' CURSOR.1 leadingBlanks(newline)+1
   return
@@ -44,7 +44,7 @@ leadingBlanks: procedure
 
 /* Convert current or ALL comment(s) to a quick comment */
 cmt2quick: procedure
-  arg input +1 opt
+  arg opt
   if opt='A' then do
     'CHANGE|/*|--|f*'
     'CHANGE|*/||l*'
@@ -57,13 +57,13 @@ cmt2quick: procedure
 
 /* Create a multi-line comment for a line or a block */
 cmtBlock: procedure
-  arg . endcol .
+  arg endcol .
   'EXTRACT /MARK/'
   'EXTRACT /FLSCREEN/'
   select
     when (MARK.2>FLSCREEN.2 | MARK.3<FLSCREEN.1 | MARK.6=0) then
-      'MSG Mark exists off screen or in another file:' MARK.1
-    when MARK.0=0 | MARK.2=MARK.3 then call commentLine endcol     -- block spans only 1 line
+      call commentLine endcol
+    when MARK.0=0 | MARK.2=MARK.3 then call commentLine endcol
     when left(endcol,1)='E'       then call cmtBlockSingle endcol
     otherwise
       call commentBlock endcol
