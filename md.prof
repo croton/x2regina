@@ -1,17 +1,17 @@
-/* --- Readme.MD --- */
+/* --- Markdown.MD --- */
 extension      = MD
-code_type      = readme-md
+code_type      = markdown
 comment_prefix = "/* "
 comment_suffix = "*/"
 quick_comment  = "--"
 margins        = 1 200 1 90
 
-key a-0 = MSG 1=Hlp 2=Prof 3=Tmpf 4=Shel 5=Xpdr
-key a-1 = MSG Now using README profile
-key a-2 = EDIT C:\Users\cjp\x2\md.prof
-key a-3 = EDIT tmp0.md
-key a-4 = CMDTEXT SHELL
-key a-5 = MACRO chooser --c xs md --t ReadMe
+key a-0 = MSG 1=Hlp 2=Prof 3=Xpdr 4=Code 5=Xpd2
+key a-1 = MSG Now using Markdown profile
+key a-2 = EDIT C:\cjp\x2\md.prof
+key a-3 = MACRO cmdout xpdrs.md xs md
+key a-4 = MACRO instr /`~`/
+key a-5 = MACRO chooser --c xs md --t Markdown
 
 expand_keyword = link \1
 expand_replace = '[\1](http://\c)'

@@ -108,6 +108,7 @@ key a-s = MACRO copyword2cmd
 key a-t = CMDTEXT dir %X2HOME%\*.prof
 key a-u = MACRO underline
 key a-v = split
+key a-w = MACRO mword
 key a-x = EXCLUDE TOGGLE
 key a-y = MACRO deleter LASTWORD
 

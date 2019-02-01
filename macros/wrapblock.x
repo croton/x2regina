@@ -2,73 +2,75 @@
    separate lines or optionally on every line.
 */
 parse arg startTxt endTxt options
-if startTxt='' then do; 'MSG wrapblock prefix suffix [EACH]'; exit; end
+if startTxt='' then do; 'MSG wrapblock prefix suffix [EACH | OUTDENT]'; exit; end
 
 options=translate(options)
-if options='EACH' then call wrapEachLine startTxt endTxt
-else                   call insertTopBottom startTxt endTxt
+select
+  when abbrev('EACH', options, 1) then
+    call wrapEachLine startTxt, endTxt
+  when abbrev('OUTDENT', options, 1) then
+    call insertTopBottom startTxt, endTxt, -2
+  otherwise
+    call insertTopBottom startTxt, endTxt
+end
 exit
 
 insertTopBottom: procedure
-  parse arg startTxt endTxt
+  parse arg startTxt, endTxt, offset
   'CURSOR DATA'
   'EXTRACT /MARK/'
   'EXTRACT /CURLINE/'
   hasmark=\(MARK.6=0 | MARK.0=0)
-  if hasmark then 'CURSOR BegMark'
+  if hasmark then do
+    'CURSOR BegMark'
+    -- Indent the marked line(s)
+    if offset='' then do 2
+      'MARK SHIFT RIGHT'
+    end
+  end
+  else do
+    if offset='' then 'REPLACE' "  "CURLINE.1
+  end
   'CURSOR UP'
-  'INPUT' insertTag(startTxt, CURLINE.1)
+  'INPUT' padtag(startTxt, CURLINE.1, offset)
 
   if endTxt<>'' then do
     if hasmark then 'CURSOR ENDMARK'
     else            'CURSOR DOWN'
-    'INPUT' insertTag(endTxt, CURLINE.1)
+    'INPUT' padtag(endTxt, CURLINE.1, offset)
   end
   return
 
 wrapEachLine: procedure
-  parse arg before after
+  parse arg before, after
   'EXTRACT /MARK/'
   'EXTRACT /FLSCREEN/'
   select
     when MARK.6=0 then 'MSG Mark exists in another file:' MARK.1
     when MARK.0=0 then do
       'EXTRACT /CURLINE/'
-      'REPLACE' insertTags(before, after, CURLINE.1)
+      'REPLACE' padtags(before, after, CURLINE.1)
     end
     otherwise
       do i=MARK.2 to MARK.3
         'CURSOR' i '1'
         'EXTRACT /CURLINE/'
-        'REPLACE' insertTags(before, after, CURLINE.1)
+        'REPLACE' padtags(before, after, CURLINE.1)
       end
       'CURSOR BEGMARK'
   end
   return
 
-/* Insert specified tag and reverse indent if possible */
-insertTag: procedure
-  parse arg tag, currentline
-  indentLevel=2
-  blanks=leadingBlanks(currentline)
-  if blanks>=indentLevel then return copies(' ',blanks-indentLevel)||tag
-  return copies(' ',blanks)||tag
+/* Left-pad a given string with blanks according to indent of current line. */
+padtag: procedure
+  parse arg tag, currentline, indentLevel
+  if \datatype(indentLevel,'W') then indentLevel=0
+  blanks=max(verify(currentline, ' ')-1,0)
+  return copies(' ', max(blanks+indentLevel,0))||tag
 
 /* Insert specified tags into a given line */
-insertTags: procedure
+padtags: procedure
   parse arg prefix, suffix, currentline
-  blanks=leadingBlanks(currentline)
-  if blanks=0 then return prefix||currentline||suffix
+  blanks=max(verify(currentline, ' ')-1,0)
   return insert(prefix, currentline, blanks)||suffix
-
-/* Return the number of leading blanks in a given string. */
-leadingBlanks: procedure
-  arg str
-  ctr=0
-  strlen=length(str)
-  do i=1 to strlen
-   if substr(str,i,1)=' ' then ctr=ctr+1
-   else return ctr        -- return counter at first non-blank
-  end i
-  return strlen
 

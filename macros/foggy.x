@@ -127,9 +127,11 @@ do i=1 to times
 end
 
 /* OK, now lets put that data out NICELY */
+'EXTRACT /CURLINE/'
+blanks=max(verify(CURLINE.1, ' ')-1,0)
 do until output = ''
   k=LASTPOS(' ',output,MIN(linesize,LENGTH(output)))
-  "INPUT" strip(LEFT(output,k))
+  'INPUT' copies(' ', blanks)||strip(LEFT(output,k))
   output=STRIP(SUBSTR(output,k+1),'L')
 end
 exit

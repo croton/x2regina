@@ -9,7 +9,7 @@ tag_end            = "/"
 margins            = 1 120 20 80
 split_align_paren  = off
 
-key a-0 = MSG 1=Hlp 2=Prof 3=ProfP 4=Xpdr 5=App 6=TagLn 7=TagBlk 8=? 9=?
+key a-0 = MSG 1=Hlp 2=Prof 3=ProfP 4=Xpdr 5=App 6=TagLn 7=TagBlk 8=Expr 9=?
 key a-1 = MSG Now using ReactJS profile
 key a-2 = EDIT C:\cjp\x2\reactjs.prof
 key a-3 = EDIT C:\cjp\x2\jscript.prof
@@ -17,7 +17,7 @@ key a-4 = MACRO cmdout xpdr.js xs reactjs
 key a-5 = CMDTEXT cmdin merge %cjp%\snips\rjspage.tmpl
 key a-6 = CMDTEXT wraptag LINE
 key a-7 = CMDTEXT wraptag
-key a-8 = MSG Alt-8
+key a-8 = MACRO instr /{~}/
 key a-9 = MSG Alt-9
 
 expand_keyword = comp \1

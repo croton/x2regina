@@ -7,38 +7,51 @@ tag_end        = "/"
 key a-/ = MACRO wrapit {
 key a-` = MACRO instr /="~"/
 
-key a-0 = MSG 1=Hlp 2=Prof 3=Xpdr 4=XpList 5=Page 6=? 7=? 8=? 9=?
+key a-0 = MSG 1=Hlp 2=Prof 3=Xpdr 4=XpList 5=Page 6=iCmt 7=Wtag 8=LocSty 9=?
 key a-1 = MSG Now using CSS profile
-key a-2 = EDIT C:\Users\cjp\x2\css.prof
+key a-2 = EDIT C:\cjp\x2\css.prof
 key a-3 = MACRO chooser --c xs css --t Expanders
 key a-4 = MACRO cmdout xpdr.css xs css
-key a-5 = CMDTEXT cmdin merge C:\Users\cjp\snips\bootstrap.tmpl
-key a-6 = MSG Alt-6
-key a-7 = MSG Alt-7
-key a-8 = MSG Alt-8
+key a-5 = CMDTEXT cmdout new.html merge %cjp%\snips\html5.tmpl
+key a-6 = MACRO wrapit /*
+key a-7 = CMDTEXT wraptag
+key a-8 = LOCATE |<style|
 key a-9 = MSG Alt-9
 
-a-PFLine = "1=Attr 2=Psdo 3=Btsp 4=Font 5=WTag 6=? 7=? 8=Trout 9=? 10=? 11=? 12=?"
-key a-F1 = MACRO fnpick css @:
+a-PFLine = "1=Attr 2=Psdo 3=Btsp 4=Font 5=Esc 6=iSty 7=Pos 8=Box 9=Disp 10=? 11=? 12=?"
+key a-F1 = MACRO fnpick css @: -m
 key a-F2 = MACRO fnpick csspseudo :@
 key a-F3 = MACRO fnpick bootstrap
 key a-F4 = MACRO fnpick fontfamily font-family: @;
-key a-F5 = CMDTEXT wraptag
-key a-F6 = MSG Alt-F6 css
-key a-F7 = MSG Alt-F7 css
-key a-F8 = MACRO chooser rainbow brown brook cutthroat golden arctic-char --t Trout
-key a-F9 = MSG Alt-F9 css
+key a-F5 = MACRO instr /&~;/
+key a-F6 = MACRO instr /style="~"/
+key a-F7 = MACRO chooser position relative absolute top right bottom left --t Position
+key a-F8 = MACRO chooser width height margin border padding --t Boxes --p @:
+key a-F9 = MACRO chooser block contents flex grid inline inline-block none table --t Display --p dislay: @;
 key a-F10 = MSG Alt-F10 css
 key a-F11 = MSG Alt-F11 css
 key a-F12 = MSG Alt-F12 css
+
+synonym startup = MACRO initcss START
+synonym exit    = MACRO initcss END
 
 expand_keyword = tag
 expand_replace = '<style type="text/css">'
 expand_replace = "  \c { }"
 expand_replace = "</style>"
 
+expand_keyword = meta \1
+expand_replace = '<meta name="\1" content="\c">'
+
+expand_keyword = vport
+expand_replace = '<meta name="viewport" content="width=device-width, initial-scale=1.0">'
+
 expand_keyword = link
 expand_replace = '<link rel="stylesheet" href="./\c.css" />'
+
+expand_keyword = linkf \1
+expand_replace = '<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=\1">'
+expand_replace = '<!-- family=Name+With+Spaces" -->'
 
 expand_keyword = "~\1"
 expand_replace = '<\1\c>'
@@ -65,16 +78,33 @@ expand_replace = "<\1>\c</\1>"
 
 expand_keyword = @ \1
 expand_replace = '\1 {'
+expand_replace = '  \c'
 expand_replace = '}'
 
+expand_keyword = media
+expand_replace = '@media only screen and (min-width: \c768px) {'
+expand_replace = '}'
+
+expand_keyword = mediaxs
+expand_replace = '@media only screen and (max-width: 600px) {\c}'
+
+expand_keyword = mediasm
+expand_replace = '@media only screen and (min-width: 600px) {\c}'
+
+expand_keyword = mediamd
+expand_replace = '@media only screen and (min-width: 768px) {\c}'
+
+expand_keyword = medialg
+expand_replace = '@media only screen and (min-width: 992px) {\c}'
+
 expand_keyword = bor
-expand_replace = 'border: 1px;'
+expand_replace = 'border: \c1px;'
 
 expand_keyword = bord
-expand_replace = 'border: 2px dotted;'
+expand_replace = 'border: \c2px dotted;'
 
 expand_keyword = borde
-expand_replace = 'border: medium dashed green;'
+expand_replace = 'border: \cmedium dashed green;'
 
 expand_keyword = pad
 expand_replace = 'padding: \c'
@@ -82,35 +112,43 @@ expand_replace = 'padding: \c'
 expand_keyword = mar
 expand_replace = 'margin: \c'
 
+expand_keyword = \1 -sa
+expand_replace = '\1 \cVpx Hpx;'
+expand_replace = '\1 Tpx Hpx Bpx;'
+expand_replace = '\1 Tpx Rpx Bpx Lpx;'
+
+expand_keyword = \1 -s2
+expand_replace = '\1 \c0px 0px;'
+expand_replace = '/* top+bot R+L */'
+
+expand_keyword = \1 -s3
+expand_replace = '\1 \c0px 0px 0px;'
+expand_replace = '/* top R+L bot*/'
+
+expand_keyword = \1 -s4
+expand_replace = '\1 \c0px 0px 0px 0px;'
+expand_replace = '/* top R bot L */'
+
+expand_keyword = pos
+expand_replace = 'position: \crelative absolute ;'
+
+expand_keyword = pa
+expand_replace = 'position: \cabsolute;'
+
+expand_keyword = pr
+expand_replace = 'position: \crelative;'
+
 expand_keyword = fl
-expand_replace = 'float: left;'
+expand_replace = 'float: \cleft;'
 
 expand_keyword = bg
 expand_replace = 'background-color: \c'
-
-expand_keyword = all \1
-expand_replace = '\1: Vpx Hpx;'
-expand_replace = '\1: Tpx Hpx Bpx;'
-expand_replace = '\1: Tpx Rpx Bpx Lpx;'
-
-expand_keyword = vh \1
-expand_replace = '\1: 2px 4px;'
-expand_replace = '/* top+bot R+L */'
-
-expand_keyword = thb \1
-expand_replace = '\1: 1px 2px 3px;'
-expand_replace = '/* top R+L bot*/'
-
-expand_keyword = each \1
-expand_replace = '\1: 2px 3px 1px 4px;'
-expand_replace = '/* top R bot L */'
 
 expand_keyword = box \1
 expand_replace = 'width: \1px;'
 expand_replace = 'height: \1px;'
 expand_replace = 'border\c'
 
-expand_keyword = font \1
-expand_replace = '<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=\1">'
-expand_replace = '<!-- family=Name+With+Spaces" -->'
+expand_keyword = fa
+expand_replace = 'font-family: \cserif sans-serif cursive fantasy monospace ;'
 

@@ -11,8 +11,6 @@ margins            = 1 200 20 80
 split_align_paren  = on
 bookmarks          = 30
 
-key c-HOME = MACRO tshome
-
 a-PFLine = "1=Pub 2=Pri 3=Search 4=Par 5=Sib 6=DirList 7=ShowDir 8=FilList 9=LayOut 10=Dirv 11=Fn 12=Tag"
 key a-F1 = ALL /public /
 key a-F2 = ALL /private /
@@ -21,8 +19,8 @@ key a-F4 = MACRO navIndent PARENT
 key a-F5 = MACRO navIndent SIBLING
 key a-F6 = MACRO dirlist
 key a-F7 = MACRO chooser --c dir /a:d /s /b |repf --ct dir --t Directories
-key a-F8 = CMDTEXT cmdout projfiles.txt ff
-key a-F9 = MACRO fnpick ngmat @=""
+key a-F8 = CMDTEXT tsfind
+key a-F9 = MACRO chooser flex layout layout-align --t ngMaterial --p @=""
 key a-F10 = MACRO fnpick ngdir ng-@=""
 key a-F11 = MACRO fnpick ngfn angular.@();
 key a-F12 = MACRO fnpick tags ~@
@@ -49,6 +47,24 @@ key a-/ = MACRO wrapit {
 expand_keyword = say
 expand_replace = "console.log('\c');"
 
+expand_keyword = log
+expand_replace = "console.log('# \c');"
+
+expand_keyword = v \1
+expand_replace = 'const \1: \c'
+
+expand_keyword = vv \1
+expand_replace = 'let \1: \c'
+
+expand_keyword = vp \1
+expand_replace = 'private \1: \c'
+
+expand_keyword = vo \1
+expand_replace = "const \1 = {\c: ''};"
+
+expand_keyword = va \1
+expand_replace = "const \1: \c[] = [];"
+
 expand_keyword = b
 expand_replace = 'const \c: boolean = false;'
 
@@ -73,38 +89,26 @@ expand_replace = "const \c: [,] = [,];"
 expand_keyword = e \1
 expand_replace = "enum \1 {\c, }"
 
-expand_keyword = v \1
-expand_replace = 'let \1: \c'
-
-expand_keyword = vp \1
-expand_replace = 'private \1: \c'
-
-expand_keyword = vo \1
-expand_replace = "const \1 = {\c: ''};"
-
-expand_keyword = va \1
-expand_replace = "const \1: \c[] = [];"
-
 expand_keyword = @ \1
 expand_replace = '\1: {\c'
 expand_replace = '}'
 
 expand_keyword = fh
 expand_replace = "/**"
-expand_replace = '* @brief \c.'
-expand_replace = '*'
-expand_replace = '* @param'
-expand_replace = '* @return'
-expand_replace = '* @return <tt>true</tt> if .. ; otherwise <tt>false</tt>.'
-expand_replace = '*/'
+expand_replace = ' * @brief \c.'
+expand_replace = ' *'
+expand_replace = ' * @param'
+expand_replace = ' * @return'
+expand_replace = ' * @return <tt>true</tt> if .. ; otherwise <tt>false</tt>.'
+expand_replace = ' */'
 
 expand_keyword = fn
 expand_replace = "/**"
-expand_replace = '* @brief .'
-expand_replace = '*'
-expand_replace = '* @param'
-expand_replace = '* @return'
-expand_replace = '*/'
+expand_replace = ' * @brief .'
+expand_replace = ' *'
+expand_replace = ' * @param'
+expand_replace = ' * @return'
+expand_replace = ' */'
 expand_replace = "private \c(): void"
 expand_replace = "{"
 expand_replace = "}"
@@ -119,10 +123,6 @@ expand_replace = 'public get \1(): \c'
 expand_replace = '{'
 expand_replace = '  return this.\1;'
 expand_replace = '}'
-
-expand_keyword = "\1 -);"
-expand_replace = '\1 function() {\c'
-expand_replace = '});'
 
 expand_keyword = cl \1
 expand_replace = 'export class \1'
@@ -182,7 +182,7 @@ expand_keyword = isarr \1
 expand_replace = "if (Array.isArray(\1)) \c"
 
 expand_keyword = do \1
-expand_replace = "for (var i=1; i<=\1; i=i+1) {"
+expand_replace = "for (let i=1; i<=\1; i++) {"
 expand_replace = "  \c"
 expand_replace = "}"
 
@@ -196,16 +196,24 @@ expand_replace = 'for (var key in \1) {'
 expand_replace = '  // key \1[key]'
 expand_replace = '}'
 
-expand_keyword = dodirx \1
-expand_replace = 'for (var i=0, key; key=\1[i]; i++) {'
-expand_replace = '  \c'
-expand_replace = '} // loop till null found'
+expand_keyword = map \1
+expand_replace = '.map(\1 => \c'
+expand_replace = ')'
+
+expand_keyword = fil \1
+expand_replace = '.filter(\1 => \c'
+expand_replace = ')'
+
+expand_keyword = red \1
+expand_replace = '.reduce((orig, \1) => {'
+expand_replace = '  }, \c'
+expand_replace = ')'
 
 expand_keyword = ret, r
 expand_replace = 'return \c;'
 
 expand_keyword = if
-expand_replace = "if (\c) ;"
+expand_replace = "if (\c)"
 
 expand_keyword = iff
 expand_replace = "if (\c)"
@@ -241,22 +249,26 @@ expand_replace = '  console.log(e.message);'
 expand_replace = '}'
 
 expand_keyword = \1 -then
-expand_replace = '\1.then(function(response) {\c'
-expand_replace = '}, function(error) {'
+expand_replace = '\1.then((response) => {\c'
+expand_replace = '}, (error) => {'
 expand_replace = '});'
 
 expand_keyword = \1 -thenc
-expand_replace = '\1.then(function(response) {\c'
-expand_replace = '}).catch(function(error) {'
+expand_replace = '\1.then((response) => {\c'
+expand_replace = '}).catch((error) => {'
 expand_replace = '});'
+
+expand_keyword = catch
+expand_replace = '.catch('
+expand_replace = '  (error) =>'
+expand_replace = '  {\c'
+expand_replace = '  });'
 
 expand_keyword = exp
 expand_replace = 'module.exports=\c;'
 
 expand_keyword = req \1
 expand_replace = 'import { \1 } from "\c\1";'
-expand_replace = "const \1=require('\c\1');"
-expand_replace = 'import * as \1 from "\c\1";'
 
 expand_keyword = #
 expand_replace = '<!-- \c -->'
@@ -283,16 +295,4 @@ expand_replace = '<\1\c/>'
 
 expand_keyword = x \1
 expand_replace = "<\1>\c</\1>"
-
-expand_keyword = $ \1
-expand_replace = "const \c=document.getElementById('\1');"
-
-expand_keyword = elem \1
-expand_replace = "const \c=document.createElement('\1');"
-
-expand_keyword = tnode \1
-expand_replace = "const \c=document.createTextNode('\1');"
-
-expand_keyword = qsel \1
-expand_replace = "const \c=document.querySelector('\1');"
 

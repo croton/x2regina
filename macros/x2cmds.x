@@ -10,7 +10,7 @@ else do
     when showvalue='FILE' then writeVarValues(setting)
     when showvalue='MSG' then 'MESSAGEBOX' setting':' showVarValues(setting)
     otherwise
-      'INPUT' quote('EXTRACT /'setting'/')
+      'KEYIN' quote('EXTRACT /'setting'/')
   end
 end
 exit

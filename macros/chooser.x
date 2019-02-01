@@ -6,6 +6,7 @@
      --t title
      --multi
      --q
+     --p
 */
 parse arg params
 if params='-?' then call help
@@ -26,6 +27,7 @@ select
     call initListStatic space(list)
 end
 parse var params '--t' title '--'
+parse var params '--p' pattern '--'
 
 if wordpos('--MULTI', paramsUC)>0 then do
   choicemade=chooseMulti(title)
@@ -46,7 +48,8 @@ else do
     end
     if wordpos('--Q', paramsUC)>0 then push choice
     else do
-      xcmd choice
+      if pattern='' then xcmd choice
+      else               xcmd changestr('@', strip(pattern), choice)
       -- Uncomment to place cursor at beginning of entry
       -- 'CURSOR +0 -'length(choice)
     end
