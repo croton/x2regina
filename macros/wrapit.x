@@ -11,9 +11,10 @@ select
   when leftside='/*' then rightside='*/'
   otherwise               rightside=leftside
 end
-if wordpos('BLOCK',options)=0 then
-  'MACRO wrapmark |'leftside'|'rightside'|'
-else
+if abbrev('BLOCK',options,1) then do
+  'MARK CLEAR'
   'MACRO wrapblock' leftside rightside
-
+end
+else
+  'MACRO wrapmark |'leftside'|'rightside'|'
 exit

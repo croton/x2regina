@@ -7,11 +7,15 @@
    Examples: multiplyline /@/fish stream rock
              multiplyline /#/=5
 */
-parse arg delim +1 wildcard (delim) tokens
+parse arg input
+if input='-?' then call help
+
+parse var input delim +1 wildcard (delim) tokens
 'extract /CURLINE/'
 
 -- Does word list indicate a numeric substitution?
-if (words(tokens)=1 & left(tokens,1)='=') then do
+tokenCount=words(tokens)
+if (tokenCount=1 & left(tokens,1)='=') then do
   parse var tokens '=' xn
   if datatype(xn, 'W') then do
     do w=1 to xn
@@ -23,9 +27,13 @@ if (words(tokens)=1 & left(tokens,1)='=') then do
   end
 end
 
-do w=1 to words(tokens)
+do w=1 to tokenCount
   -- Replace the wildcard with the current word
   'INPUT' changestr(wildcard, curline.1, word(tokens,w))
 end w
 'ALT 0 0'    -- Set file changes to zero to quit without confirm
 exit
+
+help: procedure
+  'MSG multiplyline /wildcard/wordlist'
+  exit

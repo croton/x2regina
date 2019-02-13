@@ -12,13 +12,36 @@ end
 exit
 
 /* Mark a paragraph, a block of text delimited by blank line */
-markparag: procedure
+markparag1: procedure
   'CURSOR DATA'
   'INSMODE ON'
   'MARK LINE'
   'MACRO nav DOWN'
   'MARK LINE'
   'MARK EXTEND UP'
+  return
+
+markparag: procedure
+  'EXTRACT /CURSOR/'
+  'EXTRACT /SIZE/'
+  'CURSOR DATA'
+  'INSMODE ON'
+  'MARK LINE'
+  linesToEOF=SIZE.1-CURSOR.1
+  -- If on last line already we are done
+  if linesToEOF=0 then do
+    'MSG On last line already!'
+    return
+  end
+  foundBlankline=0
+  do linesToEOF until foundBlankline
+    'DOWN'
+    'EXTRACT /CURLINE/'
+    foundBlankline=(CURLINE.1='')
+  end
+  if foundBlankline then 'UP'
+  'MARK LINE'
+  -- 'MSG Done! foundBlank?' foundBlankline 'rc='rc linesToEOF
   return
 
 /* Mark a block within brackets with a line mark (default) or block mark */

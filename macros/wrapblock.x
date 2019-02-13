@@ -1,18 +1,12 @@
-/* wrapblock -- Wrap a block with starting text and ending text, to be inserted on
-   separate lines or optionally on every line.
+/* wrapblock -- Wrap a block with start text and end text, to
+   be inserted on separate lines.
 */
 parse arg startTxt endTxt options
-if startTxt='' then do; 'MSG wrapblock prefix suffix [EACH | OUTDENT]'; exit; end
+if startTxt='' then do; 'MSG wrapblock prefix suffix [OUTDENT]'; exit; end
 
 options=translate(options)
-select
-  when abbrev('EACH', options, 1) then
-    call wrapEachLine startTxt, endTxt
-  when abbrev('OUTDENT', options, 1) then
-    call insertTopBottom startTxt, endTxt, -2
-  otherwise
-    call insertTopBottom startTxt, endTxt
-end
+if abbrev('OUTDENT', options, 1) then call insertTopBottom startTxt, endTxt, -2
+else                                  call insertTopBottom startTxt, endTxt
 exit
 
 insertTopBottom: procedure
@@ -38,26 +32,6 @@ insertTopBottom: procedure
     if hasmark then 'CURSOR ENDMARK'
     else            'CURSOR DOWN'
     'INPUT' padtag(endTxt, CURLINE.1, offset)
-  end
-  return
-
-wrapEachLine: procedure
-  parse arg before, after
-  'EXTRACT /MARK/'
-  'EXTRACT /FLSCREEN/'
-  select
-    when MARK.6=0 then 'MSG Mark exists in another file:' MARK.1
-    when MARK.0=0 then do
-      'EXTRACT /CURLINE/'
-      'REPLACE' padtags(before, after, CURLINE.1)
-    end
-    otherwise
-      do i=MARK.2 to MARK.3
-        'CURSOR' i '1'
-        'EXTRACT /CURLINE/'
-        'REPLACE' padtags(before, after, CURLINE.1)
-      end
-      'CURSOR BEGMARK'
   end
   return
 

@@ -1,12 +1,15 @@
 /* Wrapper to multiplyline; merge a template with values. */
-arg input
+parse arg input
 select
-  when input='-?' then do; 'MSG mgl [limit]'; exit; end
+  when input='-?' then do; 'MSG mgl [digit|wordlist]'; exit; end
   when datatype(input,'W') then 'MACRO multiplyline /@/='abs(input)
   otherwise
-    'CURSOR -1 0'                 -- move cursor up 1 line for argument data
-    'EXTRACT /CURLINE/'           -- get line contents
-    'CURSOR +1 0'                 -- move cursor back down to template line
-    'MACRO multiplyline /@/'CURLINE.1
+    if input='' then do
+      'UP'                   -- move cursor up 1 line for argument data
+      'EXTRACT /CURLINE/'    -- get line contents
+      'DOWN'                 -- move cursor back down to template line
+      'MACRO multiplyline /@/'CURLINE.1
+    end
+    else 'MACRO multiplyline' input
 end
 exit

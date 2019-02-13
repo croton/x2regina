@@ -6,7 +6,6 @@ if input='' | input='-?' then call help
 
 parse var input delim +1 before (delim) after (delim) options
 'EXTRACT /MARK/'
-'EXTRACT /FLSCREEN/'
 select
   when MARK.6=0 then 'MSG Mark exists in another file:' MARK.1
   when MARK.0=0 then call wrapCurrentLine before, after, options
@@ -30,14 +29,14 @@ wrapCurrentLine: procedure
 wrapMarkedLines: procedure expose MARK.
   parse arg prefix, suffix, options
   if options='' then
-    call wrapNoAlign prefix, suffix, options
+    call wrapNoAlign prefix, suffix
   else
     call wrapWithAlign prefix, suffix, options
   return
 
 /* Add a prefix or suffix to the marked lines. */
 wrapNoAlign: procedure expose MARK.
-  parse arg prefix, suffix, options
+  parse arg prefix, suffix
   do i=MARK.2 to MARK.3
     'CURSOR' i '1'
     'EXTRACT /CURLINE/'
@@ -65,8 +64,6 @@ wrapWithAlign: procedure expose MARK.
     'EXTRACT /CURLINE/'
     blanks=max(verify(CURLINE.1, ' ')-1,0)
     pad=maxlen-length(CURLINE.1)
-    newline=insert(prefix, CURLINE.1, blanks)
-    -- 'REPLACE' insert(newline, suffix, pad+offset)
     'REPLACE' insert(prefix, CURLINE.1, blanks)||right(suffix, pad+offset+suffixlen)
   end
   'CURSOR' MARK.2 '1'     -- move to first block line, then to EOL

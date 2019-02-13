@@ -1,21 +1,21 @@
 /* wraptag -- wrap a marked area with a given tag. */
 parse arg options
 if options='' | options='-?' then call help
-w=wordpos('-mark',options)
-if w>0 then do; wmark=1; options=delword(options,w,1); end; else wmark=0
 w=wordpos('-each',options)
 if w>0 then do; each=1; options=delword(options,w,1); end; else each=0
 
 tagname=word(options, 1)
 open='<'tagname'>'
 closed='</'tagname'>'
+'EXTRACT /MARK/'
+onelineBlockMark=(MARK.0>0 & MARK.4>0 & MARK.2=MARK.3)
 select
-  when wmark then 'MACRO wrapmark |'open'|'closed'|'
-  when each  then 'MACRO wrapblock' open closed 'EACH'
-  otherwise       'MACRO wrapblock' open closed
+  when each             then 'MACRO wrapline |'open'|'closed'|'
+  when onelineBlockMark then 'MACRO wrapmark |'open'|'closed'|'
+  otherwise                  'MACRO wrapblock' open closed
 end
 exit
 
 help: procedure
-  'MSG wraptag name [-mark | -each]'
+  'MSG wraptag name [-each]'
   exit

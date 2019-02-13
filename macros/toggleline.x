@@ -20,6 +20,7 @@ jump2previous: procedure
     'EXTRACT /CURSOR/'
     push CURSOR.1
     prevline
+    'TOPLINE'
     'MSG Jump to' prevline 'prev='CURSOR.1
   end
   return
