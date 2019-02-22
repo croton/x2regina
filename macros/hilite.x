@@ -61,7 +61,10 @@ hideblock: procedure
   if \hasmark() then call markparag
   'CURSOR BEGMARK'
   'EXTRACT /CURLINE/'
-  'ALL /'CURLINE.1'/m'
+  if pos('/', CURLINE.1)>0 then
+    'ALL |'CURLINE.1'|m'
+  else
+    'ALL /'CURLINE.1'/m'
   'MARK CLEAR'
   return
 
@@ -88,12 +91,5 @@ indentblock: procedure
 
 hasmark: procedure
   'EXTRACT /MARK/'
-  'EXTRACT /FLSCREEN/'
-  select
-    when MARK.0=0 then return 0                                -- Nothing marked
-    when (MARK.2>FLSCREEN.2 | MARK.3<FLSCREEN.1) then return 0 -- Mark exists off screen
-    when MARK.6=0 then return 0                                -- Mark exists in another file mark.1
-    otherwise nop
-  end
-  return 1
+  return \(MARK.0=0 | MARK.6=0)
 

@@ -44,7 +44,10 @@ quickComment: procedure
   'EXTRACT /COMMENTS/'
   qkcomm=COMMENTS.3
   if qkcomm='' then qkcomm='--'
-  'MACRO wrapline /'qkcomm '/'
+  if pos('/', qkcomm)=0 then
+    'MACRO wrapline /'qkcomm '/'
+  else
+    'MACRO wrapline |'qkcomm '|'
   return
 
 /* Change regular comments to quick comments */
