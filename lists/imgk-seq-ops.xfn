@@ -1,0 +1,28 @@
+-append
+-clut
+-coalesce
+-combine
+-compare
+-complex operator
+-composite
+-crop geom
+-deconstruct
+-evaluate-sequence operator
+-flatten
+-fx expression
+-hald-clut
+-layers method
+-morph value
+-mosaic
+-poly terms
+-print string
+-process arguments
+-separate
+-smush geom
+-write filename
+-clone indexes
+-delete indexes
+-duplicate count,indexes
+-insert index
+-reverse
+-swap indexes

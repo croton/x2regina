@@ -39,7 +39,7 @@ closedelete: procedure
     return
   end
   'QQUIT'
-  ADDRESS SYSTEM 'del' filename.1
+  ADDRESS CMD 'del' filename.1
   'MSG Removed file' filename.1
   return
 

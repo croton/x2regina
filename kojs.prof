@@ -1,0 +1,30 @@
+/* ---------------- knockoutJS ---------------- */
+extension  = JS
+code_type  = KoJS
+
+key a-0 = MSG [KoJS] 1=Prof
+key a-1 = EDIT C:\Users\ACER\cjp\x2\kojs.prof
+
+expand_keyword = apply
+expand_replace = 'ko.applyBindings(\c);'
+
+expand_keyword = $t
+expand_replace = 'data-bind="text: \c"'
+
+expand_keyword = $v
+expand_replace = 'data-bind="value: \c"'
+
+expand_keyword = $f
+expand_replace = 'data-bind="forEach: \c"'
+
+expand_keyword = $c
+expand_replace = 'data-bind="click: \c"'
+
+expand_keyword = vm
+expand_replace = 'var vm = {'
+expand_replace = '  \c: ko.observable()'
+expand_replace = '};'
+
+expand_keyword = obs \1
+expand_replace = '\1: ko.observable(\c)'
+

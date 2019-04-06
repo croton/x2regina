@@ -4,7 +4,6 @@
 'MENUITEM Mark , CMDTEXT mark'
 'MENUITEM Cursor , CMDTEXT CURSOR +0 +0'
 'MENUITEM Get output , CMDTEXT cmdin'
-'MENUITEM Get RX output , CMDTEXT cmdin rexx'
 'MENUITEM Replay keys , CMDTEXT keys_play '
 
 'MENU Keys'
@@ -12,8 +11,10 @@
 'MENUITEM Alt-Fn ,  MACRO showkeys A'
 'MENUITEM Ctrl-Fn , MACRO showkeys C'
 'MENUITEM Shift-Fn ,MACRO showkeys S'
-'MENUITEM Alt A-Z , MACRO showkeys LA'
-'MENUITEM Ctrl A-Z ,MACRO showkeys L'
+'MENUITEM Alt A-Z , MACRO showkeys AL'
+'MENUITEM Ctrl A-Z ,MACRO showkeys CL'
+'MENUITEM Query key,MACRO keyqry'
+'MENUITEM Report ,  MACRO keyrpt'
 
 'MENU Wrap'
 'MENUITEM Curr line , CMDTEXT wrapmark |||'

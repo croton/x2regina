@@ -4,9 +4,8 @@
 */
 arg option .
 select
-  when option='' then call help
-  when abbrev('SIBLING', option) then call findCurrIndent
-  when abbrev('PARENT', option) then call findupLesserIndent
+  when abbrev('SIBLING', option, 1) then call findCurrIndent
+  when abbrev('PARENT', option, 1) then call findupLesserIndent
   otherwise call help
 end
 exit

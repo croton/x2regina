@@ -1,0 +1,129 @@
+-adaptive-blur geom
+-adaptive-resize geom
+-adaptive-sharpen geom
+-alpha [on activate off deactivate set opaque copy]
+-annotate geom ""
+-auto-gamma
+-auto-level
+-auto-orient
+-bench iterations
+-black-threshold value
+-blue-shift factor
+-blur geom
+-border geom
+-bordercolor color
+-brightness-contrast
+-canny geom
+-cdl filename
+-charcoal radius
+-chop geom
+-clamp
+-clip
+-clip-path id
+-colorize value
+-color-matrix matrix
+-connected-components
+-contrast
+-contrast-stretch geom
+-convolve coefficients
+-cycle amount
+-decipher filename
+-deskew threshold
+-despeckle
+-distort method args
+-draw string
+-edge radius
+-encipher filename
+-emboss radius
+-enhance
+-equalize
+-evaluate operator value
+-extent geom
+-extract geom
+-features distance
+-fft
+-flip
+-floodfill geom color
+-flop
+-frame geom
+-function name parameters
+-gamma value
+-gaussian-blur geom
+-geom geom
+-grayscale method
+-hough-lines geom
+-identify
+-ift
+-implode amount
+-interpolative-resize geom
+-kuwahara geom
+-lat geom
+-level value
+-level-colors color,color
+-linear-stretch geom
+-liquid-rescale geom
+-magnify
+-mean-shift geom
+-median geom
+-mode geom
+-modulate value
+-monochrome
+-morphology method kernel
+-motion-blur geom
+-negate
+-noise geom
+-normalize
+-opaque color
+-ordered-dither NxN
+-paint radius
+-perceptible epsilon
+-polaroid angle
+-posterize levels
+-profile filename
+-quantize colorspace
+-radial-blur angle
+-raise value
+-random-threshold low,high
+-region geom
+-render
+-repage geom
+-resample geom
+-resize geom
+-roll geom
+-rotate degrees
+-rotational-blur angle
+-sample geom
+-scale geom
+-segment values
+-selective-blur geom
+-sepia-tone threshold
+-set property value
+-shade degrees
+-shadow geom
+-sharpen geom
+-shave geom
+-shear geom
+-sigmoidal-contrast geom
+-sketch geom
+-solarize threshold
+-sparse-color method args
+-splice geom
+-spread radius
+-statistic type geom
+-strip
+-swirl degrees
+-threshold value
+-thumbnail geom
+-tile filename
+-tint value
+-transform
+-transparent color
+-transpose
+-transverse
+-trim
+-type type
+-unique-colors
+-unsharp geom
+-vignette geom
+-wave geom
+-white-threshold value

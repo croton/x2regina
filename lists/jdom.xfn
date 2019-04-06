@@ -1,0 +1,16 @@
+location
+readyState
+referrer
+styleSheets
+createElement()
+createTextNode()
+getElementById()
+getElementsByClassName()
+getElementsByName()
+getElementsByTagName()
+getElementsByTagNameNS()
+querySelector()
+querySelectorAll()
+getSelection()
+addEventListener()
+removeEventListener()

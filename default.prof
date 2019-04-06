@@ -172,8 +172,6 @@
 /*   a-down    Alt+Down         BottomScreen                               */
 /*   a-end     Alt+End          Next_para                                  */
 /*   a-home    Alt+Home         Previous_para                              */
-/*   a-pgdn    Alt+PgDn         Next_func                                  */
-/*   a-pgup    Alt+PgUp         Previous_func                              */
 /*   a-left    Alt+Left         Previous_sym                               */
 /*   a-right   Alt+Right        Next_sym                                   */
 /*   a-up      Alt+Up           TopScreen                                  */
@@ -265,8 +263,6 @@
 * key a-down  = BottomScreen
 * key a-end   = Next_para
 * key a-home  = Previous_para
-* key a-pgdn  = Next_func
-* key a-pgup  = Previous_func
 * key a-left  = Previous_sym
 * key a-right = Next_sym
 * key a-up    = TopScreen
@@ -1126,30 +1122,12 @@ brackets = "{,};[,];(,);<,>;do,end;select,end;/*,*/;push,pop;"
 * APIFile            = ""
 
 
-/* Syntax expansion for C, C++, and Java #include "cpp.xprofile" */
-/* Syntax expansion for Rexx and NetRexx #include "rexx.xprofile" */
-/* Syntax expansion for HTML Javascript  #include "html.xprofile" */
-
-/***************************************************************************/
-/*                                                                         */
-/* Output from the DIR command                                             */
-/*                                                                         */
-/***************************************************************************/
-
+/* ------- Output from the DIR command -------- */
 extension          = DIR
-  openfile_id        = "\f", wordnum=last, pathsearch="Directory of ";
+openfile_id        = "\f", wordnum=last, pathsearch="Directory of ";
 
-
-/***************************************************************************/
-/*                                                                         */
-/* I tend to use X.HLP (via PF1) quite a lot and have been using the       */
-/* following snippet in XPROFILE.ADD in order to make X.HLP more           */
-/* colourful (and therefore more fun to use).                              */
-/*                                                                         */
-/* Contributed by Roger Spencer, REXX compiler team, on November 8, 1999   */
-/*                                                                         */
-/***************************************************************************/
-
+/* Make X.HLP more colourful (and therefore more fun to use). */
+/* by Roger Spencer, REXX compiler team, on November 8, 1999  */
 file_pattern       = HLP
   code_type          = help
   comment_formatting = NONE
@@ -1158,22 +1136,13 @@ file_pattern       = HLP
   highlight_quotes   = false
   keyword_case       = exact
 
-*  function_id        = "Page", REQUIRED_SET, COLUMN=73,  NAME_OFFSET=0
   function_id        = " X2 Editor Help", REQUIRED_SET, COLUMN=2, NAME_OFFSET=2, NAME_LENGTH=31;
+  alt_highlight_kw = _RESET
 
+  /* highlight the key names                                               */
+  highlight_keyword = F1,F2,F3,F4,F5,F6,F7,F8,F9,F10,F11,F12,Esc,Space,Ins,Tab
+  highlight_keyword = Enter,Home,CsrUp,PgUp,CsrLf,CsrRt,End,CsrDn,PgDn,Del,Backsp
 
-/***************************************************************************/
-/*                                                                         */
-/* Default extension, supplied in case user adds extension specific        */
-/* settings to their profile addition file without first specifying an     */
-/* extension.                                                              */
-/*                                                                         */
-/* Note that the clip functions are supplied in the XUTILS extension       */
-/* library.                                                                */
-/*                                                                         */
-/***************************************************************************/
-
+/* Default extension, supplied in case user adds extension specific settings */
+/* to their profile addition file without first specifying an extension.     */
 extension          = *
-  key c-ins          = clip copy
-
-  key s-ins          = clip paste

@@ -26,7 +26,7 @@ copyvislines: procedure
   fn=FILENAME.1'.x2tmp'
   'PUT' fn
   -- 'X' fn
-  ADDRESS SYSTEM 'type' fn '|gc'
-  ADDRESS SYSTEM 'del' fn
+  ADDRESS CMD 'type' fn '|gc'
+  ADDRESS CMD 'del' fn
   'MSG Visible lines copied to clipboard'
   return

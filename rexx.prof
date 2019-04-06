@@ -16,19 +16,22 @@ highlight_keyword  = _RESET;
 alt_highlight_kw   = _RESET;
 brackets       = "[,];(,);do,end;loop,end;select,end;/*,*/;"
 
-key a-0 = MSG 1=Hlp 2=Prof 3=Xpdr 4=Key 5=RxFn 6=UpPg 7=DnPg
-key a-1 = MSG Now using REXX profile
-key a-2 = EDIT C:\cjp\x2\rexx.prof
-key a-3 = MACRO cmdout xpdrs.rex xs rexx
+key a-0 = MSG [REXX] 1=Prof 2=Xpdr 3=XpdrO 4=Key 5=? 6=UpPg 7=DnPg 8=DoEnd 9=?
+key a-1 = EDIT C:\Users\ACER\cjp\x2\rexx.prof
+key a-2 = MACRO cmdout xpdrs.rex xs rexx
+key a-3 = MACRO cmdout xporx.rex xs orexx
 key a-4 = CMDTEXT SHELL xk rexx
-key a-5 = MACRO fnpick rexx
+key a-5 = MACRO showkeys
 key a-6 = PREVIOUS_PARA
 key a-7 = NEXT_PARA
 key a-8 = MACRO wrapblock do end
+key a-9 = MACRO showkeys
 
-a-PFLine = "1=Fn 2=Rtns"
+a-PFLine = "1=Fn 2=UFn 3=Rtns"
 key a-F1 = MACRO fnpick rexx
-key a-F2 = ALL /::routine /
+key a-F2 = MACRO fnpick rexxutil
+key a-F3 = ALL /::routine /
+key a-F4 = MACRO chooser directory array stream --t Orx Class --p x=.@~new
 
 expand_keyword = say
 expand_replace = "say '\c'"
@@ -92,9 +95,8 @@ expand_keyword = pver
 expand_replace = 'parse version \clangproc langlvl rday rmon ryear .'
 
 expand_keyword = "\1:"
-expand_replace = "/* \c */"
 expand_replace = "\1: procedure"
-expand_replace = "  parse arg ?"
+expand_replace = "  parse arg \c"
 expand_replace = "  return"
 
 expand_keyword = select, sel
@@ -144,9 +146,9 @@ expand_replace = "ADDRESS CMD '\c'"
 
 expand_keyword = pipeq
 expand_replace = "ADDRESS CMD '\c |RXQUEUE'"
-expand_replace = "if queued()>0 then pull entry"
 
 expand_keyword = pullq
+expand_replace = "-- if queued()>0 then pull entry"
 expand_replace = 'do while queued()>0'
 expand_replace = '  parse pull entry\c'
 expand_replace = 'end'
@@ -215,10 +217,9 @@ expand_replace = "if \1='' then \1='\c'"
 expand_keyword = ifnum \1
 expand_replace = "if datatype(\1,'W') then \c"
 
-expand_keyword = :r
-expand_replace = '::routine \c public'
-expand_replace = '  return'
-
-expand_keyword = req
+expand_keyword = inc
 expand_replace = "::requires '\c'"
+
+expand_keyword = rou
+expand_replace = '::routine \c PUBLIC'
 

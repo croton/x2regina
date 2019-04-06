@@ -9,19 +9,32 @@ split_align_paren  = on
 margins            = 1 200 20 80
 bookmarks          = 30
 
-a-PFLine = "1=Fn 2=Xpdr 3=Key 4=Par 5=Sib 6=Sel"
-key a-F1 = ALL /function/
-key a-F2 = MACRO chooser --c xs jscript --t Expanders
-key a-F3 = MACRO chooser --c xk jscript --t JS Keys
+a-PFLine = "1=Dom 2=jQ 3=InFn 4=Par 5=Sib 6=StrT 7=IfNul"
+key a-F1 = MACRO fnpick jdom document.@
+key a-F2 = MACRO fnpick jquery
+key a-F3 = instr /function() {~}/
 key a-F4 = MACRO navIndent PARENT
 key a-F5 = MACRO navIndent SIBLING
-key a-F6 = MACRO instr /$(~)/
+key a-F6 = MACRO instr /`${~}`/
+key a-F7 = MACRO instr /(typeof ~ === 'undefined') ? true : false/
+key a-F8 = MACRO showkeys
+key a-F9 = MACRO showkeys
+key a-F10 = MACRO showkeys
+key a-F11 = MACRO showkeys
+key a-F12 = MACRO showkeys
 
-key a-0 = MSG 1=Hlp 2=Prof
-key a-1 = MSG Now using Javascript profile
-key a-2 = EDIT C:\Users\ACER\cjp\x2\jscript.prof
+key a-0 = MSG [ES6] 1=Prof 2=Xp 3=Key
+key a-1 = EDIT C:\Users\ACER\cjp\x2\es6.prof
+key a-2 = MACRO chooser --c xs es6 --t Expander
+key a-3 = MACRO chooser --c xk es6 --t JS Keys
+key a-4 = MACRO showkeys
+key a-5 = MACRO showkeys
+key a-6 = MACRO showkeys
+key a-7 = MACRO showkeys
+key a-8 = MACRO showkeys
+key a-9 = MACRO showkeys
 
-key a-` = MACRO instr /function(){~}/
+key a-` = MACRO instr /() => {~}/
 key a-- = MACRO instr /: {~}/
 key a-= = MACRO instr /: [~]/
 key a-; = MACRO instr /: '~'/
@@ -30,57 +43,38 @@ key a-\ = MACRO wrapblock { } outdent
 key a-/ = MACRO wrapit {
 
 expand_keyword = say
-expand_replace = "console.log('\c');"
+expand_replace = "console.log(\c);"
 
 expand_keyword = v \1
 expand_replace = 'var \1 = \c'
 
-expand_keyword = vo \1
-expand_replace = "var \1 = {\c: ''};"
+expand_keyword = ?? \1
+expand_replace = 'const \1 = \c'
 
-expand_keyword = va \1
-expand_replace = "var \1 = ['\c', ''];"
+expand_keyword = ? \1
+expand_replace = 'let \1 = \c'
 
-expand_keyword = @ \1
-expand_replace = '\1: {\c'
-expand_replace = '}'
+expand_keyword = \1 ?o
+expand_replace = "\1 {\c: ''};"
+
+expand_keyword = "\1 -)"
+expand_replace = '\1 function(\c) {'
+expand_replace = '});'
+
+expand_keyword = \1 ?p
+expand_replace = '\1.prototype\c'
 
 expand_keyword = fn
-expand_replace = "function \c() { }"
-
-expand_keyword = fnc \1
-expand_replace = 'function \1(name) {'
-expand_replace = ' this.name=name;'
-expand_replace = ' this.@=@;'
-expand_replace = '}'
-
-expand_keyword = fnv \1
-expand_replace = '\1 = function(\c) {'
-expand_replace = '};'
-
-expand_keyword = fna \1
-expand_replace = '\1: function(\c) {'
-expand_replace = '},'
-
-expand_keyword = fnp \1
-expand_replace = '\c.prototype.\1=function() {'
-expand_replace = '};'
+expand_replace = "function \c() {"
+expand_replace = "}"
 
 expand_keyword = fni
 expand_replace = '(function(\c) {'
 expand_replace = '})();'
 
-expand_keyword = fns \1
-expand_replace = 'var \1 = (function (\c) {'
+expand_keyword = \1 ?fs
+expand_replace = '\1 (function (\c) {'
 expand_replace = '  return { };'
-expand_replace = '})();'
-
-expand_keyword = "\1 -);"
-expand_replace = '\1 function() {\c'
-expand_replace = '});'
-
-expand_keyword = bookmk \1
-expand_replace = 'javascript:(function (){'
 expand_replace = '})();'
 
 expand_keyword = ofy
@@ -102,9 +96,12 @@ expand_keyword = "\1{"
 expand_replace = '\1 \c{'
 expand_replace = '}'
 
-expand_keyword = arg \1
-expand_replace = 'if (!\1) var \1=\c;'
-expand_replace = "if (typeof \1==='undefined') var \1=\c;"
+expand_keyword = @ \1
+expand_replace = '\1: {\c'
+expand_replace = '}'
+
+expand_keyword = ifnul \1
+expand_replace = "(typeof \1 === 'undefined') ? \c : \1;"
 
 expand_keyword = has \1
 expand_replace = "if (\1.hasOwnProperty('\c'))"
@@ -118,13 +115,25 @@ expand_replace = "if (typeof \1==='\c')"
 expand_keyword = isarr \1
 expand_replace = "if (Array.isArray(\1)) \c"
 
+expand_keyword = map \1
+expand_replace = '.map(\1 => \c'
+expand_replace = ')'
+
+expand_keyword = fil \1
+expand_replace = '.filter(\1 => \c'
+expand_replace = ')'
+
+expand_keyword = red \1
+expand_replace = '.reduce((orig, \1) => {'
+expand_replace = '  }, \c'
+expand_replace = ')'
+
 expand_keyword = do \1
-expand_replace = "for (var i=1; i<=\1; i=i+1) {"
-expand_replace = "  \c"
+expand_replace = "for (let i=1; i<=\1; i++) {\c"
 expand_replace = "}"
 
 expand_keyword = doarr \1
-expand_replace = 'for (var i=0, len=\1.length; i<len; i++) {'
+expand_replace = 'for (let i=0, len=\1.length; i<len; i++) {'
 expand_replace = '\c\1[i];'
 expand_replace = '}'
 
@@ -132,20 +141,18 @@ expand_keyword = dokey \1
 expand_replace = '\cObject.keys(\1)'
 
 expand_keyword = dodir \1
-expand_replace = 'for (var key in \1) {'
+expand_replace = 'for (let key in \1) {'
 expand_replace = '  // key \1[key]'
 expand_replace = '}'
-
-expand_keyword = dodirx \1
-expand_replace = 'for (var i=0, key; key=\1[i]; i++) {'
-expand_replace = '  \c'
-expand_replace = '} // loop till null found'
 
 expand_keyword = ret, rt
 expand_replace = 'return \c;'
 
 expand_keyword = if
 expand_replace = "if (\c) ;"
+
+expand_keyword = ter
+expand_replace = "(\c ? 'T':'F')"
 
 expand_keyword = iff
 expand_replace = "if (\c) {"
@@ -161,7 +168,7 @@ expand_replace = "while (\c) {"
 expand_replace = "}"
 
 expand_keyword = sw \1
-expand_replace = 'switch (\1.value) {'
+expand_replace = 'switch (\1) {'
 expand_replace = '  case "\c":'
 expand_replace = '  break'
 expand_replace = '  default:'
@@ -184,12 +191,18 @@ expand_replace = '\1.then(function(response) {\c'
 expand_replace = '}).catch(function(error) {'
 expand_replace = '});'
 
+expand_keyword = catch
+expand_replace = '.catch('
+expand_replace = '  (error) =>'
+expand_replace = '  {\c'
+expand_replace = '  });'
+
 expand_keyword = newjs \1
-expand_replace = "var \1=(function () {"
-expand_replace = "  var author='cjp';"
+expand_replace = "const \1=(function () {"
+expand_replace = "  const author='cjp';"
 expand_replace = "  return {"
-expand_replace = "    run:function() {"
-expand_replace = "      console.log('Running \1, by'+author);"
+expand_replace = "    init:function() {"
+expand_replace = "      console.log('Running \1, by '+author);"
 expand_replace = "    }"
 expand_replace = "  };"
 expand_replace = "})();"
@@ -201,17 +214,8 @@ expand_keyword = exp
 expand_replace = 'module.exports=\c;'
 
 expand_keyword = req \1
-expand_replace = "var \1=require('\c\1');"
+expand_replace = "const \1=require('\c\1');"
 
-expand_keyword = $ \1
-expand_replace = "var \c=document.getElementById('\1');"
-
-expand_keyword = elem \1
-expand_replace = "var \c=document.createElement('\1');"
-
-expand_keyword = tnode \1
-expand_replace = "var \c=document.createTextNode('\1');"
-
-expand_keyword = qsel \1
-expand_replace = "var \c=document.querySelector('\1');"
+expand_keyword = imp \1
+expand_replace = 'import { \1 } from "\c\1";'
 

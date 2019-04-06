@@ -1,88 +1,49 @@
 /* ------------------- CSS -------------------- */
-extension      = CSS,SCSS,HTML
+extension      = CSS,SCSS
 code_type      = CSS
-highlight_tags = "<,>;"
-tag_end        = "/"
 
 key a-/ = MACRO wrapit {
 key a-` = MACRO instr /="~"/
 
-key a-0 = MSG 1=Hlp 2=Prof 3=Xpdr 4=XpList 5=Page 6=iCmt 7=Wtag 8=LocSty 9=?
-key a-1 = MSG Now using CSS profile
-key a-2 = EDIT C:\cjp\x2\css.prof
-key a-3 = MACRO chooser --c xs css --t Expanders
-key a-4 = MACRO cmdout xpdr.css xs css
-key a-5 = CMDTEXT cmdout new.html merge %cjp%\snips\html5.tmpl
-key a-6 = MACRO wrapit /*
-key a-7 = CMDTEXT wraptag
-key a-8 = LOCATE |<style|
-key a-9 = MSG Alt-9
-
-a-PFLine = "1=Attr 2=Psdo 3=Btsp 4=Font 5=Esc 6=iSty 7=Pos 8=Box 9=Disp 10=? 11=? 12=?"
-key a-F1 = MACRO fnpick css @: -m
-key a-F2 = MACRO fnpick csspseudo :@
-key a-F3 = MACRO fnpick bootstrap
-key a-F4 = MACRO fnpick fontfamily font-family: @;
-key a-F5 = MACRO instr /&~;/
-key a-F6 = MACRO instr /style="~"/
-key a-F7 = MACRO chooser position relative absolute top right bottom left --t Position
-key a-F8 = MACRO chooser width height margin border padding --t Boxes --p @:
-key a-F9 = MACRO chooser block contents flex grid inline inline-block none table --t Display --p dislay: @;
-key a-F10 = MSG Alt-F10 css
-key a-F11 = MSG Alt-F11 css
+a-PFLine = "1=Attr 2=Attr* 3=Psdo 4=Tfo 5=Font 6=Esc 7=iSty 8=Pos 9=Box 10=Disp 11=? 12=?"
+key a-F1 = MACRO fnpick css @:
+key a-F2 = MACRO fnpick css @: -m
+key a-F3 = MACRO fnpick csspseudo :@
+key a-F4 = MACRO fnpickdetail csstransform
+key a-F5 = MACRO fnpick cssfonts font-family: @;
+key a-F6 = MACRO instr /&~;/
+key a-F7 = MACRO instr /style="~"/
+key a-F8 = MACRO chooser position relative absolute top right bottom left --t Position
+key a-F9 = MACRO chooser width height margin border padding --t Boxes --p @:
+key a-F10 = MACRO chooser block contents flex grid inline inline-block none table --t Display --p display: @;
+key a-F11 = MACRO showkeys
 key a-F12 = MSG Alt-F12 css
+
+key a-0 = MSG [CSS] 1=Prof 2=Xpdr 3=XpList 4=LkUp 5=Color 6=Esc 7=Inl 8=Cmt 9=Page
+key a-1 = EDIT C:\users\acer\cjp\x2\css.prof
+key a-2 = MACRO chooser --c xs css --t Expanders
+key a-3 = MACRO cmdout xpdr.css xs css
+key a-4 = MACRO csshelp
+key a-5 = MACRO csshelp color
+key a-6 = MACRO instr /&~;/
+key a-7 = MACRO instr /style="~"/
+key a-8 = MACRO cmt CR
+key a-9 = CMDTEXT cmdin merge %cjp%\snips\html5.tmpl
 
 synonym startup = MACRO initcss START
 synonym exit    = MACRO initcss END
 
-expand_keyword = tag
-expand_replace = '<style type="text/css">'
-expand_replace = "  \c { }"
-expand_replace = "</style>"
-
-expand_keyword = meta \1
-expand_replace = '<meta name="\1" content="\c">'
-
-expand_keyword = vport
-expand_replace = '<meta name="viewport" content="width=device-width, initial-scale=1.0">'
-
-expand_keyword = link
-expand_replace = '<link rel="stylesheet" href="./\c.css" />'
-
-expand_keyword = linkf \1
-expand_replace = '<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=\1">'
-expand_replace = '<!-- family=Name+With+Spaces" -->'
-
-expand_keyword = "~\1"
-expand_replace = '<\1\c>'
-expand_replace = '</\1>'
-
-expand_keyword = "\1 !>"
-expand_replace = '\1 \c="">'
-
-expand_keyword = "\1 !c>"
-expand_replace = '\1 class="\c">'
-
-expand_keyword = "\1 !n>"
-expand_macro = xpandbstrap
-
-expand_keyword = div \1
-expand_replace = '<div class="\1"\c>'
-expand_replace = '</div>'
-
-expand_keyword = xs \1
-expand_replace = '<\1 \c/>'
-
-expand_keyword = x \1
-expand_replace = "<\1>\c</\1>"
-
-expand_keyword = @ \1
+expand_keyword = \1 {
 expand_replace = '\1 {'
 expand_replace = '  \c'
 expand_replace = '}'
 
-expand_keyword = media
-expand_replace = '@media only screen and (min-width: \c768px) {'
+expand_keyword = reset
+expand_replace = 'html { box-sizing: border-box; }'
+expand_replace =  '*, *:before, *:after { box-sizing: inherit; }\c'
+
+expand_keyword = media \1
+expand_replace = '@media all and (m\c-width: \1px) {'
 expand_replace = '}'
 
 expand_keyword = mediaxs
@@ -104,7 +65,7 @@ expand_keyword = bord
 expand_replace = 'border: \c2px dotted;'
 
 expand_keyword = borde
-expand_replace = 'border: \cmedium dashed green;'
+expand_replace = 'border: \cthin dashed green;'
 
 expand_keyword = pad
 expand_replace = 'padding: \c'
@@ -112,22 +73,25 @@ expand_replace = 'padding: \c'
 expand_keyword = mar
 expand_replace = 'margin: \c'
 
+expand_keyword = h
+expand_replace = 'height: \c;'
+
+expand_keyword = w
+expand_replace = 'width: \c;'
+
 expand_keyword = \1 -sa
 expand_replace = '\1 \cVpx Hpx;'
 expand_replace = '\1 Tpx Hpx Bpx;'
 expand_replace = '\1 Tpx Rpx Bpx Lpx;'
 
 expand_keyword = \1 -s2
-expand_replace = '\1 \c0px 0px;'
-expand_replace = '/* top+bot R+L */'
+expand_replace = '\1 \c0px 0px; /* T+B R+L */'
 
 expand_keyword = \1 -s3
-expand_replace = '\1 \c0px 0px 0px;'
-expand_replace = '/* top R+L bot*/'
+expand_replace = '\1 \c0px 0px 0px;  /* T R+L B */'
 
 expand_keyword = \1 -s4
-expand_replace = '\1 \c0px 0px 0px 0px;'
-expand_replace = '/* top R bot L */'
+expand_replace = '\1 \c0px 0px 0px 0px;  /* T R B L */'
 
 expand_keyword = pos
 expand_replace = 'position: \crelative absolute ;'
@@ -149,6 +113,21 @@ expand_replace = 'width: \1px;'
 expand_replace = 'height: \1px;'
 expand_replace = 'border\c'
 
-expand_keyword = fa
+expand_keyword = ff
 expand_replace = 'font-family: \cserif sans-serif cursive fantasy monospace ;'
+
+/* grid */
+expand_keyword = gd
+expand_replace = 'display: grid;'
+expand_replace = 'grid-template-columns: \c;'
+expand_replace = 'grid-template-rows: 100px;'
+
+expand_keyword = gr \1
+expand_replace = 'grid-row: \1/\c;'
+
+expand_keyword = gc \1
+expand_replace = 'grid-column: \1/\c;'
+
+expand_keyword = gp
+expand_replace = 'grid-gap: \c;'
 

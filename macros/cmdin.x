@@ -3,9 +3,9 @@ parse arg cmds
 if cmds='' then do; 'MSG cmdin command'; exit; end
 
 tempfile='cmdin.x.temp'
-ADDRESS SYSTEM cmds '>' tempfile
+ADDRESS CMD cmds '>' tempfile
 
 'GET' tempfile
 -- 'ALT 0 0'        -- Allow user to quit
-ADDRESS SYSTEM 'del' tempfile
+ADDRESS CMD 'del' tempfile
 exit

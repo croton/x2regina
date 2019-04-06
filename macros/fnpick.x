@@ -54,16 +54,4 @@ getchoice: procedure
   if queued()>0 then parse pull entry
   return entry
 
-/* Search for a matching file given a filespec */
-getFunctionFile: procedure
-  parse arg filestem
-  fnfile=filestem'.xfn'
-  x2home=value('X2HOME',,'ENVIRONMENT')
-  filepaths='.\'fnfile x2home'\lists\'fnfile
-  do w=1 to words(filepaths)
-    fn=word(filepaths,w)
-    if stream(fn,'c','query exists')<>'' then return fn
-  end w
-  return ''
-
 ::requires 'XRoutines.x'

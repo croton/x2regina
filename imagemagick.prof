@@ -1,0 +1,54 @@
+/* -------------------------- Imagemagick profile --------------------------- */
+extension          = cmd,bat,imgk
+comment_prefix     = "/* "
+comment_suffix     = "*/"
+quick_comment      = "::"
+expand_tabs        = on
+comment_formatting = NONE;
+margins            = 1 250 1 85
+split_align_paren  = off
+
+/* ALT keys */
+a-PFLine = "1=Xpdr 2=Key 3=Fn 4=Geom 5=Run 6=? 7=? 8=? 9=? 10=Tool 11=Colr 12=Font"
+key a-F1 = MACRO expanders imagemagick.prof
+key a-F2 = MACRO shortcutkeys imagemagick.prof
+key a-F3 = MACRO fnlist imagemagick_fn.txt
+key a-F4 = MACRO instr -geometry +0~+0
+key a-F5 = MACRO imgk
+key a-F6 = MSG Alt-F6
+key a-F7 = MSG Alt-F7
+key a-F8 = MSG Alt-F8
+key a-F9 = MSG Alt-F9
+key a-F10 = MACRO chooser --f %X2HOME%\lists\imgk_tools.txt --t Tools
+key a-F11 = MACRO chooser --f %X2HOME%\lists\imgk_colors.txt --t Colors
+key a-F12 = MACRO chooser --f %X2HOME%\lists\imgk_fonts.txt --t Fonts
+
+key a-0 = MSG 1=Hlp 2=Prof 3=CvHlp 4=CvOp 5=ImgOp 6=SeqOp
+key a-1 = MSG Now using Imagemagick profile
+key a-2 = MACRO loadprof imagemagick
+key a-3 = MACRO cmdout imconvert.help imconvert --help
+key a-4 = MACRO chooser --f %X2HOME%\lists\imgk-icv-ops.txt --t Convert
+key a-5 = MACRO chooser --f %X2HOME%\lists\imgk-img-ops.txt --t ImgOps
+key a-6 = MACRO chooser --f %X2HOME%\lists\imgk-seq-ops.txt --t SeqOps
+key a-7 = MSG Alt-7
+key a-8 = MSG Alt-8
+key a-9 = MSG Alt-9
+key a-; = MSG Alt-; (semi-colon)
+key a-' = MSG Alt-' (quote)
+key a-- = MSG Alt-- (dash)
+key a-= = MSG Alt-= (equals)
+key a-/ = MSG Alt-/ (slash)
+key a-` = MSG Alt-` (backtick)
+
+expand_keyword = id
+expand_replace = 'identify \c'
+
+expand_keyword = overlay \1
+expand_replace = 'composite -geometry +5+5 \1 \c out'
+
+expand_keyword = crop \1
+expand_replace = 'imconvert \1 -crop 10x10+0+0 \c'
+
+expand_keyword = "\1 geom"
+expand_replace = '\1 \c+10+10'
+

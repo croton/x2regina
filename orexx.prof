@@ -1,0 +1,71 @@
+/* -------------- OREXX profile --------------- */
+extension = ORX,CLS,REX,X
+
+expand_keyword = :c
+expand_replace = '::class \c public'
+
+expand_keyword = :sub \1
+expand_replace = '::class \c subclass \1 public'
+
+expand_keyword = :mix \1
+expand_replace = '::class \c mixinclass \1 public'
+
+expand_keyword = :m \1
+expand_replace = '::method \1'
+expand_replace = '  \c'
+expand_replace = '  return'
+
+expand_keyword = :cm \1
+expand_replace = '::method \1 CLASS'
+expand_replace = '  use arg \c'
+expand_replace = '  return'
+
+expand_keyword = :a
+expand_replace = '::method \c ATTRIBUTE'
+
+expand_keyword = init
+expand_replace = '::method init'
+expand_replace = '  expose'
+expand_replace = '  use arg \c'
+
+expand_keyword = unk
+expand_replace = '::method unknown'
+expand_replace = '  use arg messagename, messageargs'
+expand_replace = '  \c'
+expand_replace = '  return'
+
+expand_keyword = sm \1
+expand_replace = 'self~\1:super(\c)'
+
+expand_keyword = ? \1
+expand_replace = '\c=.\1~new'
+
+expand_keyword = exp
+expand_replace = 'expose \c'
+
+expand_keyword = ret
+expand_replace = 'return \c'
+
+expand_keyword = sayn
+expand_replace = ".stdout~charout('\c')"
+
+expand_keyword = saye
+expand_replace = ".stderr~lineout('\c')"
+
+expand_keyword = env
+expand_replace = '.environment[\c]'
+
+expand_keyword = supp \1
+expand_replace = '\1=\c~supplier'
+expand_replace = 'do while \1~available'
+expand_replace = '  -- \1~index \1~item'
+expand_replace = '  \1~next'
+expand_replace = 'end'
+
+expand_keyword = readf \1
+expand_replace = "inp=.stream~new('\1')"
+expand_replace = 'do while inp~lines>0'
+expand_replace = '  parse value inp~linein with \cln'
+expand_replace = 'end'
+expand_replace = 'inp~close'
+

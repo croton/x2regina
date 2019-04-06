@@ -1,0 +1,11 @@
+/* ---------------- bootstrap ----------------- */
+extension  = HTML
+
+expand_keyword = layout
+expand_replace = '<div class="container">'
+expand_replace = '  <div class="row">'
+expand_replace = '    <div class="col-sm-\c">'
+expand_replace = '    </div>'
+expand_replace = '  </div>'
+expand_replace = '</div>'
+

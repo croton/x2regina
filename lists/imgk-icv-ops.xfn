@@ -1,0 +1,86 @@
+-adjoin
+-affine matrix
+-alpha option
+-antialias
+-authenticate password
+-attenuate value
+-background color
+-bias value
+-black-point-compensation
+-blue-primary point
+-bordercolor color
+-caption string
+-channel type
+-clip-mask filename
+-colors value
+-colorspace type
+-comment string
+-compose operator
+-compress type
+-define format:option
+-delay value
+-density geom
+-depth value
+-direction type
+-display server
+-dispose method
+-dither method
+-encoding type
+-endian type
+-family name
+-fill color
+-filter type
+-font name
+-format ""
+-fuzz distance
+-gravity type
+-green-primary point
+-intensity method
+-intent type
+-interlace type
+-interline-spacing value
+-interpolate method
+-interword-spacing value
+-kerning value
+-label string
+-limit type value
+-loop iterations
+-mask filename
+-matte
+-mattecolor color
+-moments
+-monitor
+-orient type
+-page geom
+-ping
+-pointsize value
+-precision value
+-preview type
+-quality value
+-quiet
+-red-primary point
+-regard-warnings
+-remap filename
+-respect-parentheses
+-sampling-factor geom
+-scene value
+-seed value
+-size geom
+-stretch type
+-stroke color
+-strokewidth value
+-style type
+-support factor
+-synchronize
+-taint
+-texture filename
+-tile-offset geom
+-treedepth value
+-transparent-color color
+-undercolor color
+-units type
+-verbose
+-view
+-virtual-pixel method
+-weight type
+-white-point point

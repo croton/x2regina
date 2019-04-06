@@ -153,10 +153,12 @@ goldenrod1            255,193,37
 goldenrod2            238,180,34
 goldenrod3            205,155,29
 goldenrod4            139,105,20
+gray                  190,190,190
 gray                  126,126,126
 gray0                 0,0,0
 gray1                 3,3,3
 gray10                26,26,26
+gray100               255,255,255
 gray100               255,255,255
 gray11                28,28,28
 gray12                31,31,31
@@ -256,6 +258,7 @@ gray97                247,247,247
 gray98                250,250,250
 gray99                252,252,252
 green                 0,128,0
+green                 0,255,0
 green1                0,255,0
 green2                0,238,0
 green3                0,205,0
@@ -458,7 +461,7 @@ magenta1              255,0,255
 magenta2              238,0,238
 magenta3              205,0,205
 magenta4              139,0,139
-PinkMaroon            176,48,96
+maroon                176,48,96
 maroon                128,0,0
 maroon1               255,52,179
 maroon2               238,48,167
@@ -558,7 +561,7 @@ plum3                 205,150,205
 plum4                 139,102,139
 PowderBlue            176,224,230
 purple                128,0,128
-LightPurple           160,32,240
+purple                160,32,240
 purple1               155,48,255
 purple2               145,44,238
 purple3               125,38,205

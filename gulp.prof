@@ -1,0 +1,31 @@
+/* ------------------- gulp ------------------- */
+extension = JS
+
+key a-0 = MSG [Gulp] 1=Prof 2=Xpdr 3=Cmd
+key a-1 = EDIT c:\users\ACER\cjp\x2\gulp.prof
+key a-2 = MACRO chooser --c xs gulp --t Expanders
+key a-3 = MACRO chooser src dest rename series parallel watch --t Gulp cmds --p gulp.@()
+
+expand_keyword = exp
+expand_replace = 'exports\c'
+
+expand_keyword = expd
+expand_replace = 'exports.default = \c'
+
+expand_keyword = task
+expand_replace = "gulp.task('\c', function() {"
+expand_replace = "})"
+
+expand_keyword = pipe, pi
+expand_replace = '.pipe(\c)'
+
+expand_keyword = cb \1
+expand_replace = 'function \1(cb) {'
+expand_replace = '  \c'
+expand_replace = '  cb();'
+expand_replace = '}'
+
+expand_keyword = pl \1
+expand_replace = "return src('\1')"
+expand_replace = "  .pipe(dest('\c'));"
+
