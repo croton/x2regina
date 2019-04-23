@@ -33,19 +33,19 @@ key s-Del = MACRO deleter
 key s-PgUp = MACRO nav ENDUP
 key s-PgDn = MACRO marker CURR
 
-c-PFLine = "F1=Cmd 2=Var 3=Val 4=SwFn 5=TglFn 6=TopLn 7=Hil{} 8=HidBlk 9=FdRestore 10=Case 11=RingInf 12=Ring"
+c-PFLine = "F1=Cmd 2=Var 3=Val 4=Show 5=Hide 6=TopLn 7=Hil{} 8=HidBlk 9=FdRestore 10=Case 11=RingInf 12=Ring"
 key c-F1 = MACRO x2cmds
 key c-F2 = MACRO x2cmds VAR
 key c-F3 = MACRO x2cmds VAR MSG
-key c-F4 = MACRO togglefile 1
-key c-F5 = MACRO togglefile
+key c-F4 = SHOW
+key c-F5 = EXCLUDE
 key c-F6 = TOPLINE
 key c-F7 = MACRO hilite BL
 key c-F8 = MACRO hilite HIDE
 key c-F9 = Find restore
 key c-F11 = MACRO ring
-key c-F12 = MACRO ringfil
-key c-Tab  = MACRO expandword
+key c-F12 = MACRO togglefile 1
+key c-Tab  = MACRO togglefile
 key c-Space = Expand
 key c-Ins  = Clip copy
 key c-Del  = MACRO deleter FILE
@@ -75,16 +75,16 @@ key c-x = MACRO hilite BB
 key c-z = CopyToCmd
 
 a-PFLine = ">=Ind <=RvInd"
-key a-0 = MSG [Default] 1=Date 2=Show 3=RingP 4=Ring 5=MkLnX
+key a-0 = MSG [Default] 1=Date 2=RingS 3=RingP 4=RingX 5=RingW 6=MkLnX 7=CKey 8=AKey 9=ClipV
 key a-1 = MACRO ipt left(date('w'),3) space(date(),1,'-')
-key a-2 = show
-key a-3 = MACRO ringfil PARTIAL
-key a-4 = ringwin
-key a-5 = Mark LINE EXTEND
-key a-6 = MSG Alt-6
-key a-7 = MSG Alt-7
-key a-8 = MSG Alt-8
-key a-9 = MSG Alt-9
+key a-2 = MACRO ring S
+key a-3 = MACRO ring P
+key a-4 = MACRO ringfil PARTIAL
+key a-5 = ringwin
+key a-6 = MACRO showkeys CL
+key a-7 = MACRO showkeys AL
+key a-8 = MACRO showkeys
+key a-9 = MACRO clipper VIS
 key a-[ = MACRO nav REV
 key a-] = MACRO nav FWD
 key a-a = MACRO nav HOME
@@ -132,6 +132,7 @@ expand_keyword = prof \1
 expand_replace = '\c\1'
 expand_replace = 'extension  = \1'
 expand_replace = 'code_type  = \1'
-expand_replace = 'key a-0 = MSG 1=Hlp 2=Prof'
-expand_replace = 'key a-1 = MSG Now using \1 profile'
+expand_replace = 'key a-0 = MSG [\1] 1=Prof 2=Xp'
+expand_replace = 'key a-1 = EDIT \1.prof'
+expand_replace = 'key a-2 = MACRO cmdout xpdr.\1 xs \1'
 

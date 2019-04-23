@@ -21,14 +21,14 @@ key a-F10 = LOCATE |<script|
 key a-F11 = LOCATE |</head>|
 key a-F12 = LOCATE |<body|
 
-key a-0 = MSG [HTML] 1=Prof 2=Xpdr 3=XpList 4=Par 5=Sib 8=Page 9=Merge
+key a-0 = MSG [HTML] 1=Prof 2=Xp 3=XpList 4=XpTag 5=Sib 8=Page 9=Merge
 key a-1 = EDIT C:\users\acer\cjp\x2\html.prof
-key a-2 = MACRO chooser --c xs html --t Expanders
-key a-3 = MACRO cmdout xpdr.html xs html
-key a-4 = MACRO navindent parent
-key a-5 = MACRO navindent sibling
-key a-6 = MACRO showkeys
-key a-7 = MACRO showkeys A
+key a-2 = MACRO chooser --c xs html --t HTML-XP
+key a-3 = MACRO cmdout xpdr.html xs html & xs tags
+key a-4 = MACRO chooser --c xs tags --t Tags-XP
+key a-5 = MACRO navindent parent
+key a-6 = MACRO navindent sibling
+key a-7 = MACRO showkeys
 key a-8 = CMDTEXT cmdin merge %cjp%\snips\html5.tmpl
 key a-9 = CMDTEXT cmdin merge
 

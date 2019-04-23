@@ -3,7 +3,7 @@
 arg option
 select
   when option='-?' then call help
-  when option='W' then call printRing 'recent-files.txt'
+  when option='P' then call printRing 'recent-files.txt'
   when option='S' then do
     opt='FILE'
     'EXTRACT /CD/'
@@ -60,7 +60,7 @@ printRing: procedure
   return
 
 help: procedure
-  'MSG ring [S | W]'
+  'MSG ring (S)tatus | (P)rint-file-list'
   return
 
 ::requires 'XRoutines.x'
