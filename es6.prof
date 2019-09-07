@@ -114,22 +114,21 @@ expand_replace = "if (typeof \1==='\c')"
 expand_keyword = isarr \1
 expand_replace = "if (Array.isArray(\1)) \c"
 
-expand_keyword = ea \1
-expand_replace = '.forEach(\1 => {\c'
-expand_replace = '})'
+expand_keyword = \1 -ea
+expand_replace = '\1.forEach(\c => {'
+expand_replace = '});'
 
-expand_keyword = map \1
-expand_replace = '.map(\1 => \c'
-expand_replace = ')'
+expand_keyword = \1 -map
+expand_replace = '\1.map(\c => );'
 
-expand_keyword = fil \1
-expand_replace = '.filter(\1 => \c'
-expand_replace = ')'
+expand_keyword = \1 -fil
+expand_replace = '\1.filter(\c => );'
 
-expand_keyword = red \1
-expand_replace = '.reduce((orig, \1) => {'
+expand_keyword = \1 -red
+expand_replace = '\1.reduce((orig, curr) => {'
+expand_replace = '  return orig;'
 expand_replace = '  }, \c'
-expand_replace = ')'
+expand_replace = ');'
 
 expand_keyword = do \1
 expand_replace = "for (let i=1; i<=\1; i++) {\c"
@@ -140,8 +139,8 @@ expand_replace = 'for (let i=0, len=\1.length; i<len; i++) {'
 expand_replace = '\c\1[i];'
 expand_replace = '}'
 
-expand_keyword = dokey \1
-expand_replace = '\cObject.keys(\1)'
+expand_keyword = keys
+expand_replace = 'Object.keys(\c)'
 
 expand_keyword = dodir \1
 expand_replace = 'for (let key in \1) {'
@@ -151,11 +150,11 @@ expand_replace = '}'
 expand_keyword = ret, rt
 expand_replace = 'return \c;'
 
-expand_keyword = if
-expand_replace = "if (\c) ;"
-
 expand_keyword = ter
 expand_replace = "(\c ? 'T':'F')"
+
+expand_keyword = if
+expand_replace = "if (\c) ;"
 
 expand_keyword = iff
 expand_replace = "if (\c) {"
@@ -167,8 +166,7 @@ expand_replace = "} else {"
 expand_replace = "}"
 
 expand_keyword = wh
-expand_replace = "while (\c) {"
-expand_replace = "}"
+expand_replace = "while (\c) {}"
 
 expand_keyword = sw \1
 expand_replace = 'switch (\1) {'
@@ -185,28 +183,24 @@ expand_replace = '  console.log(e.message);'
 expand_replace = '}'
 
 expand_keyword = \1 -then
-expand_replace = '\1.then(function(response) {\c'
+expand_replace = '\1.then(function(\c) {'
 expand_replace = '}, function(error) {'
 expand_replace = '});'
 
 expand_keyword = \1 -thenc
-expand_replace = '\1.then(function(response) {\c'
+expand_replace = '\1.then(function(\c) {'
 expand_replace = '}).catch(function(error) {'
 expand_replace = '});'
 
-expand_keyword = catch
-expand_replace = '.catch('
-expand_replace = '  (error) =>'
-expand_replace = '  {\c'
-expand_replace = '  });'
+expand_keyword = \1 -catch
+expand_replace = '\1.catch(\cerror => {'
+expand_replace = '});'
 
-expand_keyword = newjs \1
+expand_keyword = mod \1
 expand_replace = "const \1=(function () {"
 expand_replace = "  const author='cjp';"
 expand_replace = "  return {"
-expand_replace = "    init:function() {"
-expand_replace = "      console.log('Running \1, by '+author);"
-expand_replace = "    }"
+expand_replace = "    init:function() { console.log('Running \1 by', author); }"
 expand_replace = "  };"
 expand_replace = "})();"
 
@@ -223,6 +217,6 @@ expand_keyword = imp \1
 expand_replace = 'import { \1 } from "\c\1";'
 
 expand_keyword = click \1
-expand_replace = "$('#\1').click(function() {\c"
+expand_replace = "$(\c\1).click(function() {"
 expand_replace = '});'
 

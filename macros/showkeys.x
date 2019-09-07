@@ -1,9 +1,13 @@
 /* showkeys -- Show key assignments by meta key. */
 arg metakey
-if metakey='-?' then do; 'MSG showkeys [A|AL|C|CL|S]'; exit; end
+if metakey='-?' then do; 'MSG showkeys [?|A|AL|C|CL|S]'; exit; end
 
 'EXTRACT /ESCAPE/'
 NL=ESCAPE.1||'N'
+if metakey='?' then do
+  call queryAnyKey
+  exit
+end
 select
   when metakey='A' then mykeys=altfn()
   when metakey='C' then mykeys=ctrlfn()
@@ -68,3 +72,15 @@ do k=1 to length(letters)
 end k
 return msgtxt
 
+-- Query key assignment until ESCAPE is pressed
+queryAnyKey: procedure expose NL
+  do forever
+    msg = 'X2 Editor Key Query Utility' || NL || NL 'Press Escape to end'
+    'MESSAGEBOX' msg ||NL
+    if rc<>0 then leave
+    'EXTRACT /key' messagebox.1'/'
+    if key.1=0 then key.1='undefined'
+    'MSG key name='left(messagebox.1,12) 'function='key.1
+    if result='1b'x | result='ESCAPE' then leave   -- Escape key
+  end
+  return
