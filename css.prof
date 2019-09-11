@@ -5,30 +5,32 @@ code_type      = CSS
 key a-/ = MACRO wrapit {
 key a-` = MACRO instr /="~"/
 
-a-PFLine = "1=Attr 2=Attr* 3=Psdo 4=Tfo 5=Font 6=Esc 7=iSty 8=Pos 9=Box 10=Disp 11=? 12=?"
+a-PFLine = "1=Attr 2=Attr* 3=Psdo 4=Color 5=Font 6=Esc 7=Inl 8=Pos 9=Box 10=Disp 11=Tmpl 12=Favs"
 key a-F1 = MACRO fnpick css @:
 key a-F2 = MACRO fnpick css @: -m
 key a-F3 = MACRO fnpick csspseudo :@
-key a-F4 = MACRO fnpickdetail csstransform
+key a-F4 = MACRO csscolor
 key a-F5 = MACRO fnpick cssfonts font-family: @;
 key a-F6 = MACRO instr /&~;/
 key a-F7 = MACRO instr /style="~"/
 key a-F8 = MACRO chooser position relative absolute top right bottom left --t Position
 key a-F9 = MACRO chooser width height margin border padding --t Boxes --p @:
 key a-F10 = MACRO chooser block contents flex grid inline inline-block none table --t Display --p display: @;
-key a-F11 = MACRO showkeys
-key a-F12 = MSG Alt-F12 css
+key a-F11 = CMDTEXT cmdin merge %cjp%\snips\css.tmpl
+key a-F12 = MACRO chooser thistle tomato firebrick burlywood forestgreen darkorange --t FavColors
 
-key a-0 = MSG [CSS] 1=Prof 2=Xpdr 3=XpList 4=LkUp 5=Color 6=Esc 7=Inl 8=Cmt 9=Page
+key a-0 = MSG [CSS] 1=Prof 2=Xpdr 3=XpList 4=LkUp 5=Tfo 6=Flex 7=Inl 8=Cmt 9=Page
 key a-1 = EDIT C:\users\acer\cjp\x2\css.prof
 key a-2 = MACRO chooser --c xs css --t Expanders
 key a-3 = MACRO cmdout xpdr.css xs css
-key a-4 = MACRO csshelp
-key a-5 = MACRO csshelp color
-key a-6 = MACRO instr /&~;/
+key a-4 = MACRO cssattr
+key a-5 = MACRO fnpickdetail csstransform
+key a-6 = MACRO cssflex
 key a-7 = MACRO instr /style="~"/
 key a-8 = MACRO cmt CR
-key a-9 = CMDTEXT cmdin merge %cjp%\snips\html5.tmpl
+key a-9 = CMDTEXT cmdin merge %cjp%\snips\css.tmpl
+
+key AltGr-0 = MESSAGEBOX Alt-Ctl-0
 
 synonym startup = MACRO initcss START
 synonym exit    = MACRO initcss END
