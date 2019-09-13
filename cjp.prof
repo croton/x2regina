@@ -75,14 +75,14 @@ key c-x = MACRO hilite BB
 key c-z = CopyToCmd
 
 a-PFLine = ">=Ind <=RvInd"
-key a-0 = MSG [Default] 1=Date 2=RingS 3=RingP 4=RingX 5=RingW 6=MkLnX 7=CKey 8=AKey 9=ClipV
+key a-0 = MSG [Default] 1=Date 2=RingS 3=RingP 4=RingX 5=RingW 6=BkC 7=BkP 8=AKey 9=ClipV
 key a-1 = MACRO ipt left(date('w'),3) space(date(),1,'-')
 key a-2 = MACRO ring S
 key a-3 = MACRO ring P
 key a-4 = MACRO ringfil PARTIAL
 key a-5 = ringwin
-key a-6 = MACRO showkeys CL
-key a-7 = MACRO showkeys AL
+key a-6 = MACRO bkm C
+key a-7 = MACRO bkm P
 key a-8 = MACRO showkeys
 key a-9 = MACRO clipper VIS
 key a-[ = MACRO nav REV

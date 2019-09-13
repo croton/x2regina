@@ -13,35 +13,55 @@ if codeType='-?' then do; 'MSG fnpick [filename][@template][-m]'; exit; end
 w=wordpos('-m',template)
 if w>0 then do; pickmany=1; template=delword(template,w,1); end; else pickmany=0
 
+/* Optionally, insert many selections into one line (concatenated) rather than
+   one choice per line
+*/
+w=wordpos('-M',template)
+if w>0 then do
+  pickmany=1
+  concat=1
+  template=delword(template,w,1)
+end
+
 if codeType='' then do
   'EXTRACT /CODE_TYPE/'
   codeType=CODE_TYPE.1
 end
-call insertFn codeType, template, pickmany
+call insertFn codeType, template, pickmany, concat
 exit
 
 /* Load items from specified file and keyin the selected one within a template.*/
 insertFn: procedure
-  parse arg filestem, tmpl, pickmany
+  parse arg filestem, tmpl, pickmany, concat
   fnfile=getFunctionFile(filestem)
   if fnfile='' then do
     'MSG Function file not found:' filestem
     return
   end
   if pickmany then do
-    ans=pickManyFromFile(fnfile, filestem)
-    if ans~items=0 then 'MSG No selection made'
-    else loop item over ans
-      if tmpl='' then 'INPUT' item
-      else            'INPUT' changestr('@', tmpl, item)
-    end
-  end
-  else do
-    ans=pickFromFile(fnfile, filestem)
-    if ans='' then 'MSG Selection cancelled'
+    choices=pickManyFromFile(fnfile, filestem)
+    if choices~items=0 then 'MSG No selection made'
     else do
-      if tmpl='' then 'KEYIN' ans
-      else            'KEYIN' changestr('@', tmpl, ans)
+      if concat=1 then do
+        item=''
+        do choice over choices
+          item=item choice
+        end
+        if tmpl='' then 'KEYIN' strip(item)
+        else            'KEYIN' changestr('@', tmpl, strip(item))
+      end -- concat choices into one line
+      else loop item over choices
+        if tmpl='' then 'INPUT' item
+        else            'INPUT' changestr('@', tmpl, item)
+      end
+    end -- choices made
+  end -- pick many
+  else do
+    choice=pickFromFile(fnfile, filestem)
+    if choice='' then 'MSG Selection cancelled'
+    else do
+      if tmpl='' then 'KEYIN' choice
+      else            'KEYIN' changestr('@', tmpl, choice)
     end
   end
   return
