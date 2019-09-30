@@ -5,10 +5,11 @@ extension      = JS,JSON,MJS
 base_extension = JS
 code_type      = nodejs
 
-key a-0 = MSG [Node] 1=Prof 2=Xpdr 3=App
+key a-0 = MSG [Node] 1=Prof 2=Xpdr 3=App 4=Env
 key a-1 = CMDTEXT EDIT C:\Users\acer\cjp\x2\nodejs.prof
 key a-2 = MACRO chooser --c xs nodejs --t Expanders
 key a-3 = CMDTEXT cmdin merge %cjp%\snips\nodeapp.tmpl
+key a-4 = MACRO instr /process.env.~/
 
 expand_keyword = readf
 expand_replace = 'fs.readFile(\c, (err, data) => {'

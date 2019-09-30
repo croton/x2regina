@@ -7,42 +7,44 @@ comment_prefix = "<!-- "
 comment_suffix = " -->"
 
 /* ALT keys */
-a-PFLine = "1=Tag 2=Att 3=Class 4=Par 5=Sib 6=NxOpen 7=NxClos 8=FdAtt 9=FdCss 10=FdJs 11=FdHd 12=FdBd"
+a-PFLine = "1=Tag 2=Att 3=Class 4=Par 5=Sib 6=Icons 7=? 8=? 9=Org 10=FdAtt 11=NxOpen 12=NxClos"
 key a-F1 = CMDTEXT wraptag p
 key a-F2 = MACRO instr /="~"/
 key a-F3 = MACRO instr /class="~"/
 key a-F4 = MACRO navindent parent
 key a-F5 = MACRO navindent sibling
-key a-F6 = LOCATE |<|
-key a-F7 = LOCATE |>|
-key a-F8 = CMDTEXT all /id=/
-key a-F9 = LOCATE |<style|
-key a-F10 = LOCATE |<script|
-key a-F11 = LOCATE |</head>|
-key a-F12 = LOCATE |<body|
+key a-F6 = MACRO fnpick fa-fonts <i class="fa fa-@"></i>
+key a-F7 = MSG Alt-F7
+key a-F8 = MSG Alt-F8
+key a-F9 = MACRO ht list
+key a-F10 = CMDTEXT all /id=/
+key a-F11 = LOCATE |<|
+key a-F12 = LOCATE |>|
 
-key a-0 = MSG [HTML] 1=Prof 2=Xp 3=XpList 4=XpTag 5=Sib 8=Page 9=Merge
+key a-0 = MSG [HTML] 1=Prof 2=Xp 3=XpList 4=XpTag 5=? 6=? 7=New 8=Page 9=Merge
 key a-1 = EDIT C:\users\acer\cjp\x2\html.prof
 key a-2 = MACRO chooser --c xs html --t HTML-XP
 key a-3 = MACRO cmdout xpdr.html xs html & xs tags
 key a-4 = MACRO chooser --c xs tags --t Tags-XP
-key a-5 = MACRO navindent parent
-key a-6 = MACRO navindent sibling
-key a-7 = MACRO showkeys
-key a-8 = CMDTEXT cmdin merge %cjp%\snips\html5.tmpl
+key a-5 = MSG Alt-5
+key a-6 = MSG Alt-6
+key a-7 = CMDTEXT cmdin merge %cjp%\snips\html5.tmpl
+key a-8 = CMDTEXT cmdin merge %cjp%\snips\html5page.tmpl
 key a-9 = CMDTEXT cmdin merge
 
-key AltGr-0 = MESSAGEBOX Press Ctl-H for other Alt-Ctl keys
+key AltGr-0 = MSG 1=FdCss 2=FdJs 3=FdHd 4=FdBody
+key AltGr-1 = LOCATE |<style|
+key AltGr-2 = LOCATE |<script|
+key AltGr-3 = LOCATE |</head>|
+key AltGr-4 = LOCATE |<body|
 
 key a-` = MACRO showkeys A
 key a-- = MACRO showkeys AL
 key a-= = MACRO showkeys C
 key a-; = MACRO showkeys CL
-key a-' = MACRO showkeys
+key a-' = MACRO wraptag div
 key a-\ = MACRO wrapblock <!-- --> outdent
 key a-/ = MACRO wrapit <
-
-#include "tags.prof"
 
 expand_keyword = --
 expand_replace = "\CP\c\CS"

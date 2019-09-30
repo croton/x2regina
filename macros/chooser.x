@@ -162,5 +162,5 @@ initListStatic:
   return
 
 help:
-  'MSG chooser [--c cmd | --f file | wordlist][--multi][--q]'
+  'MSG chooser [--c cmd | --f file | wordlist][--multi][--q][--p]'
   exit

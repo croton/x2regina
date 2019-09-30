@@ -1,21 +1,18 @@
 /* ---------------------------------- PHP ----------------------------------- */
-
-extension          = PHP,HTML
-code_type          = php
+extension          = PHP
+code_type          = PHP
 comment_prefix     = "/* "
 comment_suffix     = "*/"
 quick_comment      = "#"
 comment_formatting = NONE;
 margins            = 1 200 20 80
 
-#include "tags.prof"
-
 /* ALT keys */
 a-PFLine = "1=? 2=? 3=? 4={} 5=? 6=? 7=? 8=? 9=? 10=? 11=? 12=?"
 key a-F1 = MSG A-F1
 key a-F2 = MSG A-F2
 key a-F3 = MSG A-F3
-key a-F4 = MACRO instr {~}
+key a-F4 = MACRO instr /{~}/
 key a-F5 = MSG Alt-F5
 key a-F6 = MSG Alt-F6
 key a-F7 = MSG Alt-F7
@@ -25,15 +22,16 @@ key a-F10 = MSG Alt-F10
 key a-F11 = MSG Alt-F11
 key a-F12 = MSG Alt-F12
 
-key a-0 = MSG [Php] 1=Prof 2=Xpdr 3=New 4=EnV 5=Bloc
+key a-0 = MSG [Php] 1=Prof 2=Xpdr 3=XpdrH 4=New 5=EnV 6=Bloc 7=? 8=? 9=?
 key a-1 = EDIT C:\Users\acer\cjp\x2\php.prof
-key a-2 = MACRO chooser --c xs php --t Expanders
-key a-3 = CMDTEXT cmdout new.php merge %cjp%\snips\html5.tmpl
-key a-4 = MSG Alt-4
-key a-5 = MACRO instr /{~}/
-key a-6 = MACRO chooser --c set|cut = --t Environment Variables --popw 50
+key a-2 = MACRO chooser --c xs php --t PHP
+key a-3 = MACRO chooser --c xs html --t HTML
+key a-4 = CMDTEXT cmdout new.php merge %cjp%\snips\html5.tmpl
+key a-5 = MACRO chooser --c set|cut = --t Environment Variables
+key a-6 = MACRO instr /{~}/
 key a-7 = MSG Alt-7
-key a-8 = MSG Alt-9
+key a-8 = MSG Alt-8
+key a-9 = MSG Alt-9
 
 key a-` = MACRO instr /function(){~}/
 key a-- = MACRO instr /: {~}/
@@ -43,21 +41,59 @@ key a-' = MACRO instr /="~"/
 key a-\ = MACRO wrapblock { } outdent
 key a-/ = MACRO wrapit {
 
-expand_keyword = css
-expand_replace = '<style type="text/css">'
-expand_replace = "  \c { }"
-expand_replace = "</style>"
+expand_keyword = fn \1
+expand_replace = 'function \1(\c) {'
+expand_replace = ''
+expand_replace = '}'
 
-expand_keyword = js
-expand_replace = '<script language="Javascript" type="text/javascript">'
-expand_replace = "\c"
-expand_replace = "</script>"
+expand_keyword = class \1
+expand_replace = 'namespace \c;'
+expand_replace = 'use myLib;'
+expand_replace = ''
+expand_replace = 'class \1 {'
+expand_replace = '  \c'
+expand_replace = '} # \1'
 
-expand_keyword = jss \1
-expand_replace = '<script language="JavaScript" src="\1.js"></script>'
+expand_keyword = subclass \1
+expand_replace = 'class \c extends \1 {'
+expand_replace = ''
+expand_replace = '}'
 
-expand_keyword = aj \1
-expand_replace = '<a href="javascript:\1()">\c</a>'
+expand_keyword = sec \1
+expand_replace = "@section('\1')\c"
+expand_replace = '@endsection'
+
+expand_keyword = cto \1
+expand_replace = 'public function __construct($\1) {'
+expand_replace = '  \c'
+expand_replace = '}'
+
+expand_keyword = ? \1
+expand_replace = '$\1=\c;'
+
+expand_keyword = "% \1"
+expand_replace = 'expand \1 with %'
+
+expand_keyword = "& \1"
+expand_replace = 'expand \1 with &'
+
+expand_keyword = "* \1"
+expand_replace = 'expand \1 with *'
+
+expand_keyword = ! \1
+expand_replace = 'expand \1 with \c!;'
+
+expand_keyword = \1 .
+expand_replace = '\1->\c;'
+
+expand_keyword = v \1
+expand_replace = 'private $\1=\c;'
+
+expand_keyword = vp \1
+expand_replace = 'public $\1=\c;'
+
+expand_keyword = vpr \1
+expand_replace = 'protected $\1=\c;'
 
 expand_keyword = snip
 expand_replace = '<?php'
@@ -128,9 +164,6 @@ expand_replace = '} # end switch $\1'
 expand_keyword = inc
 expand_replace = "include '\c';"
 
-expand_keyword = v \1
-expand_replace = '$\1=\c;'
-
 expand_keyword = arr \1
 expand_replace = '$\1[]=\c;'
 
@@ -144,78 +177,14 @@ expand_keyword = vpost \1
 expand_replace = "$\1=$_POST['\1'];"
 expand_replace = "if (!isset($\1)) $\1=\c;"
 
-expand_keyword = fn \1
-expand_replace = 'function \1(\c) {'
-expand_replace = ''
-expand_replace = '}'
-
-expand_keyword = class \1
-expand_replace = 'class \1 {'
-expand_replace = '  \c'
-expand_replace = '} # \1'
-
-expand_keyword = subclass \1
-expand_replace = 'class \c extends \1 {'
-expand_replace = ''
-expand_replace = '}'
-
-expand_keyword = @ \1
-expand_replace = '$\1->\c;'
-
-expand_keyword = ctor \1
-expand_replace = 'public function __construct($\1) {'
-expand_replace = '  \c'
-expand_replace = '}'
-
 expand_keyword = fdate
 expand_replace = "date('Y-m-d')"
 
 expand_keyword = ftime
 expand_replace = "date('H:i:s')"
 
-expand_keyword = htc
-expand_replace = '<!-- \c -->'
-
-expand_keyword = client
-expand_replace = '<script language="javascript" type="text/javascript" src="forms/includes/tools.inc.js"></script>'
-expand_replace = '<script language="javascript" type="text/javascript">'
-expand_replace = '\c'
-expand_replace = '</script>'
-
 expand_keyword = new
 expand_replace = '<?php'
-expand_replace = "defined('_JEXEC') or die('Restricted access');"
 expand_replace = '\c'
 expand_replace = '?>'
-
-expand_keyword = ss
-expand_replace = '\csession_start();'
-
-expand_keyword = ssadd \1
-expand_replace = "$_SESSION['\1']=\c;"
-
-expand_keyword = ssmod \1
-expand_replace = "if (isset($_SESSION['\1'])) $_SESSION['\1']=\c;"
-
-expand_keyword = ssexit
-expand_replace = '\csession_destroy();'
-
-expand_keyword = query \1
-expand_replace = '$db =& JFactory::getDBO();'
-expand_replace = "$query = 'SELECT * FROM #__\1';"
-expand_replace = '$db->setQuery($query);'
-expand_replace = '$objs = $db->loadObjectList();'
-
-expand_keyword = ckuser \1
-expand_replace = '$user =& JFactory::getUser();'
-expand_replace = "if ($user->guest) die('You are NOT logged in.<br/>');"
-expand_replace = '$db =& JFactory::getDBO();'
-expand_replace = "$query = 'SELECT username, usertype FROM #__users where id='.$user->id;"
-expand_replace = "$db->setQuery($query);"
-expand_replace = "$objs = $db->loadObjectList();"
-expand_replace = "$curruser = $objs[0];"
-expand_replace = "$uname=$curruser->username;"
-expand_replace = "if (strtolower($curruser->usertype)!='\1')"
-expand_replace = '  die("<center><h2>Unauthorized to access this function as ".strtoupper($curruser->usertype)."</h2></center>");'
-expand_replace = '\c'
 
