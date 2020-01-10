@@ -1,49 +1,54 @@
 /* ---------------------------------- PHP ----------------------------------- */
-extension          = PHP
-code_type          = PHP
-comment_prefix     = "/* "
-comment_suffix     = "*/"
-quick_comment      = "#"
+extension      = PHP,HTML
+code_type      = PHP
+comment_prefix = "/* "
+comment_suffix = "*/"
+quick_comment  = "#"
+highlight_tags = "<,>;"
+tag_end        = "/"
+margins        = 1 200 20 80
 comment_formatting = NONE;
-margins            = 1 200 20 80
 
 /* ALT keys */
-a-PFLine = "1=? 2=? 3=? 4={} 5=? 6=? 7=? 8=? 9=? 10=? 11=? 12=?"
-key a-F1 = MSG A-F1
-key a-F2 = MSG A-F2
-key a-F3 = MSG A-F3
-key a-F4 = MACRO instr /{~}/
-key a-F5 = MSG Alt-F5
+a-PFLine = "1=dbCol 2=dbCol2 3={ 4={{ 5=Eval 6=? 7=Css* 8=Css 9=Tag 10=Id 11=Par 12=Sib"
+key a-F1 = MACRO fnpick php-data-cmds
+key a-F2 = MACRO fnpick php-data-cmds $table->@(' ');
+key a-F3 = MACRO instr /{~}/
+key a-F4 = MACRO instr /{{~}}/
+key a-F5 = MACRO instr /{{!! ~ !!}}/
 key a-F6 = MSG Alt-F6
-key a-F7 = MSG Alt-F7
-key a-F8 = MSG Alt-F8
-key a-F9 = MSG Alt-F9
-key a-F10 = MSG Alt-F10
-key a-F11 = MSG Alt-F11
-key a-F12 = MSG Alt-F12
+key a-F7 = CMDTEXT cssbulma 1
+key a-F8 = MACRO fnpick classes-bulma
+key a-F9 = CMDTEXT wraptag p
+key a-F10 = MACRO instr / id="~"/
+key a-F11 = MACRO navindent parent
+key a-F12 = MACRO navindent sibling
 
-key a-0 = MSG [Php] 1=Prof 2=Xpdr 3=XpdrH 4=New 5=EnV 6=Bloc 7=? 8=? 9=?
-key a-1 = EDIT C:\Users\acer\cjp\x2\php.prof
+key a-0 = MSG [Php] 1=Prof 2=Xpdr 3=XpList 4=XpdrH 5=? 6=Link 7=Freq 8=New 9=View
+key a-1 = EDIT C:\Users\cpgle\cjp\x2\php.prof
 key a-2 = MACRO chooser --c xs php --t PHP
-key a-3 = MACRO chooser --c xs html --t HTML
-key a-4 = CMDTEXT cmdout new.php merge %cjp%\snips\html5.tmpl
-key a-5 = MACRO chooser --c set|cut = --t Environment Variables
-key a-6 = MACRO instr /{~}/
-key a-7 = MSG Alt-7
-key a-8 = MSG Alt-8
-key a-9 = MSG Alt-9
+key a-3 = MACRO cmdout xpdr.php xs php
+key a-4 = MACRO cmdout xpdr.html xs html tags
+key a-5 = MSG Alt-5
+key a-6 = MACRO instr ?<a href="~"> </a>?
+key a-7 = MACRO cmdout project.txt lvpro all
+key a-8 = CMDTEXT cmdout new.php merge %cjp%\snips\html5-bulma.tmpl
+key a-9 = CMDTEXT cmdout new.php merge %cjp%\snips\php-view.tmpl
 
-key a-` = MACRO instr /function(){~}/
-key a-- = MACRO instr /: {~}/
-key a-= = MACRO instr /: [~]/
-key a-; = MACRO instr /: '~'/
-key a-' = MACRO instr /="~"/
+key a-` = MACRO instr /<?php echo ~; ?>/
+key a-- = MACRO instr /->with(~)/
+key a-= = MACRO instr /'~' => ''/
+key a-; = MACRO instr /->~()/
+key a-' = MACRO instr / class="~"/
 key a-\ = MACRO wrapblock { } outdent
 key a-/ = MACRO wrapit {
 
 expand_keyword = fn \1
 expand_replace = 'function \1(\c) {'
-expand_replace = ''
+expand_replace = '}'
+
+expand_keyword = fnp \1
+expand_replace = 'public function \1(\c) {'
 expand_replace = '}'
 
 expand_keyword = class \1
@@ -51,45 +56,32 @@ expand_replace = 'namespace \c;'
 expand_replace = 'use myLib;'
 expand_replace = ''
 expand_replace = 'class \1 {'
-expand_replace = '  \c'
 expand_replace = '} # \1'
 
 expand_keyword = subclass \1
 expand_replace = 'class \c extends \1 {'
-expand_replace = ''
 expand_replace = '}'
 
-expand_keyword = sec \1
-expand_replace = "@section('\1')\c"
-expand_replace = '@endsection'
-
-expand_keyword = cto \1
-expand_replace = 'public function __construct($\1) {'
-expand_replace = '  \c'
+expand_keyword = cto
+expand_replace = 'public function __construct($\c) {'
 expand_replace = '}'
 
-expand_keyword = ? \1
-expand_replace = '$\1=\c;'
+expand_keyword = v \1
+expand_replace = '$\1 = \c;'
 
-expand_keyword = "% \1"
-expand_replace = 'expand \1 with %'
-
-expand_keyword = "& \1"
+expand_keyword = "\1 &"
 expand_replace = 'expand \1 with &'
 
 expand_keyword = "* \1"
 expand_replace = 'expand \1 with *'
 
-expand_keyword = ! \1
-expand_replace = 'expand \1 with \c!;'
-
 expand_keyword = \1 .
 expand_replace = '\1->\c;'
 
-expand_keyword = v \1
+expand_keyword = vp \1
 expand_replace = 'private $\1=\c;'
 
-expand_keyword = vp \1
+expand_keyword = vpu \1
 expand_replace = 'public $\1=\c;'
 
 expand_keyword = vpr \1
@@ -142,7 +134,6 @@ expand_replace = '}'
 
 expand_keyword = dow
 expand_replace = 'do {'
-expand_replace = ''
 expand_replace = '} while (\c);'
 
 expand_keyword = while
@@ -158,20 +149,22 @@ expand_replace = 'switch ($\1) {'
 expand_replace = "case '\c':"
 expand_replace = '  break;'
 expand_replace = 'default:'
-expand_replace = ''
 expand_replace = '} # end switch $\1'
 
-expand_keyword = inc
-expand_replace = "include '\c';"
+expand_keyword = arr1 \1
+expand_replace = '$\1[] = \c;'
 
 expand_keyword = arr \1
-expand_replace = '$\1[]=\c;'
+expand_replace = '$\1 = array('
+expand_replace = '  \c'
+expand_replace = "  '@' => '@',"
+expand_replace = ');'
 
 expand_keyword = arrf \1
-expand_replace = "$\1=array('\c','');"
+expand_replace = "$\1 = ['\c',''];"
 
 expand_keyword = arr2str \1
-expand_replace = "$\c=implode('\n', $\1);"
+expand_replace = "$\c = implode('\n', $\1);"
 
 expand_keyword = vpost \1
 expand_replace = "$\1=$_POST['\1'];"
@@ -187,4 +180,45 @@ expand_keyword = new
 expand_replace = '<?php'
 expand_replace = '\c'
 expand_replace = '?>'
+
+expand_keyword = ret
+expand_replace = 'return \c'
+
+expand_keyword = rt \1
+expand_replace = "Route::get('/\c', function() {"
+expand_replace = "  return view('\1');"
+expand_replace = '});'
+
+expand_keyword = rte \1
+expand_replace = "Route::get('/\c', '\1Controller @');"
+
+expand_keyword = rtr \1
+expand_replace = "Route::resource('\c\1', '\1Controller');"
+
+expand_keyword = sec \1
+expand_replace = "@section('\1')\c"
+expand_replace = '@endsection'
+
+expand_keyword = y
+expand_replace = "@yield('\c')"
+
+expand_keyword = inc
+expand_replace = "@include('\c')"
+
+expand_keyword = xt
+expand_replace = "@extends('\c')"
+
+expand_keyword = ife
+expand_replace = '@if (\c)'
+expand_replace = '@else'
+expand_replace = '@endif'
+
+expand_keyword = auth
+expand_replace = '@auth'
+expand_replace = '@else'
+expand_replace = '@endauth'
+
+expand_keyword = ea \1
+expand_replace = '@foreach($\1 as $\c)'
+expand_replace = '@endforeach'
 

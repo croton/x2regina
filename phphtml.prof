@@ -1,0 +1,133 @@
+/* ---------------- phphtml -- For use in php view templates ---------------- */
+extension  = PHP,HTML
+code_type  = PHP
+
+expand_keyword = --
+expand_replace = "<!-- \c -->"
+
+expand_keyword = sref
+expand_replace = '<link rel="stylesheet" href="./\c.css"/>'
+
+expand_keyword = fref \1
+expand_replace = '<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=\1">'
+expand_replace = '<!-- family=Name+With+Spaces" -->'
+expand_replace = '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">'
+
+expand_keyword = js
+expand_replace = '<script>\c'
+expand_replace = "</script>"
+
+expand_keyword = jsr \1
+expand_replace = '<script src="\1.js"></script>'
+
+expand_keyword = div
+expand_replace = '<div class="\c">'
+expand_replace = '</div>'
+
+expand_keyword = list \1
+expand_replace = "<\1>"
+expand_replace = "  <li>\c</li>"
+expand_replace = "</\1>"
+
+expand_keyword = dl \1
+expand_replace = '<dl>'
+expand_replace = '  <dt>\1</dt>'
+expand_replace = '  <dd>\c</dd>'
+expand_replace = '</dl>'
+
+expand_keyword = esc \1
+expand_replace = '&\1;\c'
+
+/* ---------------------------- links ----------------------------- */
+expand_keyword = an \1
+expand_replace = '<a name="\1">\c</a>'
+
+expand_keyword = ah \1
+expand_replace = '<a href="\1">\c</a>'
+
+expand_keyword = img
+expand_replace = '<img src="\c" alt="--" />'
+
+expand_keyword = vid
+expand_replace = '<iframe width="420" height="345" src="http://www.youtube.com/embed/\1"></iframe>'
+/* -------------------------- end links --------------------------- */
+
+expand_keyword = tab
+expand_replace = '<table>'
+expand_replace = '<thead>'
+expand_replace = '  <tr>'
+expand_replace = '    <th>\c</th>'
+expand_replace = '  </tr>'
+expand_replace = '</thead>'
+expand_replace = '<tbody>'
+expand_replace = '  <tr>'
+expand_replace = '    <td> </td>'
+expand_replace = '  </tr>'
+expand_replace = '</tbody>'
+expand_replace = '</table>'
+
+expand_keyword = row
+expand_replace = '<tr><td>\c</td></tr>'
+
+expand_keyword = col
+expand_replace = '<td>\c</td>'
+
+/* ------------------------ Form elements ------------------------- */
+expand_keyword = form
+expand_replace = '<form method="post" action="\c">'
+expand_replace = "</form>"
+
+expand_keyword = entry \1
+expand_replace = '<label for="\1">\c</label>'
+expand_replace = '<input type="text" name="\1" id="\1" />'
+
+expand_keyword = txt \1
+expand_replace = '<input type="text" name="\1" value="" />'
+expand_replace = '<input type="text" id="\1" name="\1" placeholder="\c" />'
+
+expand_keyword = pwd
+expand_replace = '<input type="password" name="\c" value="?" />'
+
+expand_keyword = upload
+expand_replace = '<!-- form enctype="multipart/form-data" -->'
+expand_replace = '<input type="file" name="\c">'
+
+expand_keyword = hid \1
+expand_replace = '<input type="hidden" name="\1" value="\c" />'
+
+expand_keyword = imgf
+expand_replace = '<input type="image" name="\c" src="img" />'
+
+expand_keyword = ck \1
+expand_replace = '<input type="checkbox" name="\1" value="\con" CHECKED />'
+
+expand_keyword = rb \1
+expand_replace = '<input type="radio" name="\1" value="\con" CHECKED />'
+
+expand_keyword = submit \1
+expand_replace = '<input type="submit" name="\1" value="\c" />'
+expand_replace = '<input type="reset" name="Clear" value="Reset" />'
+
+expand_keyword = btn \1
+expand_replace = '<button id="\1">\c</button>'
+
+expand_keyword = btni \1
+expand_replace = '<input type="button" name="\1" id="\1" value="\c" />'
+
+expand_keyword = sel \1
+expand_replace = '<select name="\1" id="\1">'
+expand_replace = '  <option value="\c"> </option>'
+expand_replace = "</select>"
+
+expand_keyword = opt
+expand_replace = '<option SELECTED value="\c"> </option>'
+
+expand_keyword = txta \1
+expand_replace = '<textarea name="\1" id="\1" rows="4" cols="\c50" >'
+expand_replace = "</textarea>"
+
+expand_keyword = group \1
+expand_replace = '<fieldset class="\1">'
+expand_replace = '<legend>\c</legend>'
+expand_replace = '</fieldset>'
+
