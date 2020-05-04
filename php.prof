@@ -25,13 +25,13 @@ key a-F11 = MACRO navindent parent
 key a-F12 = MACRO navindent sibling
 
 key a-0 = MSG [Php] 1=Prof 2=Xpdr 3=XpList 4=XpdrH 5=? 6=Link 7=Freq 8=New 9=View
-key a-1 = EDIT C:\Users\cpgle\cjp\x2\php.prof
+key a-1 = EDIT C:\Users\celes\cjp\x2\php.prof
 key a-2 = MACRO chooser --c xs php --t PHP
 key a-3 = MACRO cmdout xpdr.php xs php
 key a-4 = MACRO cmdout xpdr.html xs html tags
 key a-5 = MSG Alt-5
 key a-6 = MACRO instr ?<a href="~"> </a>?
-key a-7 = MACRO cmdout project.txt lvpro all
+key a-7 = MACRO cmdout project.txt lvdir all
 key a-8 = CMDTEXT cmdout new.php merge %cjp%\snips\html5-bulma.tmpl
 key a-9 = CMDTEXT cmdout new.php merge %cjp%\snips\php-view.tmpl
 

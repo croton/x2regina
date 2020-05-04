@@ -15,7 +15,7 @@ key F8 = Mark move
 key F9 = Mark copy
 key F10 = Undo
 
-s-PFLine = "F1=KeyRe 2=KeyDo 3=KeyDo* 4=CpLn 5=RevFind 6=Nm 7=FindMk 8=ChgMk 9=MkBloc 10=Redo 11=BlDn 12=BlUp"
+s-PFLine = "F1=KeyRe 2=KeyDo 3=KeyDo* 4=CpLn 5=RevFind 6=Nm 7=FindMk 8=ChgMk 9=MkBloc 10=Redo 11=Par 12=Sib"
 key s-F1 = keys_record
 key s-F2 = keys_play
 key s-F3 = MACRO repeatkey
@@ -26,8 +26,8 @@ key s-F7 = MACRO findmark
 key s-F8 = MACRO findmark C
 key s-F9 = Mark BLOCK
 key s-F10 = Redo
-key s-F11 = MACRO nav DOWN
-key s-F12 = MACRO nav UP
+key s-F11 = MACRO navIndent PARENT
+key s-F12 = MACRO navIndent SIBLING
 key s-Ins = Clip paste
 key s-Del = MACRO deleter
 key s-PgUp = MACRO nav ENDUP
@@ -81,8 +81,8 @@ key a-2 = MACRO ring S
 key a-3 = MACRO ring P
 key a-4 = MACRO ringfil PARTIAL
 key a-5 = ringwin
-key a-6 = MACRO bkm C
-key a-7 = MACRO bkm P
+key a-6 = MACRO bkm CLEAR
+key a-7 = MACRO bkm PRINT
 key a-8 = MACRO showkeys
 key a-9 = MACRO clipper VIS
 key a-[ = MACRO nav REV
@@ -127,12 +127,4 @@ expand_replace = 'parse arg input'
 expand_replace = "if input='' then do; 'MSG \1 input'; exit; end"
 expand_replace = "'MSG Macro \1 done.'"
 expand_replace = 'exit'
-
-expand_keyword = prof \1
-expand_replace = '\c\1'
-expand_replace = 'extension  = \1'
-expand_replace = 'code_type  = \1'
-expand_replace = 'key a-0 = MSG [\1] 1=Prof 2=Xp'
-expand_replace = 'key a-1 = EDIT \1.prof'
-expand_replace = 'key a-2 = MACRO cmdout xpdr.\1 xs \1'
 

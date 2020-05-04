@@ -50,9 +50,12 @@ insertFn: procedure
         if tmpl='' then 'KEYIN' strip(item)
         else            'KEYIN' changestr('@', tmpl, strip(item))
       end -- concat choices into one line
-      else loop item over choices
-        if tmpl='' then 'INPUT' item
-        else            'INPUT' changestr('@', tmpl, item)
+      else do
+        leadblanks=currentIndent()
+        loop item over choices
+          if tmpl='' then 'INPUT' leadblanks||item
+          else            'INPUT' leadblanks||changestr('@', tmpl, item)
+        end
       end
     end -- choices made
   end -- pick many
@@ -74,4 +77,5 @@ getchoice: procedure
   if queued()>0 then parse pull entry
   return entry
 
+::requires 'XEdit.x'
 ::requires 'XRoutines.x'

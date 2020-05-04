@@ -60,3 +60,6 @@ expand_replace = '```'
 expand_replace = 'run'
 expand_replace = '```'
 
+expand_keyword = lx \1
+expand_replace = '[\1]: <http://\c>'
+

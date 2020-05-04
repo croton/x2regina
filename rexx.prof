@@ -17,7 +17,7 @@ alt_highlight_kw   = _RESET;
 brackets       = "[,];(,);do,end;loop,end;select,end;/*,*/;"
 
 key a-0 = MSG [REXX] 1=Prof 2=Xpdr 3=XpdrO 4=Key 5=? 6=UpPg 7=DnPg 8=DoEnd 9=?
-key a-1 = EDIT C:\Users\ACER\cjp\x2\rexx.prof
+key a-1 = EDIT C:\Users\celes\cjp\x2\rexx.prof
 key a-2 = MACRO cmdout xpdrs.rex xs rexx
 key a-3 = MACRO cmdout xporx.rex xs orexx
 key a-4 = CMDTEXT SHELL xk rexx
@@ -27,7 +27,7 @@ key a-7 = NEXT_PARA
 key a-8 = MACRO wrapblock do end
 key a-9 = MACRO showkeys
 
-a-PFLine = "1=Fn 2=UFn 3=Rtns"
+a-PFLine = "1=Fn 2=UFn 3=Rtns 4=Class"
 key a-F1 = MACRO fnpick rexx
 key a-F2 = MACRO fnpick rexxutil
 key a-F3 = ALL /::routine /

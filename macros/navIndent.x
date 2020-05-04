@@ -41,13 +41,13 @@ findupLesserIndent: procedure
      if blankAtCursor then do
        data2left=(strip(left(CURLINE.1, CURSOR.2-1))<>'')
        if data2left then do
-         'MSG Found at line' CURSOR.1 'col' CURSOR.2 'orig indent='char1
+         'MSG Found parent, orig line='row
          call moveToFirstChar
          leave
        end
      end
      else do
-       'MSG Found at line' CURSOR.1 'col' CURSOR.2 'ORIG indent='char1
+       'MSG Found parent, orig line='row
        leave
      end
    end

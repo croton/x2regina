@@ -9,7 +9,7 @@ comment_suffix = " -->"
 /* ALT keys */
 a-PFLine = "1=Tag 2=Att 3=Class 4=Par 5=Sib 6=Icons 7=? 8=? 9=Org 10=FdAtt 11=NxOpen 12=NxClos"
 key a-F1 = CMDTEXT wraptag p
-key a-F2 = MACRO instr /="~"/
+key a-F2 = MACRO instr /id="~"/
 key a-F3 = MACRO instr /class="~"/
 key a-F4 = MACRO navindent parent
 key a-F5 = MACRO navindent sibling
@@ -22,9 +22,9 @@ key a-F11 = LOCATE |<|
 key a-F12 = LOCATE |>|
 
 key a-0 = MSG [HTML] 1=Prof 2=Xp 3=XpList 4=XpTag 5=? 6=? 7=New 8=Page 9=Merge
-key a-1 = EDIT C:\users\acer\cjp\x2\html.prof
+key a-1 = EDIT C:\users\celes\cjp\x2\html.prof
 key a-2 = MACRO chooser --c xs html --t HTML-XP
-key a-3 = MACRO cmdout xpdr.html xs html & xs tags
+key a-3 = MACRO cmdout xpdr.html xs html tags
 key a-4 = MACRO chooser --c xs tags --t Tags-XP
 key a-5 = MSG Alt-5
 key a-6 = MSG Alt-6
@@ -79,8 +79,7 @@ expand_replace = '<!-- family=Name+With+Spaces" -->'
 expand_replace = '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">'
 
 expand_keyword = js
-expand_replace = '<script>'
-expand_replace = "\c"
+expand_replace = '<script>\c'
 expand_replace = "</script>"
 
 expand_keyword = jsr \1
@@ -119,13 +118,6 @@ expand_replace = '<iframe width="420" height="345" src="http://www.youtube.com/e
 /* -------------------------- end links --------------------------- */
 
 expand_keyword = tab
-expand_replace = '<table>'
-expand_replace = '  <tr>'
-expand_replace = '    <td>\c</td>'
-expand_replace = '  </tr>'
-expand_replace = '</table>'
-
-expand_keyword = tabc
 expand_replace = '<table>'
 expand_replace = '<thead>'
 expand_replace = '  <tr>'

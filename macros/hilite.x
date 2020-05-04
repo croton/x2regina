@@ -1,6 +1,6 @@
 /* hilite -- Mark a paragraph or block. */
 arg input
-if input='-?' then do; 'MSG hiliteblock [BL | BB | HIDE | INDENT]'; exit; end
+if input='-?' then do; 'MSG hilite [BL | BB | HIDE | INDENT]'; exit; end
 
 select
   when input='BL' then call markbrackets

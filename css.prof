@@ -20,7 +20,7 @@ key a-F11 = MACRO instr /var(--~);/
 key a-F12 = MACRO chooser thistle tomato firebrick burlywood forestgreen darkorange --t FavColors
 
 key a-0 = MSG [CSS] 1=Prof 2=Xpdr 3=XpList 4=LkUp 5=Flex 6=Bts 7=Inl 8=Cmt 9=Sheet
-key a-1 = EDIT C:\users\acer\cjp\x2\css.prof
+key a-1 = EDIT C:\users\celes\cjp\x2\css.prof
 key a-2 = MACRO chooser --c xs css --t Expanders
 key a-3 = MACRO cmdout xpdr.css xs css
 key a-4 = MACRO cssattr
@@ -30,12 +30,14 @@ key a-7 = MACRO fnpickdetail csstransform
 key a-8 = MACRO cmt CR
 key a-9 = CMDTEXT cmdin merge %cjp%\snips\css.tmpl
 
-key AltGr-0 = MSG CtlAlt-1=FlexParent 2=FlexChild
+key AltGr-0 = MSG CtlAlt-1=FlexParent 2=FlexChild 3=FlexHelp 4=Rgba
 key AltGr-1 = MACRO chooser flex-direction flex-wrap flex-flow justify-content align-items align-content --t FlexParent
 key AltGr-2 = MACRO chooser order flex-grow flex-shrink flex-basis flex align-self --t FlexChild
+key AltGr-3 = MACRO cssflex -?
+key AltGr-4 = MACRO instr /rgba(~100, 100, 100, .5)/
 
-synonym startup = MACRO initcss START
-synonym exit    = MACRO initcss END
+synonym startup = MACRO cssinit START
+synonym exit    = MACRO cssinit END
 
 expand_keyword = \1 {
 expand_replace = '\1 {'
@@ -69,7 +71,7 @@ expand_keyword = bord
 expand_replace = 'border: \c2px dotted;'
 
 expand_keyword = borde
-expand_replace = 'border: \cthin dashed green;'
+expand_replace = 'border: \c1px dashed green;'
 
 expand_keyword = pad
 expand_replace = 'padding: \c'

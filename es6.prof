@@ -8,12 +8,12 @@ comment_formatting = NONE;
 margins            = 1 200 20 80
 bookmarks          = 30
 
-a-PFLine = "1=Dom 2=jQ 3=InFn 4=Par 5=Sib 6=StrT 7=IfNul 8=Search 9=CmtQ 10=Dif"
+a-PFLine = "1=Dom 2=jQ 3=InFn 4=? 5=? 6=StrT 7=IfNul 8=Search 9=CmtQ 10=Dif 11=DifSv 12=?"
 key a-F1 = MACRO fnpick jdom document.@
 key a-F2 = MACRO fnpick jquery
 key a-F3 = instr /function() {~}/
-key a-F4 = MACRO navIndent PARENT
-key a-F5 = MACRO navIndent SIBLING
+key a-F4 = MSG Alt-F4 es6
+key a-F5 = MSG Alt-F5 es6
 key a-F6 = MACRO instr /`${~}`/
 key a-F7 = MACRO instr /(typeof ~ === 'undefined') ? true : false/
 key a-F8 = MACRO searchFileAtCursor
@@ -22,23 +22,23 @@ key a-F10 = MACRO dif
 key a-F11 = MACRO dif File
 key a-F12 = MACRO showkeys
 
-key a-0 = MSG [ES6] 1=Prof 2=Xp 3=Key 4=BkmP 5=LocFn
+key a-0 = MSG [ES6] 1=Prof 2=Xp 3=Key 4=Fns 5=BkmPr 6=BkmCl 7=ClipV
 key a-1 = EDIT C:\Users\celes\cjp\x2\es6.prof
 key a-2 = MACRO chooser --c xs es6 --t Expander
 key a-3 = MACRO chooser --c xk es6 --t JS Keys
-key a-4 = MACRO bmprint
-key a-5 = ALL /  function/
-key a-6 = MACRO showkeys A
-key a-7 = MACRO showkeys AL
-key a-8 = MACRO showkeys C
-key a-9 = MACRO showkeys CL
+key a-4 = ALL /  function/
+key a-5 = MACRO bkm PRINT
+key a-6 = MACRO bkm CLEAR
+key a-7 = MACRO clipper VIS
+key a-8 = MACRO showkeys CL
+key a-9 = MACRO showkeys AL
 
 key a-` = MACRO wrapit `
 key a-- = MACRO instr /$(~)/
 key a-= = MACRO instr /${~}/
 key a-; = MACRO instr /() => {~}/
 key a-' = MACRO instr /="~"/
-key a-\ = MACRO wrapblock { } outdent
+key a-\ = MACRO wrapblock { } OUTDENT
 key a-/ = MACRO wrapit {
 
 expand_keyword = say

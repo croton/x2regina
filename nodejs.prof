@@ -1,19 +1,48 @@
 /* ------------------ Nodejs ------------------ */
 #include "es6.prof"
 
-extension      = JS,JSON,MJS
+extension      = JS,JSON
 base_extension = JS
 code_type      = nodejs
 
-key a-0 = MSG [Node] 1=Prof 2=Xpdr 3=App 4=Env
-key a-1 = CMDTEXT EDIT C:\Users\acer\cjp\x2\nodejs.prof
-key a-2 = MACRO chooser --c xs nodejs --t Expanders
-key a-3 = CMDTEXT cmdin merge %cjp%\snips\nodeapp.tmpl
-key a-4 = MACRO instr /process.env.~/
+a-PFLine = "1=? 2=? 3=InFn 4=Par 5=Sib 6=StrT 7=IfNul 8=Search 9=CmtQ 10=Dif"
+key a-F1 = MSG Alt-F1 nodejs
+key a-F2 = MSG Alt-F2 nodejs
+
+key a-0 = MSG [Node] 1=Prof 2=ProfP 3=Xpdr 4=XpdrP 5=Key 6=App 7=Fns 8=Env 9=Arg
+key a-1 = EDIT C:\Users\celes\cjp\x2\nodejs.prof
+key a-2 = EDIT C:\Users\celes\cjp\x2\es6.prof
+key a-3 = MACRO chooser --c xs nodejs --t Expanders
+key a-4 = MACRO chooser --c xs es6 --t Expander
+key a-5 = MACRO chooser --c xk es6 --t JS Keys
+key a-6 = CMDTEXT cmdin merge %cjp%\snips\nodeapp.tmpl
+key a-7 = ALL /function/
+key a-8 = MACRO instr /process.env.~/
+key a-9 = MACRO instr /process.argv[~]/
 
 expand_keyword = readf
 expand_replace = 'fs.readFile(\c, (err, data) => {'
 expand_replace = '  if (err) throw err;'
 expand_replace = '  console.log(data);'
 expand_replace = '});'
+
+expand_keyword = lib
+expand_replace = "'use strict';"
+expand_replace = 'function init() {'
+expand_replace = '  return {'
+expand_replace = '  };'
+expand_replace = '}'
+expand_replace = 'module.exports = { init: init };'
+
+expand_keyword = prom
+expand_replace = 'new Promise((resolve, reject) => {'
+expand_replace = '  resolve(\c);'
+expand_replace = '  // reject(new Error(''));'
+expand_replace = '});'
+
+expand_keyword = arg
+expand_replace = 'process.argv[\c]'
+
+expand_keyword = copy \1
+expand_replace = 'Object.assign(\c, \1)'
 

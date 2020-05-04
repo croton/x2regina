@@ -1,10 +1,10 @@
 /* ring -- Common tasks related to files in the ring. */
 'EXTRACT /RING/'
-arg option
+arg cmd options
 select
-  when option='-?' then call help
-  when option='P' then call printRing 'recent-files.txt'
-  when option='S' then do
+  when cmd='-?' then call help
+  when cmd='P' then call printRing options
+  when cmd='S' then do
     opt='FILE'
     'EXTRACT /CD/'
     status.=getRingStatus()
@@ -48,7 +48,7 @@ getRingStatus: procedure expose RING.
 
 printRing: procedure
   parse arg filename
-  if filename='' then return
+  if filename='' then filename='recent-files.log'
   'EXTRACT /RING/'
   outp=.stream~new(filename)
   outp~lineout('Files open on' date() time('c'))
