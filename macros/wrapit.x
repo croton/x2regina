@@ -13,7 +13,7 @@ select
 end
 if abbrev('BLOCK',options,1) then do
   'MARK CLEAR'
-  'MACRO wrapblock' leftside rightside
+  'MACRO wrapblock |'leftside'|'rightside'|'
 end
 else
   'MACRO wrapmark |'leftside'|'rightside'|'

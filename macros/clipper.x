@@ -15,9 +15,11 @@ exit
 
 /* Copy current file */
 copyfile: procedure
+  'EXTRACT /CURSOR/'
   'MACRO marker'
   'CLIP COPY'
   'MARK CLEAR'
+  'CURSOR' CURSOR.1 CURSOR.2 -- restore orig
   return
 
 /* Copy visible lines only */

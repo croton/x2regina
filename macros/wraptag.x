@@ -12,7 +12,7 @@ onelineBlockMark=(MARK.0>0 & MARK.4>0 & MARK.2=MARK.3)
 select
   when each             then 'MACRO wrapline |'open'|'closed'|'
   when onelineBlockMark then 'MACRO wrapmark |'open'|'closed'|'
-  otherwise                  'MACRO wrapblock' open closed
+  otherwise                 'MACRO wrapblock |'open'|'closed'|'
 end
 exit
 

@@ -17,6 +17,7 @@ select
   when input='FWD' then call endwordFwd
   when input='REV' then call endwordRev
   when input='HOME' then call homechar
+  when input='?' then 'MSG nav TOP* | BOT | ENDUP | UP | DOWN | FWD | REV | HOME'
   otherwise
     'TOP'
     'CURSOR COL1'

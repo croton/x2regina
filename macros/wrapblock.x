@@ -1,50 +1,48 @@
 /* wrapblock -- Wrap a block with start text and end text, to
    be inserted on separate lines.
 */
-parse arg startTxt endTxt options
-if startTxt='' then do; 'MSG wrapblock prefix suffix [OUTDENT]'; exit; end
+parse arg delim +1 topline (delim) bottomline (delim) options
+if abbrev('-?',delim) | topline='' then do
+  'MSG wrapblock /topline/bottomline/doIndent'
+  exit
+end
 
-options=translate(options)
-if abbrev('OUTDENT', options, 1) then call insertTopBottom startTxt, endTxt, -2
-else                                  call insertTopBottom startTxt, endTxt
+if abbrev('INDENT', translate(options), 1) then
+  call insertTopBottom topline, bottomline, 2
+else
+  call insertTopBottom topline, bottomline
 exit
 
 insertTopBottom: procedure
-  parse arg startTxt, endTxt, offset
+  parse arg topline, bottomline, offset
   'CURSOR DATA'
   'EXTRACT /MARK/'
   'EXTRACT /CURLINE/'
+  if datatype(offset,'W') then indents=min(offset,10)
+  else                         indents=0
   hasmark=\(MARK.6=0 | MARK.0=0)
   if hasmark then do
     'CURSOR BegMark'
-    -- Indent the marked line(s)
-    if offset='' then do 2
+    if indents>0 then do indents
       'MARK SHIFT RIGHT'
-    end
+    end -- Indent the marked line(s) if specified
   end
   else do
-    if offset='' then 'REPLACE' "  "CURLINE.1
+    if indents>0 then 'REPLACE' copies(' ',indents)||CURLINE.1
   end
-  'CURSOR UP'
-  'INPUT' padtag(startTxt, CURLINE.1, offset)
 
-  if endTxt<>'' then do
+  'CURSOR UP'
+  'INPUT' indentLine(topline, CURLINE.1)
+  if bottomline<>'' then do
     if hasmark then 'CURSOR ENDMARK'
     else            'CURSOR DOWN'
-    'INPUT' padtag(endTxt, CURLINE.1, offset)
+    'INPUT' indentLine(bottomline, CURLINE.1)
   end
   return
 
 /* Left-pad a given string with blanks according to indent of current line. */
-padtag: procedure
-  parse arg tag, currentline, indentLevel
-  if \datatype(indentLevel,'W') then indentLevel=0
+indentLine: procedure
+  parse arg tag, currentline
   blanks=max(verify(currentline, ' ')-1,0)
-  return copies(' ', max(blanks+indentLevel,0))||tag
-
-/* Insert specified tags into a given line */
-padtags: procedure
-  parse arg prefix, suffix, currentline
-  blanks=max(verify(currentline, ' ')-1,0)
-  return insert(prefix, currentline, blanks)||suffix
+  return copies(' ', max(blanks,0))||tag
 

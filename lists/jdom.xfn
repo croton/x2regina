@@ -1,3 +1,15 @@
+firstChild
+lastChild
+nodeName
+nodeType
+nodeValue
+parentElement
+parentNode
+nextSibling
+previousSibling
+appendChild
+removeChild
+textContent
 location
 readyState
 referrer
