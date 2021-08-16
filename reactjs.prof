@@ -1,20 +1,43 @@
 /* ----------------- ReactJS ------------------ */
 #include "es6.prof"
 
-extension      = JS,JSON
+extension      = JS
 base_extension = JS
 code_type      = reactjs
 highlight_tags = "<,>;"
 tag_end        = "/"
 
-key a-0 = MSG [React] 1=Prof 2=Xpdr 3=XpList 4=App
-key a-1 = CMDTEXT EDIT C:\Users\acer\cjp\x2\reactjs.prof
-key a-2 = MACRO chooser --c xs reactjs --t Expanders
-key a-3 = MACRO cmdout xpdr-react.js xs reactjs tags
-key a-4 = CMDTEXT cmdin merge %cjp%\snips\reactapp.tmpl
-key a-5 = MSG Alt-5
+key a-0 = MSG [React] 1=Prof 2=ProfP 3=Xpdr 4=XpdrP 5=XpList 6=SetKey 7=Class 8=Attrib 9=Prop
+key a-1 = EDIT C:\Users\celes\cjp\x2\reactjs.prof
+key a-2 = EDIT C:\Users\celes\cjp\x2\es6.prof
+key a-3 = MACRO chooser --c xs reactjs --t Expanders
+key a-4 = MACRO chooser --c xs es6 --t Expander
+key a-5 = MACRO cmdout xpdr-react.js xs reactjs tags
+key a-6 = MACRO instr /key={~}/
+key a-7 = MACRO instr /className="~"/
+key a-8 = MACRO instr / ~=""/
+key a-9 = MACRO instr / ~={}/
+
+/* Ctrl+Alt Keys */
+key AltGr-0 = MSG Ctl-Alt-1=App 2=Aria 3=ImpTag 4=iState 5=iClick 6=LCycle
+key AltGr-1 = CMDTEXT cmdin merge %cjp%\snips\reactapp.tmpl
+key AltGr-2 = MACRO fnpick aria aria-@=""
+key AltGr-3 = MACRO rjstool it
+key AltGr-4 = MACRO instr /this.state.~/
+key AltGr-5 = MACRO instr /onClick={() => { ~ }}/
+key AltGr-6 = MACRO chooser DidMount DidUpdate componentDidCatch --t LifeCycle --p component
+
+expand_keyword = co \1
+expand_replace = 'const \1 = \c'
+
+expand_keyword = v \1
+expand_replace = 'let \1 = \c'
+
+expand_keyword = fnr
+expand_replace = '\c() {'
 
 expand_keyword = comp \1
+expand_replace = "import React from 'react';"
 expand_replace = 'class \1 extends React.Component {'
 expand_replace = '  render() {'
 expand_replace = '    return ('
@@ -23,21 +46,96 @@ expand_replace = '      </div>'
 expand_replace = '    );'
 expand_replace = '  }'
 expand_replace = '}'
+expand_replace = 'export default \1;'
 
-expand_keyword = compfn \1
-expand_replace = 'function \1(props) {'
-expand_replace = '  return <div>\1 {props}</div>;'
-expand_replace = '}'
-
-expand_keyword = ctor \1
+expand_keyword = ctor
 expand_replace = 'constructor(props) {'
 expand_replace = '  super(props);'
-expand_replace = '  this.state = {\1: \c};'
+expand_replace = '  this.state = {\c: 0};'
+expand_replace = '  // bindfn'
 expand_replace = '}'
 
-expand_keyword = state \1
+expand_keyword = fnc \1
+expand_replace = 'function \1(props) {'
+expand_replace = '  return <div>\c {props}</div>'
+expand_replace = '  // ('
+expand_replace = '  // );'
+expand_replace = '}'
+
+expand_keyword = st8 \1
 expand_replace = 'this.setState({\1: \c});'
 
-expand_keyword = statefn
-expand_replace = 'this.setState((\c) => {});'
+expand_keyword = st8fn \1
+expand_replace = 'this.setState((\c) => ({'
+expand_replace = '  \1: 0'
+expand_replace = '}));'
+
+expand_keyword = bindfn \1
+expand_replace = 'this.\1 = this.\1.bind(\cthis);'
+
+expand_keyword = pr \1
+expand_replace = '\1={\c\1}'
+
+expand_keyword = mount
+expand_replace = 'componentDidMount() {\c'
+expand_replace = '}'
+
+expand_keyword = umount
+expand_replace = 'componentWillUnmount() {\c'
+expand_replace = '}'
+
+expand_keyword = frag
+expand_replace = '<Fragment\c>'
+expand_replace = '</Fragment>'
+
+expand_keyword = map \1
+expand_replace = '{props.\1.map(item => ('
+expand_replace = '  <\c key={item.id} />'
+expand_replace = '))}'
+
+expand_keyword = fmlabel \1
+expand_replace = '<label htmlFor="\1">\c</label>'
+expand_replace = '<input type="text" name="\1" id="\1">'
+
+expand_keyword = exp
+expand_replace = 'export \c'
+
+expand_keyword = expd
+expand_replace = 'export default \c'
+
+expand_keyword = --
+expand_replace = "/**"
+expand_replace = ' * \c'
+expand_replace = ' * @param'
+expand_replace = ' * @return'
+expand_replace = ' */'
+
+expand_keyword = \1 -lit
+expand_replace = '\1`\c'
+expand_replace = '`;'
+
+expand_keyword = fallback
+expand_replace = 'static getDerivedStateFromError(error) {'
+expand_replace = '  return { hasError: true };\c'
+expand_replace = '}'
+
+/* TAGS */
+expand_keyword = "?\1"
+expand_replace = '<\1\c>'
+expand_replace = '</\1>'
+
+expand_keyword = "!\1"
+expand_replace = '<\1>\c</\1>'
+
+expand_keyword = "@\1"
+expand_replace = '<\1 className="\c"></\1>'
+
+expand_keyword = $\1
+expand_replace = '<\1 \c/>'
+
+expand_keyword = "\1 ?>"
+expand_replace = '\1 \c="">'
+
+expand_keyword = "\1 c>"
+expand_replace = '\1 className="\c">'
 

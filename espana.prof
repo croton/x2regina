@@ -1,0 +1,16 @@
+/* Spanish characters */
+file_pattern = *
+
+key AltGr-0 = MSG CtlAlt-1=i 2=n 3=N 4=u 5=? 6=­ 7=A 8=a 9=All
+key AltGr-1 = keyin ¡
+key AltGr-2 = keyin ¤
+key AltGr-3 = keyin ¥
+key AltGr-4 = keyin £
+key AltGr-5 = keyin ¨
+key AltGr-6 = keyin ­
+key AltGr-7 = keyin &Aacute;
+key AltGr-8 = keyin &aacute;
+key AltGr-9 = MACRO pickdual spanishchars
+
+key AltGr-e = keyin ‚
+key AltGr-o = keyin ¢

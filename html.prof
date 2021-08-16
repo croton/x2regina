@@ -7,12 +7,12 @@ comment_prefix = "<!-- "
 comment_suffix = " -->"
 
 /* ALT keys */
-a-PFLine = "1=Tag 2=Att 3=Class 4=Par 5=Sib 6=Icons 7=? 8=? 9=Org 10=FdAtt 11=NxOpen 12=NxClos"
+a-PFLine = "1=Tag 2=Att 3=Class 4=Esc 5=Aria 6=Icons 7=? 8=? 9=Org 10=FdAtt 11=NxOpen 12=NxClos"
 key a-F1 = CMDTEXT wraptag p
 key a-F2 = MACRO instr /id="~"/
 key a-F3 = MACRO instr /class="~"/
-key a-F4 = MACRO navindent parent
-key a-F5 = MACRO navindent sibling
+key a-F4 = MACRO instr /&~;/
+key a-F5 = MACRO fnpick aria aria-@=""
 key a-F6 = MACRO fnpick fa-fonts <i class="fa fa-@"></i>
 key a-F7 = MSG Alt-F7
 key a-F8 = MSG Alt-F8
@@ -21,12 +21,12 @@ key a-F10 = CMDTEXT all /id=/
 key a-F11 = LOCATE |<|
 key a-F12 = LOCATE |>|
 
-key a-0 = MSG [HTML] 1=Prof 2=Xp 3=XpList 4=XpTag 5=? 6=? 7=New 8=Page 9=Merge
+key a-0 = MSG [HTML] 1=Prof 2=Xp 3=XpList 4=XpTag 5=Keys 6=? 7=New 8=Page 9=Merge
 key a-1 = EDIT C:\users\celes\cjp\x2\html.prof
 key a-2 = MACRO chooser --c xs html --t HTML-XP
 key a-3 = MACRO cmdout xpdr.html xs html tags
 key a-4 = MACRO chooser --c xs tags --t Tags-XP
-key a-5 = MSG Alt-5
+key a-5 = MACRO msgFromCmd --t HTML Keys --c xk html
 key a-6 = MSG Alt-6
 key a-7 = CMDTEXT cmdin merge %cjp%\snips\html5.tmpl
 key a-8 = CMDTEXT cmdin merge %cjp%\snips\html5page.tmpl
@@ -144,7 +144,7 @@ expand_replace = "</form>"
 
 expand_keyword = entry \1
 expand_replace = '<label for="\1">\c</label>'
-expand_replace = '<input type="text" name="\1" id="\1" />'
+expand_replace = '<input type="text" id="\1" name="\1" />'
 
 expand_keyword = txt \1
 expand_replace = '<input type="text" name="\1" value="" />'
@@ -161,7 +161,7 @@ expand_keyword = hid \1
 expand_replace = '<input type="hidden" name="\1" value="\c" />'
 
 expand_keyword = imgf
-expand_replace = '<input type="image" name="\c" src="img" />'
+expand_replace = '<input type="image" name="\c" src="img" alt="img btn" />'
 
 expand_keyword = ck \1
 expand_replace = '<input type="checkbox" name="\1" value="\con" CHECKED />'
@@ -169,15 +169,15 @@ expand_replace = '<input type="checkbox" name="\1" value="\con" CHECKED />'
 expand_keyword = rb \1
 expand_replace = '<input type="radio" name="\1" value="\con" CHECKED />'
 
-expand_keyword = submit \1
-expand_replace = '<input type="submit" name="\1" value="\c" />'
-expand_replace = '<input type="reset" name="Clear" value="Reset" />'
-
 expand_keyword = btn \1
 expand_replace = '<button id="\1">\c</button>'
 
 expand_keyword = btni \1
 expand_replace = '<input type="button" name="\1" id="\1" value="\c" />'
+
+expand_keyword = btns \1
+expand_replace = '<input type="submit" name="\1" value="\c" />'
+expand_replace = '<input type="reset" name="Clear" value="Reset" />'
 
 expand_keyword = sel \1
 expand_replace = '<select name="\1" id="\1">'

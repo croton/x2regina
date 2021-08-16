@@ -1,6 +1,6 @@
 @echo off
 :: No backup needed for default profile
-  xprof default.prof cjp.prof colorsblue.prof rexx.prof
+  xprof default.prof cjp.prof colors.prof rexx.prof
   pause
 
 :: Copy generated profile
@@ -8,5 +8,5 @@
 
 :: Clear the attribute as indicator that profile is made
   attrib -A cjp.prof
-  attrib -A colorsblue.prof
+  attrib -A colors.prof
   attrib -A rexx.prof

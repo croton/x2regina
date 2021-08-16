@@ -2,10 +2,7 @@
 extension      = CSS,SCSS
 code_type      = CSS
 
-key a-/ = MACRO wrapit {
-key a-` = MACRO instr /="~"/
-
-a-PFLine = "1=Attr 2=Attr* 3=Psdo 4=Color 5=Font 6=Esc 7=Inl 8=Pos 9=Box 10=Disp 11=Var 12=Favs"
+a-PFLine = "1=Attr 2=Attr* 3=Psdo 4=Color 5=Font 6=Esc 7=Inl 8=Box1 9=Box 10=Disp 11=Var 12=Favs"
 key a-F1 = MACRO fnpick css @:
 key a-F2 = MACRO fnpick css @: -m
 key a-F3 = MACRO fnpick csspseudo :@
@@ -13,13 +10,13 @@ key a-F4 = MACRO csscolor
 key a-F5 = MACRO fnpick cssfonts font-family: @;
 key a-F6 = MACRO instr /&~;/
 key a-F7 = MACRO instr /style="~"/
-key a-F8 = MACRO chooser position relative absolute top right bottom left --t Position
-key a-F9 = MACRO chooser width height margin border padding --t Boxes --p @:
+key a-F8 = MACRO chooser width height top right bottom left margin border padding --t Boxes --p @:
+key a-F9 = MACRO chooser width height top right bottom left margin border padding --t Boxes --multi
 key a-F10 = MACRO chooser block contents flex grid inline inline-block none table --t Display --p display: @;
 key a-F11 = MACRO instr /var(--~);/
 key a-F12 = MACRO chooser thistle tomato firebrick burlywood forestgreen darkorange --t FavColors
 
-key a-0 = MSG [CSS] 1=Prof 2=Xpdr 3=XpList 4=LkUp 5=Flex 6=Bts 7=Inl 8=Cmt 9=Sheet
+key a-0 = MSG [CSS] 1=Prof 2=Xpdr 3=XpList 4=LkUp 5=Flex 6=Bts 7=Xfrm 8=Cmt 9=Sheet
 key a-1 = EDIT C:\users\celes\cjp\x2\css.prof
 key a-2 = MACRO chooser --c xs css --t Expanders
 key a-3 = MACRO cmdout xpdr.css xs css
@@ -33,11 +30,23 @@ key a-9 = CMDTEXT cmdin merge %cjp%\snips\css.tmpl
 key AltGr-0 = MSG CtlAlt-1=FlexParent 2=FlexChild 3=FlexHelp 4=Rgba
 key AltGr-1 = MACRO chooser flex-direction flex-wrap flex-flow justify-content align-items align-content --t FlexParent
 key AltGr-2 = MACRO chooser order flex-grow flex-shrink flex-basis flex align-self --t FlexChild
-key AltGr-3 = MACRO cssflex -?
+key AltGr-3 = MACRO cssflex ?
 key AltGr-4 = MACRO instr /rgba(~100, 100, 100, .5)/
+
+key a-` = MACRO wrapit `
+key a-- = MACRO instr /var(--~);/
+key a-= = MACRO instr /="~"/
+key a-; = MACRO instr /rgba(~100, 100, 100, .5)/
+key a-' = MSG CSS Alt-singlequote
+key a-\ = MSG CSS Alt-backslash
+key a-/ = MACRO wrapit {
 
 synonym startup = MACRO cssinit START
 synonym exit    = MACRO cssinit END
+
+expand_keyword = "-"
+expand_replace = '\c {'
+expand_replace = '}'
 
 expand_keyword = \1 {
 expand_replace = '\1 {'
@@ -52,26 +61,14 @@ expand_keyword = media \1
 expand_replace = '@media all and (m\c-width: \1px) {'
 expand_replace = '}'
 
-expand_keyword = mediaxs
-expand_replace = '@media only screen and (max-width: 600px) {\c}'
-
-expand_keyword = mediasm
-expand_replace = '@media only screen and (min-width: 600px) {\c}'
-
-expand_keyword = mediamd
-expand_replace = '@media only screen and (min-width: 768px) {\c}'
-
-expand_keyword = medialg
-expand_replace = '@media only screen and (min-width: 992px) {\c}'
-
 expand_keyword = bor
 expand_replace = 'border: \c1px;'
 
 expand_keyword = bord
-expand_replace = 'border: \c2px dotted;'
+expand_replace = 'border: 2px dotted\c;'
 
 expand_keyword = borde
-expand_replace = 'border: \c1px dashed green;'
+expand_replace = 'border: 1px dashed \ctomato;'
 
 expand_keyword = pad
 expand_replace = 'padding: \c'
@@ -86,18 +83,20 @@ expand_keyword = w
 expand_replace = 'width: \c;'
 
 expand_keyword = \1 -sa
-expand_replace = '\1 \cVpx Hpx;'
-expand_replace = '\1 Tpx Hpx Bpx;'
-expand_replace = '\1 Tpx Rpx Bpx Lpx;'
+expand_replace = '\1 \cV H;'
+expand_replace = '\1 T H B;'
+expand_replace = '\1 T R B L;'
 
 expand_keyword = \1 -s2
-expand_replace = '\1 \c0px 0px; /* T+B R+L */'
+expand_replace = '\1 \cVpx 0px;'
 
 expand_keyword = \1 -s3
-expand_replace = '\1 \c0px 0px 0px;  /* T R+L B */'
+expand_replace = '/* T H B */'
+expand_replace = '\1 \cTpx Hpx Bpx;'
 
 expand_keyword = \1 -s4
-expand_replace = '\1 \c0px 0px 0px 0px;  /* T R B L */'
+expand_replace = '/* T R B L */'
+expand_replace = '\1 \c0px 0px 0px 0px;'
 
 expand_keyword = pos
 expand_replace = 'position: \crelative absolute ;'
@@ -122,6 +121,12 @@ expand_replace = 'border\c'
 expand_keyword = ff
 expand_replace = 'font-family: \cserif sans-serif cursive fantasy monospace ;'
 
+expand_keyword = xbro \1
+expand_replace = '\1:'
+expand_replace = '-webkit-\1:'
+expand_replace = '-moz-\1:'
+expand_replace = '-o-\1:'
+
 /* grid */
 expand_keyword = gd
 expand_replace = 'display: grid;'
@@ -139,4 +144,23 @@ expand_replace = 'grid-gap: \c;'
 
 expand_keyword = v \1
 expand_replace = '--\1: \c;'
+
+/* flex */
+expand_keyword = flexp
+expand_replace = 'display: flex;'
+expand_replace = 'flex-flow: \crow nowrap;'
+expand_replace = 'justify-content: flex-start;'
+expand_replace = 'align-items: stretch;'
+expand_replace = 'align-content: stretch;'
+
+expand_keyword = flexc
+expand_replace = 'flex: 0 1 auto;'
+expand_replace = 'flex-grow: 0;'
+expand_replace = 'flex-shrink: 1;'
+expand_replace = 'flex-basis: auto;'
+expand_replace = 'order: 0;'
+expand_replace = 'align-self: auto;'
+
+expand_keyword = \1 xpm
+expand_macro = xp_css
 

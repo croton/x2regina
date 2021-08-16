@@ -18,7 +18,7 @@ build: procedure
   defProf='XW32.PRO'
   defaultExists=SysFileExists(defProf)
   if doSave then do
-    baseprofs='default.prof cjp.prof colorsblue.prof'
+    baseprofs='default.prof cjp.prof colorz.prof'
     outp=.Stream~new('prof-'name'.cmd')
     outp~lineout('@copy' defProf 'XDEF.PRO 2>nul')
     outp~lineout('xprof' baseprofs profiles)

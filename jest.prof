@@ -1,0 +1,84 @@
+/* ------------------- jest ------------------- */
+#include "es6.prof"
+
+extension      = JS
+base_extension = JS
+code_type      = jest
+
+key a-0 = MSG [Jest] 1=Prof 2=ProfP 3=Xpdr 4=XpdrP 5=Key 6=Tests
+key a-1 = EDIT C:\Users\celes\cjp\x2\jest.prof
+key a-2 = EDIT C:\Users\celes\cjp\x2\es6.prof
+key a-3 = MACRO chooser --c xs jest --t Expanders
+key a-4 = MACRO chooser --c xs es6 --t Expander
+key a-5 = MACRO chooser --c xk es6 --t JS Keys
+key a-6 = ALL /test(/
+
+expand_keyword = desc
+expand_replace = "describe('\c', function() {"
+expand_replace = '});'
+
+expand_keyword = test
+expand_replace = "test('it should \c', function() {"
+expand_replace = '});'
+
+expand_keyword = eq \1
+expand_replace = 'expect(\c).toEqual(\1);'
+
+expand_keyword = match \1
+expand_replace = 'expect(\c).toMatch(/\1/);'
+
+expand_keyword = throw
+expand_replace = 'expect(function() {'
+expand_replace = '  \c'
+expand_replace = '}).toThrow();'
+
+expand_keyword = thro
+expand_replace = 'expect(() => \c()).toThrow();'
+
+expand_keyword = be \1
+expand_replace = 'expect(\c).toBe(\1);'
+
+expand_keyword = tru
+expand_replace = 'expect(\c).toBeTruthy();'
+
+expand_keyword = fal
+expand_replace = 'expect(\c).toBeFalsy();'
+
+expand_keyword = def
+expand_replace = 'expect(\c).toBeDefined();'
+
+expand_keyword = undef
+expand_replace = 'expect(\c).toBeUndefined();'
+
+expand_keyword = nul
+expand_replace = 'expect(\c).toBeNull();'
+
+expand_keyword = has \1
+expand_replace = 'expect(\c).toContain(\1);'
+
+expand_keyword = lt \1
+expand_replace = 'expect(\c).toBeLessThan(\1);'
+
+expand_keyword = gt \1
+expand_replace = 'expect(\c).toBeGreaterThan(\1);'
+
+expand_keyword = call
+expand_replace = 'expect(\c).toHaveBeenCalled();'
+
+expand_keyword = callw \1
+expand_replace = 'expect(\c).toHaveBeenCalledWith(\1);'
+
+expand_keyword = spy \1
+expand_replace = 'spyOn(\1, '\c').and.returnValue(q.defer().promise);'
+
+expand_keyword = bef
+expand_replace = 'beforeEach(\c);'
+
+expand_keyword = before
+expand_replace = 'beforeEach(function() {\c'
+expand_replace = '});'
+
+expand_keyword = after
+expand_replace = 'afterEach(function() {\c'
+expand_replace = '});'
+

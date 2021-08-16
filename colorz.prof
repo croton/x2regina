@@ -1,0 +1,35 @@
+/* An X2 color scheme */
+colour filename        = Dark Grey on Red
+colour mod_filename    = Light Red on Red
+colour status          = Cyan on Red
+colour command         = Dark Grey on Brown
+colour command_stack   = Light Cyan on Yellow
+colour data            = Black on Light Grey
+
+colour window_title    = Dark Grey on Brown
+colour window_data     = Light Cyan on Yellow
+colour window_bold     = Green on Yellow
+colour window_emphasis = Blue on Yellow
+colour prompt          = White on Light Blue
+colour prompt_input    = Black on Yellow
+
+colour quotes          = Blue on Light Grey
+colour brackets        = Light Red on Light Grey
+colour comment         = Cyan on Light Grey
+colour keywords        = Magenta on Light Grey
+colour mark            = White on Light Red
+colour highlight       = Light Green on White
+colour csr_line        = Black on White
+colour message         = Yellow on Magenta
+colour pfline          = Black on Light Magenta
+
+colour alt_keywords    = White on Blue
+colour tofeof          = Black on Light Grey
+colour error_line      = Magenta on Light Grey
+colour function_name   = Magenta on Light Grey
+colour popup_cursor    = Black on Cyan
+colour protected       = Green on Light Grey
+colour shadow          = Light Blue on Light Grey
+colour shadow_cursor   = Black on Cyan
+colour browse_data     = Green on Light Grey
+colour browse_ind      = Blue on Light Grey

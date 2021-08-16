@@ -6,21 +6,31 @@ comment_suffix = "*/"
 quick_comment  = "--"
 margins        = 1 200 1 90
 
-key a-0 = MSG 1=Hlp 2=Prof 3=Xpdr 4=Code 5=Xpd2
-key a-1 = MSG Now using Markdown profile
-key a-2 = EDIT C:\cjp\x2\md.prof
-key a-3 = MACRO cmdout xpdrs.md xs md
+key a-0 = MSG [MD] 1=Prof 2=Xpdr 3=XpList 4=Code 5=Italic
+key a-1 = EDIT C:\Users\celes\cjp\x2\md.prof
+key a-2 = MACRO chooser --c xs md --t Markdown
+key a-3 = MACRO cmdout xpdr.md xs md
 key a-4 = MACRO instr /`~`/
-key a-5 = MACRO chooser --c xs md --t Markdown
+key a-5 = MACRO instr /_~_/
+key a-` = MACRO wrapit `
 
 expand_keyword = link \1
 expand_replace = '[\1](http://\c)'
 
+expand_keyword = linkx \1
+expand_replace = '[\1]: <http://\c>'
+
 expand_keyword = p
 expand_replace = '## \c'
 
-expand_keyword = i
+expand_keyword = bq
 expand_replace = '> \c'
+
+expand_keyword = img \1
+expand_replace = '![\c](\1)'
+
+expand_keyword = imgx \1
+expand_replace = '![\c][\1]'
 
 expand_keyword = b
 expand_replace = '**\c**'
@@ -48,6 +58,10 @@ expand_replace = '- [\1](#\1)'
 expand_replace = '- [section 2](#section2)'
 expand_replace = '## \1'
 
+expand_keyword = toci
+expand_replace = '\c'
+expand_replace = '- [@](#@) ## @'
+
 expand_keyword = new
 expand_replace = '# \c'
 expand_replace = '> This is introduction.'
@@ -59,7 +73,4 @@ expand_replace = '## Usage'
 expand_replace = '```'
 expand_replace = 'run'
 expand_replace = '```'
-
-expand_keyword = lx \1
-expand_replace = '[\1]: <http://\c>'
 

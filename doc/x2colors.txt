@@ -1,0 +1,17 @@
+idx X2 Color       Color Key
+ 1 Black            Black
+ 2 Blue             Blue
+ 3 Brown            Brown
+ 4 Cyan             Cyan
+ 5 Dark Grey        Dark_Grey
+ 6 Green            Green
+ 7 Light Blue       Light_Blue
+ 8 Light Cyan       Light_Cyan
+ 9 Light Green      Light_Green
+10 Light Grey       Light_Grey
+11 Light Magenta    Light_Magenta
+12 Light Red        Light_Red
+13 Magenta          Magenta
+14 Red              Red
+15 White            White
+16 Yellow           Yellow

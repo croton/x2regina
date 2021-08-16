@@ -1,26 +1,29 @@
-/* A Blueish color scheme */
-colour filename        = Dark Grey on Light Grey
-colour mod_filename    = Light Red on Light Grey
-colour status          = Cyan on Light Grey
+/* My standard color scheme */
+colour filename        = Dark Grey on Red
+colour mod_filename    = Light Red on Red
+colour status          = Cyan on Red
 colour command         = Blue on Light Magenta
 colour command_stack   = Blue on Yellow
 colour data            = Black on Light Grey
-colour csr_line        = Black on White
+
+colour window_title    = Dark Grey on Brown
+colour window_data     = Light Cyan on Yellow
+colour window_bold     = Green on Yellow
+colour window_emphasis = Light Blue on Yellow
+colour prompt          = White on Light Green
+colour prompt_input    = Black on Yellow
+
+colour quotes          = Blue on Light Grey
+colour brackets        = Green on Light Grey
+colour comment         = Cyan on Light Grey
+colour keywords        = Magenta on Light Grey
 colour mark            = White on Light Red
+colour highlight       = Light Green on White
+colour csr_line        = Black on White
 colour message         = Yellow on Magenta
 colour pfline          = Black on Light Magenta
-colour window_title    = Dark Grey on Brown
-colour window_data     = Blue on Yellow
-colour window_bold     = Green on Yellow
-colour window_emphasis = Red on Yellow
-colour prompt          = White on Blue
-colour prompt_input    = Black on Yellow
-colour quotes          = Blue on Light Grey
-colour brackets        = Light Green on Light Grey
-colour comment         = Blue on Light Grey
-colour keywords        = Light Cyan on Light Grey
+
 colour alt_keywords    = White on Blue
-colour highlight       = Yellow on Magenta
 colour tofeof          = Black on Light Grey
 colour error_line      = Magenta on Light Grey
 colour function_name   = Magenta on Light Grey

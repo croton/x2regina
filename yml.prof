@@ -1,0 +1,61 @@
+/* ------------------- yml -------------------- */
+extension     = yml
+code_type     = YML
+quick_comment = "#"
+
+key a-0 = MSG [YML] 1=Prof 2=Xp 3=Types 4=NL
+key a-1 = EDIT c:\users\celes\cjp\x2\yml.prof
+key a-2 = MACRO cmdout xpdr.yml xs yml
+key a-3 = MACRO chooser string number integer boolean date array null any object --t Types
+key a-4 = MACRO nlout
+key c-ENTER = MACRO nlout
+
+expand_keyword = new \1
+expand_replace = 'id: /\1'
+expand_replace = 'type: object'
+expand_replace = 'prop\c'
+
+expand_keyword = req
+expand_replace = 'required:'
+expand_replace = '  - \c'
+
+expand_keyword = prop
+expand_replace = 'properties:'
+expand_replace = '  att \c'
+
+expand_keyword = \1 propx
+expand_replace = '\1 properties:'
+expand_replace = '  att \c'
+
+expand_keyword = att \1
+expand_replace = '\1:'
+expand_replace = '  type:\c'
+expand_replace = '    - string'
+expand_replace = '    - null'
+
+expand_keyword = ref \1
+expand_replace = '\1:'
+expand_replace = '  $ref: /\c\1'
+
+expand_keyword = arr \1
+expand_replace = '\1:'
+expand_replace = '  type: array'
+expand_replace = '  items:'
+expand_replace = '    type: \cstring'
+
+expand_keyword = arrx \1
+expand_replace = '\1:'
+expand_replace = '  type: array'
+expand_replace = '  items:'
+expand_replace = '    prop\c'
+
+expand_keyword = all \1
+expand_replace = 'allOf:'
+expand_replace = '  - type: null'
+expand_replace = '  - $ref: /\c\1'
+expand_replace = '  - prop'
+
+expand_keyword = any \1
+expand_replace = 'anyOf:'
+expand_replace = '  - type: null'
+expand_replace = '  - $ref: /\c\1'

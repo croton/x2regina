@@ -2,7 +2,7 @@
 extension = JS
 
 key a-0 = MSG [Gulp] 1=Prof 2=Xpdr 3=Cmd
-key a-1 = EDIT c:\users\ACER\cjp\x2\gulp.prof
+key a-1 = EDIT c:\users\celes\cjp\x2\gulp.prof
 key a-2 = MACRO chooser --c xs gulp --t Expanders
 key a-3 = MACRO chooser src dest rename series parallel watch --t Gulp cmds --p gulp.@()
 

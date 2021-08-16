@@ -8,44 +8,38 @@ comment_formatting = NONE;
 margins            = 1 200 20 80
 bookmarks          = 30
 
-a-PFLine = "1=Dom 2=jQ 3=InFn 4=? 5=? 6=StrT 7=IfNul 8=Search 9=CmtQ 10=Dif 11=DifSv 12=?"
+a-PFLine = "1=Dom 2=jQ 3=InFn 4=? 5=Sfy 6=StrT 7=TypeOf 8=Copy 9=ObjKey 10=CmtQ 11=? 12=FnDefs"
 key a-F1 = MACRO fnpick jdom document.@
 key a-F2 = MACRO fnpick jquery
-key a-F3 = instr /function() {~}/
-key a-F4 = MSG Alt-F4 es6
-key a-F5 = MSG Alt-F5 es6
+key a-F3 = MACRO instr /function() {~}/
+key a-F4 = MSG Alt-F4
+key a-F5 = MACRO instr /JSON.stringify(~)/
 key a-F6 = MACRO instr /`${~}`/
-key a-F7 = MACRO instr /(typeof ~ === 'undefined') ? true : false/
-key a-F8 = MACRO searchFileAtCursor
-key a-F9 = MACRO cmt Q
-key a-F10 = MACRO dif
-key a-F11 = MACRO dif File
-key a-F12 = MACRO showkeys
+key a-F7 = MACRO instr /(typeof ~)/
+key a-F8 = MACRO instr /Object.assign(~)/
+key a-F9 = MACRO instr /Object.keys(~)/
+key a-F10 = MACRO cmt Q
+key a-F11 = MSG Alt-F11
+key a-F12 = ALL / function/
 
-key a-0 = MSG [ES6] 1=Prof 2=Xp 3=Key 4=Fns 5=BkmPr 6=BkmCl 7=ClipV
+key a-0 = MSG [ES6] 1=Prof 2=Xp 3=Key 4=FavDir 5=BkmPr 6=BkmCl 7=ClipV 8=RingP 9=RingW
 key a-1 = EDIT C:\Users\celes\cjp\x2\es6.prof
 key a-2 = MACRO chooser --c xs es6 --t Expander
 key a-3 = MACRO chooser --c xk es6 --t JS Keys
-key a-4 = ALL /  function/
+key a-4 = MACRO favdir ?
 key a-5 = MACRO bkm PRINT
 key a-6 = MACRO bkm CLEAR
 key a-7 = MACRO clipper VIS
-key a-8 = MACRO showkeys CL
-key a-9 = MACRO showkeys AL
 
 key a-` = MACRO wrapit `
 key a-- = MACRO instr /$(~)/
 key a-= = MACRO instr /${~}/
 key a-; = MACRO instr /() => {~}/
 key a-' = MACRO instr /="~"/
-key a-\ = MACRO wrapblock { } OUTDENT
-key a-/ = MACRO wrapit {
+key a-\ = MACRO wrapblock /{/}/
 
 expand_keyword = say
 expand_replace = "console.log(\c);"
-
-expand_keyword = v \1
-expand_replace = 'var \1 = \c'
 
 expand_keyword = ? \1
 expand_replace = 'const \1 = \c'
@@ -53,34 +47,30 @@ expand_replace = 'const \1 = \c'
 expand_keyword = ?? \1
 expand_replace = 'let \1 = \c'
 
-expand_keyword = \1 ?o
-expand_replace = "\1 {\c: ''};"
-
-expand_keyword = "\1 -)"
-expand_replace = '\1 function(\c) {'
-expand_replace = '});'
-
-expand_keyword = \1 ?p
-expand_replace = '\1.prototype\c'
-
 expand_keyword = fn
 expand_replace = "function \c() {"
 expand_replace = "}"
 
 expand_keyword = fni
-expand_replace = '(function(\c) {'
-expand_replace = '})();'
+expand_replace = "(function () {"
+expand_replace = "})(\c);"
 
-expand_keyword = \1 ?fs
-expand_replace = '\1 (function (\c) {'
+expand_keyword = \1 -fs
+expand_replace = '\1 (function(\c) {'
 expand_replace = '  return { };'
 expand_replace = '})();'
+
+expand_keyword = \1 -p
+expand_replace = '\1.prototype\c'
 
 expand_keyword = ofy
 expand_replace = 'JSON.parse(\c);'
 
 expand_keyword = sfy
 expand_replace = 'JSON.stringify(\c);'
+
+expand_keyword = copy \1
+expand_replace = 'Object.assign(\c, \1)'
 
 expand_keyword = rem \1
 expand_replace = "delete \1['\c'];"
@@ -94,13 +84,6 @@ expand_replace = '\1(\c)'
 expand_keyword = "\1{"
 expand_replace = '\1 \c{'
 expand_replace = '}'
-
-expand_keyword = @ \1
-expand_replace = '\1: {\c'
-expand_replace = '}'
-
-expand_keyword = ifnul \1
-expand_replace = "(typeof \1 === 'undefined') ? \c : \1;"
 
 expand_keyword = has \1
 expand_replace = "if (\1.hasOwnProperty('\c'))"
@@ -127,11 +110,10 @@ expand_replace = '\1.filter(\c => );'
 expand_keyword = \1 -red
 expand_replace = '\1.reduce((orig, curr) => {'
 expand_replace = '  return orig;'
-expand_replace = '  }, \c'
-expand_replace = ');'
+expand_replace = '  }, \c);'
 
 expand_keyword = do \1
-expand_replace = "for (let i=1; i<=\1; i++) {\c"
+expand_replace = "for (let i=0; i<\1; i++) {\c"
 expand_replace = "}"
 
 expand_keyword = doarr \1
@@ -139,22 +121,19 @@ expand_replace = 'for (let i=0, len=\1.length; i<len; i++) {'
 expand_replace = '\c\1[i];'
 expand_replace = '}'
 
-expand_keyword = keys
-expand_replace = 'Object.keys(\c)'
-
 expand_keyword = dodir \1
 expand_replace = 'for (let key in \1) {'
 expand_replace = '  // key \1[key]'
 expand_replace = '}'
 
-expand_keyword = ret, rt
+expand_keyword = ret
 expand_replace = 'return \c;'
 
-expand_keyword = ter
-expand_replace = "(\c ? 'T':'F')"
+expand_keyword = \1 -ter
+expand_replace = "\1 (\c ? 1 : 0)"
 
 expand_keyword = if
-expand_replace = "if (\c) ;"
+expand_replace = "if (\c)"
 
 expand_keyword = iff
 expand_replace = "if (\c) {"
@@ -177,9 +156,9 @@ expand_replace = '} // \1'
 
 expand_keyword = try
 expand_replace = 'try {'
-expand_replace = "  if (1) throw new Error('Oops');"
-expand_replace = '} catch (e) {'
-expand_replace = '  console.log(e.message);'
+expand_replace = "  \c"
+expand_replace = '} catch (err) {'
+expand_replace = '  throw err;'
 expand_replace = '}'
 
 expand_keyword = \1 -then
@@ -196,13 +175,8 @@ expand_keyword = \1 -catch
 expand_replace = '\1.catch(\cerror => {'
 expand_replace = '});'
 
-expand_keyword = mod \1
-expand_replace = "const \1=(function () {"
-expand_replace = "  const author='cjp';"
-expand_replace = "  return {"
-expand_replace = "    init:function() { console.log('Running \1 by', author); }"
-expand_replace = "  };"
-expand_replace = "})();"
+expand_keyword = err
+expand_replace = 'throw new Error(\c);'
 
 expand_keyword = us
 expand_replace = "'use strict';"
@@ -211,16 +185,16 @@ expand_keyword = exp
 expand_replace = 'module.exports=\c;'
 
 expand_keyword = req \1
-expand_replace = "const \1=require('\c\1');"
+expand_replace = "const \1 = require('\c\1');"
 
 expand_keyword = imp \1
-expand_replace = 'import { \1 } from "\c\1";'
+expand_replace = "import \1 from '\c./\1';"
 
+/* JS DOM */
 expand_keyword = jclick \1
 expand_replace = "$(\c\1).click(function() {"
 expand_replace = '});'
 
-/* JS DOM */
 expand_keyword = ev
 expand_replace = ".addEventListener('\c', function() {"
 expand_replace = "});"

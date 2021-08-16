@@ -1,0 +1,2058 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN"><html><head><title>Macros for the X Editor</title>
+
+<meta name="abstract" content="A two part document about macros for
+the X editor:  part 1 is a guide to the ttxmacs collection; part 2
+is an introduction and tutorial for writing your own macros">
+<meta name="keywords" content="X X2 XWNT X4X REXX">
+<meta name="author" content="Toby Thurston">
+<link rel="stylesheet" type="text/css" href="xmacguide_files/tt.css"><!--*************************************************************--><!--*************************************************************--><!--*************************************************************--></head>
+
+
+
+
+<body>
+<h1 align="center">Macros for the X Editor</h1>
+<p align="center"><big><strong>
+A user guide and tutorial
+</strong></big>
+</p><p align="center">September 2000, minor amendments June 2001, July
+2002
+</p><p align="center">Toby Thurston
+
+</p><p>
+This document is in two parts:
+<a href="#guide">part 1</a> is a user guide for the
+<a href="http://www.wildfire.dircon.co.uk/Announcexmacs.html">XMACS</a> collection of macros;
+<a href="#tutor">part 2</a> is a tutorial and introduction to
+writing your own macros.
+I welcome <a href="http://www.wildfire.dircon.co.uk/contact.html">feedback</a> on this document.
+
+</p><p>
+First, what is X and what is all this about?  X is a text
+editor, that is very fast, can handle extremely large files, can be
+customized very easily, has lots of smart features (mainly
+for programmers) and above all is <i>programmable</i>.
+</p><p>
+What does this mean?  Why is it important?  It means that all the
+functions of X, that are normally accessed through F-keys or
+combinations of letter with the Alt or Ctrl keys, are available as
+<i>commands</i> that you can enter from the command line; and also
+that the X program provides a REXX <i>command environment</i> and
+programming interface which lets you put these editor commands in a
+REXX program, called a macro.  It's important because using macros
+allows you to automate repetitive tasks and to extend the editor's
+capabilities, easily and quickly.
+</p><p>
+The descriptions in <a href="#guide">part 1</a> of
+this document of my collection of macros will give you an idea of
+the range of things you can do with macros.
+<a href="#tutor">Part 2</a> will help you to write your own.
+
+
+<!--*************************************************************-->
+</p><hr>
+<h2>Getting started</h2>
+<h3>Obtaining X</h3>
+<p>
+You can get a copy of X from the
+<a href="http://www.tangbu.com/">X Editor website</a>
+run by Blair Thompson, the author of X. It runs on
+DOS, OS/2, Windows 95, Windows NT and various shades of Unix.  There
+is no macro support for DOS (so upgrade!); on OS/2 it uses the built
+in REXX interpreter; on Windows you need to get
+<a href="http://www.ibm.com/software/ad/obj-rexx">Object Rexx</a>
+or some other Rexx implementation.  (There are many, some free,
+listed on the
+<a href="http://www.ibm.com/rexx/">Rexx Home page</a>.
+
+I have tested my macros in OS/2, Windows 95 with Object/REXX and
+Windows NT with Regina REXX.
+
+For REXX macro support in the Unix
+versions see the X documentation.
+
+</p><h3>Using X</h3>
+<p>
+It is not my intention to repeat anything from the X documentation,
+which you can read online or view in the help file that comes with
+X. Before going any further here you may wish to review the X
+documentation to be sure you understand at least:
+</p><ul>
+<li>where to put macros on your system so that X can find them
+</li><li>how to run a macro from the command line
+</li><li>how to assign a macro to an F-key or a Ctrl or Alt combination.
+</li></ul>
+<p>
+When you get onto writing macros, then it is essential to learn as
+much as you can about the X command set; being familiar with all
+the commands available will save you hours of time:  I spent ages
+fiddling with combinations of
+"<tt>INPUT</tt>",
+"<tt>UP</tt>" and
+"<tt>DELETE</tt>" before I discovered the
+"<tt>REPLACE</tt>" command.
+
+
+</p><h3>Using REXX</h3>
+<p>
+Neither is it my intention to teach you how to use REXX in this
+guide.
+However I do want to make a few points about why
+REXX is a good macro language.
+
+</p><p>
+<a href="http://www.amazon.com/exec/obidos/ASIN/0070153051/tobythurstshomep">
+<img align="right" src="xmacguide_files/pirexx.gif" border="0" alt="Cover" hspace="3" vspace="3"></a>
+
+If want to learn REXX then the best starting point is Mike
+Cowlishaw's
+<a href="http://www.ibm.com/rexx/">Rexx Home page</a>
+and in particular his
+<a href="http://www-306.ibm.com/software/awdtools/rexx/language/rexxbook.html">Rexx Book
+List</a>.
+</p><p>
+My personal recommendation is that you read
+<a name="book"><cite>
+</cite></a><a href="http://www.amazon.com/exec/obidos/ASIN/0070153051/tobythurstshomep">
+Programming in REXX</a>
+by Charles Daney (ISBN
+0-07-015305-1, 300pp, McGraw Hill, 1992, IBM Pub Number
+SR28-5864-00).
+
+
+
+</p><p>
+There are many reasons why REXX makes such a good macro language,
+but the fundamental one is the way the REXX interpreter handles
+the results of each clause it parses.  There are three basic types
+of statement in REXX (not counting comments and labels):
+assignments, keyword instructions and commands.
+Keywords like "<tt>if</tt>" and "<tt>then</tt>" are handled in a
+similar way to languages like C, but assignment statements and
+commands (that is the result of a fully evaluating particular
+statement that is not either a keyword or an assignment) are handled
+in a very different way.  This is a fundamental difference between
+REXX and other languages, particularly C.
+
+Consider the assignment statement:
+</p><pre>  x = 0;
+</pre>
+In C this evaluates to a value of 0, (enabling you to write
+constructions like this:  "<tt>z = y = x = 0;</tt>"), and after the
+statement is fully evaluated, any residual value is simply ignored.
+However in REXX there is no residual value after an assignment,
+there is nothing left that you can assign to anything else.
+<p>
+The reason for this apparent restriction is that REXX has the
+builtin concept of an outside environment, and any residual values
+left when a statement is fully evaluated are passed out to it,
+as <i>commands</i> to that environment.
+Thus if you write a statement in REXX that evaluates to "0" (such as
+"<tt>(x=0)</tt>" where the brackets make it into a comparison
+rather than an assignment) then that "0" is passed to the external
+environment as a command, which will probably give you an error
+(although in the case of X this causes the editor
+to scroll to top of file).
+</p><p>
+So the apparent restriction is in fact a great strength for macro
+programming because to send commands to the editor, we can simply
+write commands as lists of literal strings instead of having to call
+some function.
+
+
+<!--*************************************************************-->
+</p><hr>
+<h2>Part 1: <a name="guide">TTXMACS -- A user guide</a></h2>
+<p>
+You can get a copy of my collection of macros from
+<a href="http://www.wildfire.dircon.co.uk/Announcexmacs.html">here</a>, you may like to retrieve them
+and unzip them now if you don't already have an up to date set.  You
+will find that the collection includes some that are not mentioned
+here.  This is either because they are too trivial to be mentioned
+at all or because I mention them in the detailed tutorial section.
+Most of the macros here illustrate a useful technique.
+
+</p><p>
+The descriptions below are arranged thematically, like this:
+</p><p align="center">
+<a href="#applmacs">Applications   </a>    
+<a href="#textmacs">Text assistants</a>    
+<a href="#markmacs">Mark functions </a>    
+<a href="#tinymacs">Tiny utilities &amp; examples</a>    
+
+</p><p>
+Here is an alphabetical index:
+
+</p><p align="center">
+<a href="#mac:accent">accent    </a>    
+<a href="#mac:alignright">alignright</a>    
+<a href="#mac:allre">allre     </a>    
+<a href="#mac:alphacol">alphacol  </a>    
+<a href="#mac:avg">avg       </a>    
+<br>
+<a href="#mac:cal">cal       </a>    
+<a href="#mac:chart">chart     </a>    
+<a href="#mac:chk42">chk42     </a>    
+<a href="#mac:cols">cols      </a>    
+<a href="#mac:copydown">copydown  </a>    
+<a href="#mac:cp">cp        </a>    
+<br>
+<a href="#mac:date">date      </a>    
+<a href="#mac:dc">dc        </a>    
+<a href="#mac:delbb">delbb     </a>    
+<a href="#mac:env">env       </a>    
+<a href="#mac:foggy">foggy     </a>    
+<a href="#mac:gwook">gwook     </a>    
+<br>
+<a href="#mac:hc">hc        </a>    
+<a href="#mac:lorem">lorem     </a>    
+<a href="#mac:m2f">m2f       </a>    
+<a href="#mac:markstat">markstat  </a>    
+<a href="#mac:math">math      </a>    
+<a href="#mac:median">median    </a>    
+<a href="#mac:product">product   </a>    
+<br>
+<a href="#mac:quitall">quitall   </a>    
+<a href="#mac:sdev">sdev      </a>    
+<a href="#mac:sen">sen       </a>    
+<a href="#mac:series">series    </a>    
+<br>
+<a href="#mac:stdin">stdin     </a>    
+<a href="#mac:sum">sum       </a>    
+<a href="#mac:table">table     </a>    
+<a href="#mac:transpose">transpose </a>    
+<a href="#mac:underl">underl    </a>    
+<a href="#mac:wc">wc        </a>    
+</p>
+
+<h3><a name="textmacs">Text assistants</a></h3>
+
+<h4><a href="#guide" name="mac:accent">accent.x</a></h4>
+<p>
+This macro is for those with keyboards lacking accent chars,
+yet who occasionally need to type words with accents in them.
+Assign it to a key (try alt-e) as it's almost unusable from the
+command line.  You do this by adding a line to your xprofile file,
+for example
+</p><pre>key a-e       = macro accent
+</pre>
+and recompiling.  See the X2 documentation for details.
+<p>
+Once you have done this you get the following useful
+behaviour:
+
+</p><ul>
+<li>
+Press the key with the cursor on blank: e-acute is entered,
+and the cursor is moved one place to the right.
+</li><li>
+Press the key with the cursor on 'e': e-acute is entered,
+and the cursor is not moved.  Repeated presses of the key will
+cycle through e-grave, e-hat, e-umlaut, e, e-acute again etc.
+</li><li>
+Press the key with the cursor on 'a', 'i', 'o' or 'u' and the
+same cycle is repeated for those letters.
+</li><li>
+Other characters (for Spanish):  c goes to c-cedilla &amp; back,
+n to n-tilde, ? to ?-inverted and ! to !-inverted.
+</li><li>
+If you press the key with the cursor on anything else, then
+nothing happens.  If you want accented upper case letters,
+start with a lower case letter and then press Ctrl-Up when you
+finish.
+</li></ul>
+<p>
+As shipped this macro works with code pages 437 and 850.
+You can extend the functions for yourself by adding new chains
+or adding more characters to a chain.  For example you might add
+'86'x to the 'a' chain, in order to get a-ring.  You may also
+care to alter the order of the chains, for example you might
+put '94'x directly after 'o' to have o-umlaut first.  You
+could also remove characters you never use.
+
+</p><h4><a href="#guide" name="mac:chk42">chk42.x</a></h4>
+
+<p>
+Chk42.x (say "Check for two") is a complement to OS2PROOF, the
+rudimentary spell checker that can be used with X:  it checks for
+repeated words.  You invoke it by typing "chk42" on the command
+line.  It always starts from the top of the file.  It puts the
+cursor back where it was in the data when its finished.
+</p><p>
+When a repeated word is found, the second word is highlighted, the
+line it is in is scrolled to the bottom of the screen and
+a prompt is displayed on the message line that asks you to enter
+D (delete), S (skip), E (edit) or Q (quit) and waits for your input.
+</p><ul>
+<li>If you press D the marked word is deleted and checking continues
+</li><li>If you press S the word is left in the text and checking continues
+</li><li>If you press E the macro stops and leaves the cursor on the
+repeated word
+</li><li>If you press Q the macro stops and puts the cursor back where
+it was when you started
+</li></ul>
+When no more words are found the macro stops, puts the cursor back
+and displays a message summarizing what it found and what it did.
+<p>
+This macro demonstrates how to program a prompt in X and get user
+input, this differs from the built in "prompt" command in that you
+can retrieve the input one char at a time, rather than waiting for
+the enter key.
+It depends on an external "sysgetkey" function as shipped in
+REXXUTIL.DLL with OS/2 and with Object Rexx.
+
+</p><h4><a href="#guide" name="mac:cp">cp.x</a></h4>
+
+<p>
+A simple change-preserving-case routine, that will preserve the case
+of the original text when changing it to the replacement text.  For
+example, if you have the following text in a file.
+  </p><pre>  Specifically, a large portion of it is due to coordination
+  communication which presents extremely interesting challenges to
+  the most recent level of hardware.   It is assumed that initiation
+  of critical subsystem development is further compounded when
+  taking into account possible bidirectional logical relationship
+  approaches.
+  </pre>
+and you do "<tt>cp /it/this/s*</tt>" you get
+<pre>  Specifically, a large portion of this is due to coordination
+  communication which presents extremely interesting challenges to
+  the most recent level of hardware.   This is assumed that initiation
+  of critical subsystem development is further compounded when
+  taking into account possible bidirectional logical relationship
+  approaches.
+</pre>
+<p>
+This macro shows you how you can extend the function of commands
+while still allowing the user to use options that they are familiar
+with.  You can use the normal change options (such as "<tt>s</tt>"
+to change whole words only).  There is one problem:  you cannot write
+"<tt>cp/it/this/</tt>" as X thinks this is one long command; this
+is only annoying if you are used to doing "<tt>c/it/this/</tt>"
+normally.
+</p><h4><a href="#guide" name="mac:delblank">delblank.x</a></h4>
+
+<p>
+This macro deletes every blank line in a marked area.
+
+</p><h4><a href="#guide" name="mac:delbb">delbb.x</a></h4>
+<p>
+This macro is like the "deldupes" command, but less destructive:
+it reduces multiple blank lines to single blank lines.
+It always starts at the top, and it always saves the file before it
+starts.
+
+</p><h4><a href="#guide" name="mac:lorem">lorem.x</a>
+,
+    <a href="#guide" name="mac:foggy">foggy.x</a>
+and
+    <a href="#guide" name="mac:gwook">gwook.x</a></h4>
+<p>
+These three are different versions of the same macro:  they generate
+"filler text".  They are useful if you ever need a paragraph of text
+to illustrate something (like how it looks when printed in some new
+font, or to show off a new macro) but you can't think of anything to
+make up.
+
+The source of the macro code was an old EPM macro called foggy.e,
+which I ported (trivially) for X.  This was also the source of the
+"foggy" text.  For the source of the other texts look at the FAQ
+list of the news group <tt>comp.fonts</tt>.
+
+</p><h3><a name="markmacs">Mark functions</a></h3>
+
+<h4><a href="#guide" name="mac:alignright">alignright.x</a></h4>
+
+<p>
+Until version 1.91
+the editor provided a "<tt>MARK ALIGN</tt>" command which aligns a
+mark to the left, but no "<tt>MARK ALIGN RIGHT</tt>" command.
+This macro was written to
+remedy that deficiency.  It is still has one useful feature that the
+command doesn't: the pad character.
+It needs a block mark, and you
+can give it an optional single pad character to pad the entries.
+This defaults to a blank.  For example "<tt>alignright 0</tt>"
+will transform
+</p><pre>  8                      008
+  9                      009
+  10         into        010
+  11                     011
+  12                     012
+</pre>
+
+<p>
+This macro shows a good way to deal with marks, which can come in a
+variety of forms some of which are not suitable for what we want to
+do in a macro.
+
+
+</p><h4><a href="#guide" name="mac:alphacol">alphacol.x</a></h4>
+
+<p>
+This macro provides a similar function to the command "<tt>MARK
+INTEGERS</tt>", but it fills the single column mark with letters
+rather than numbers.  Beware that if you have a very long mark you
+will run off the end of the alphabet and get into the rest of the
+ASCII sequence, if you get over 255 then it gets very weird.
+If you want to practice you could devise a way to correct this bug,
+but alphabetic enumerations are very hard to follow if they are
+longer than about six or seven letters, so your solution may be of
+limited practical use.
+
+</p><h4><a href="#guide" name="mac:copydown">copydown.x</a></h4>
+
+<p>
+Copydown is one of my favourites, I use it frequently.  It was
+inspired by the "e" prefix command that came with the COL package
+for XEDIT on VM.  You mark a block, do "<tt>copydown</tt>" and the
+first line of the mark is repeated down the mark, overlaying any
+previous contents.
+
+</p><h4><a href="#guide" name="mac:markstat">markstat.x</a> ,
+    <a href="#guide" name="mac:avg">avg.x</a>,
+    <a href="#guide" name="mac:median">median.x</a>,
+    <a href="#guide" name="mac:modal">modal.x</a>,
+    <a href="#guide" name="mac:sdev">sdev.x</a>,
+    <a href="#guide" name="mac:product">product.x</a> and
+    <a href="#guide" name="mac:sum">sum.x</a></h4>
+
+<p>
+This group of macros perform statistical functions on numbers in a
+marked area, and insert the result at the cursor.  All the code is
+in Markstat, the others are just "short hand" macros that call
+Markstat with appropriate arguments, so "<tt>markstat avg</tt>" is
+equivalent to "<tt>avg</tt>" and so on.   Not all functions have
+short hand macros, but you can add them.
+Note that if the mark contains data other than numbers then these
+will be ignored, only the numbers in are mark are processed.
+</p><p>
+The following functions are provided:
+</p><dl><dt>COUNT
+</dt><dd>inserts the number of numbers in the mark
+</dd><dt>SUM
+</dt><dd>inserts the total of the numbers in the mark
+</dd><dt>AVG
+</dt><dd>inserts the average, or arithmetic mean of the numbers in the
+mark (that is SUM / COUNT)
+</dd><dt>MODAL
+</dt><dd>inserts the modal value or values of the numbers in the mark,
+the modal value is the one (or more) that occurs most frequently in
+the data.
+</dd><dt>MEDIAN
+</dt><dd>inserts the median value of the numbers in the mark, the median
+is the middle value of the sample after it has been sorted (or the
+mean of the two middle values if there are an even number of
+values).
+</dd><dt>RANGE
+</dt><dd>inserts the lowest and highest values in the mark
+</dd><dt>SDEV
+</dt><dd>inserts an approximation of the standard deviation of the
+sample.
+</dd></dl>
+<p>
+If you do "<tt>markstat all</tt>" you will get a summary of all
+the functions like this:
+</p><p>
+Input data:
+</p><pre>  208 174 596 821 108 490 462 304 470 333 514 175 176 593 427 410
+  387 145 174 130 777 540 286 214 735 163 644 193 114 426 795 298
+  584 617 104 681 678 228 377 199 218 459 134 399 578 687 451 658
+  291 607 268 134 860 237 966 326 662 252 183 293 669 675 578 310
+</pre>
+<p>
+Output from "<tt>markstat all</tt>":
+</p><pre>  Range:  104...966
+  Count:  64
+  Sum:    26645
+  Prod:   1E+163
+  Mean:   416.3
+  Mode:   174 134 578
+  Median: 393.0
+  SDev:   225.4
+</pre>
+
+<h3><a name="tinymacs">Tiny utilities &amp; examples</a></h3>
+<h4><a href="#guide" name="mac:cols">cols.x</a></h4>
+<p>
+Inserts a ruler in the text using X's "errorline" facility.
+The ruler starts at the cursor position like this:
+</p><pre>   Some text that you need to "measure"
+             ....+....1....+....2....+....3....+....4....+....5...
+</pre>
+Error lines are removed when you save the file or do
+an "<tt>errors remove</tt>" command (ctrl-o by default).
+
+<h4><a href="#guide" name="mac:date">date.x</a></h4>
+
+<p>
+The X "<tt>date</tt>" command inputs the current data at the
+cursor position, in one of four alternative formats.
+This macro works in exactly the same way, but
+offers several more formats.  Since it has the same name as the
+built in command you need to do "<tt>macro date
+<var>option</var></tt>" to call it.  I have it assigned
+to the alt-f9 and ctrl-f9 keys.  The options and their effects are
+as follows:
+</p><dl><dt>B, D, E, L, M, N, O, S, U or W
+</dt><dd>inputs the date in one of these REXX forms.  So "B" does
+"<tt>date("B")</tt>" and inputs the REXX base date (days since 1
+Jan 0001); "W" does
+"<tt>date("W")</tt>" and inputs the English name of the day of the
+week; see the online REXX help for the meaning of the others.
+</dd><dt>ISO
+</dt><dd>inputs the date in ISO standard form: 1997-11-19
+</dd><dt>FULL
+</dt><dd>inputs day name and long date: Wednesday 19 November 1997
+</dd><dt>LONG
+</dt><dd>inputs a long date: 19 November 1997
+</dd><dt>SHORT
+</dt><dd>inputs a short date: 19/11/1997
+</dd></dl>
+<p>
+"Short" is the default.  Note that "Full", "Long" and "Short" will
+format the date according to your Country settings, so if
+you have chosen m-d-y dates and "-" as the date separator string:
+"Long" will get you "November 19, 1997" and "Short", 11-19-1997.
+</p><p>
+These options will only work on Windows or OS/2 since the code to
+read the user INI files and the INI file settings are specific to
+those platforms. (But I am sure it could be adapted to other
+platforms...)
+</p><h4><a href="#guide" name="mac:env">env.x</a></h4>
+<p>
+Shows the current value of an environment variable.  The argument
+for the command is the name of the variable.  If you omit the
+argument ENV.X will read the word at the cursor and use that as the
+variable name.  The environment searched is "ENVIRONMENT" on all
+platforms except OS/2 where we look at "OS2ENVIRONMENT".
+</p><p>
+This macros shows an example of how to read the word at the cursor.
+
+</p><h4><a href="#guide" name="mac:quitall">quitall.x</a></h4>
+<p>
+Exit all the files in the ring, immediately, without asking
+questions.  Handy if you have loaded 100s of files by mistake.
+Dangerous to use if you have lots of unsaved files open, as the
+"<tt>qquit</tt>" command used throws away all changes without
+asking.
+
+</p><h4><a href="#guide" name="mac:underl">underl.x</a></h4>
+<p>
+This macro underlines the current line of text.
+This is useful in plain text notes for headings or tables.
+You can supply an option to choose a different "level" of
+underlining from 0 (strongest) to 4 (weakest).  The default level is
+1 which corresponds to "normal" underlining.
+The output from "underl" looks like this.
+</p><pre>  A sample line of text
+  ---------------------
+</pre>
+
+<h4><a href="#guide" name="mac:wc">wc.x</a></h4>
+<p>
+WC is a word counter.  It displays the number of words in the
+current file on the message line.  It is not implemented directly as
+a macro, but depends on you having an external WC program located
+somewhere in your path.  This macro shows you how to call an
+external program and retrieve its output using the REXX queue
+interface.
+
+</p><h4><a href="#guide" name="mac:allre">allre.x</a></h4>
+<p>
+ALLRE is an interface to an external GREP program.  If you don't
+know what GREP is, here is probably not the place to start.  Try
+getting a book on Awk, or Perl or (if you must) Sed.
+</p><p>
+ALLRE takes a regular expression as an argument and shows you all
+those lines in the current file that match it (which may be none).
+
+
+</p><h3><a name="applmacs">Applications</a></h3>
+
+<h4><a href="#guide" name="mac:cal">qcal.x</a></h4>
+<p>
+Qcal displays a calendar for a month, a quarter or a year.
+Like this:
+</p><pre>June             2000
+  M  T  W  T  F  S  S
+           1  2  3  4
+  5  6  7  8  9 10 11
+ 12 13 14 15 16 17 18
+ 19 20 21 22 23 24 25
+ 26 27 28 29 30
+</pre>
+<p>
+Here are some example commands...
+<table border="0">
+<tbody><tr><td><i>This command...</i></td><td><i>displays calendar for...</i>
+</td></tr><tr><td>qcal        </td><td>current month
+</td></tr><tr><td>qcal 7      </td><td>July this year
+</td></tr><tr><td>qcal 12     </td><td>December this year
+</td></tr><tr><td>qcal 7 1962 </td><td>July 1962
+</td></tr><tr><td>qcal 1962 7 </td><td>July 1962
+</td></tr><tr><td>qcal 2001   </td><td>all of 2001
+</td></tr><tr><td>qcal 49     </td><td>all of 2049
+</td></tr><tr><td>qcal 50     </td><td>all of 1950
+</td></tr><tr><td>qcal 102    </td><td>all of 102 AD
+</td></tr></tbody></table>
+</p><p>
+Qcal is a quick version of my calendar macro for X.  The
+<a href="http://www.wildfire.dircon.co.uk/Announcecal.html">full version</a> has a much more generic
+way of customizing the date forms and language settings, and can
+also show you a daily diary.  It comes with several other diary
+management tools, and uses several external utility programs.  This
+version is a stripped down stand alone version.  You may prefer this
+one if all you want is a quick calendar, or if you are on a slow
+machine.
+</p><p>
+Note that in the Calendar all the normal key definitions are
+suspended; the macro intercepts your key strokes before X gets to
+them.  To get out of the Calendar press F3.  (If you want to keep
+the calendar in the edit ring, press F4).
+</p><p>
+In the calendar the cursor starts pointing at the current date.
+Above the calendar an information line shows you information about
+the date in three parts; as you move the cursor in the calendar
+with the arrow keys from day to day, the information changes too.
+</p><p>
+The information line shows the date pointed at by the cursor in
+three forms:  the familiar <tt>yyyy-mm-dd</tt>; <tt>jjj/ggg</tt>,
+where <tt>jjj</tt> is the day of the year (sometimes --- wrongly ---
+called the Julian day) and <tt>ggg</tt> is the days to go to the end
+of the current year; and <tt>yyyy-Www-d</tt>, where the <tt>ww</tt>
+is the ISO week number, and <tt>d</tt> is the number of the day of
+that week.  ISO weeks run from Monday (day 1) to Sunday (day 7).
+ISO week 1 of any year is defined to be the week in which January
+4th occurs.  This apparently bizarre definition ensures that the
+first week of a year is the week that has a majority of days
+belonging to that year.  It also means that the last few days of a
+year may belong to week 1 of the following year and <i>vice
+versa</i>.  Further some years may have a week 53.
+</p><p>
+The third part of the line shows the base date as yyyy-mm-dd and
+the difference in days and weeks between the base date and the
+current date.  The base date is the date that the cursor started on,
+and the current date is the one that its on now.  You can use F2 to
+set the base date to the current date.  This lets you do
+calculations of the days and weeks between two dates.
+</p><p>
+So to summarize the F-keys:  F1 sets current date to today, F2 sets
+base date to current date, F3 quits, F4 quits but keeps the calendar
+in the ring.  And these keys change the date:
+</p><ul>
+<li>Left and Right change the day;
+</li><li>Up and Down change the week;
+</li><li>PgUp and PgDn the month;
+</li><li>Ctrl-PgUp and Ctrl-PgDn the year;
+</li><li>Alt-PgUp and Alt-PgDn the decade.
+</li></ul>
+<p>
+The tab key cycles between one, three and 12 month views.
+</p><pre>May              2000   June             2000   July             2000
+  M  T  W  T  F  S  S     M  T  W  T  F  S  S     M  T  W  T  F  S  S
+  1  2  3  4  5  6  7              1  2  3  4                    1  2
+  8  9 10 11 12 13 14     5  6  7  8  9 10 11     3  4  5  6  7  8  9
+ 15 16 17 18 19 20 21    12 13 14 15 16 17 18    10 11 12 13 14 15 16
+ 22 23 24 25 26 27 28    19 20 21 22 23 24 25    17 18 19 20 21 22 23
+ 29 30 31                26 27 28 29 30          24 25 26 27 28 29 30
+                                                 31
+</pre>
+Use at least mode 80,36 for the 12 month view.  In the 12 month view
+the date of Easter Sunday in the current year is shown at the top
+right of the display.
+<p>
+Now we come to the main motivation for writing Cal in the first
+place.  I was writing a letter and I needed to know what day of the
+week it was on the 21st of the month, and I didn't have a calendar
+to hand.  Getting this right is important when arranging meetings.
+How many times have you had a letter or an e-mail that asked you to
+do something on Thursday 21st when next Thursday is in fact the
+22nd?  Then you have to ring up or reply to check. Did they mean
+Wednesday 21st or Thursday 22nd?  Which were they more likely to get
+wrong?  There is no way of knowing.  Cal helps you avoid this
+problem by allowing you to enter a day name and date back in the
+file you started in.
+</p><p>
+This is how it works:  you are typing a letter or note, and you want
+to refer to a particular date next month.  You bring up cal for next
+month, use the arrow keys to get to the day you want and then press
+enter.  Cal quits the calendar and enters the date back in the
+original file like this: Thursday 25 December.  Besides the
+enter key, the Alt-F9 and Ctrl-F9 (the standard X date keys) enter
+the date in shorter forms.  Like this:
+</p><ul>
+<li>Enter puts the date in full form (eg Thursday 25 December)
+</li><li>Ctrl-F9 in long form (eg 25 December 1997)
+</li><li>Alt-F9 in short form (eg 25/12/97)
+</li></ul>
+<p>
+You can set your preferred form at the top of the macro. You can
+also tell qcal.x to start the week on a different day, so if you are
+used to calendars like this:
+</p><pre>June             2000
+  S  M  T  W  T  F  S
+              1  2  3
+  4  5  6  7  8  9 10
+ 11 12 13 14 15 16 17
+ 18 19 20 21 22 23 24
+ 25 26 27 28 29 30
+</pre>
+showing Sunday as the first day you can have that
+too.  Just make changes at the top of the macro.
+<p>
+Note:  qcal.x displays the Gregorian calendar.  This calendar
+system was not adopted until 1584 in France, Italy, Spain etc
+and not until 1752 in England and former colonies; so while
+the calendar is accurate in its own terms for earlier dates
+it may not show the calendar in use locally at the time.  Cal
+does not work for dates (even Gregorian ones) before 1 AD
+</p><p>
+Note:  The algorithm used to determine leap years does not
+work for very large year values (more than 8 digits).
+
+</p><h4><a href="#guide" name="mac:chart">chart.x</a></h4>
+<p>
+Chart.x makes an "ASCII ART" bar chart from a table of data.
+It is good for notes, :cgraphics., quick data visualization, etc.
+</p><p>
+Mark a block of text that has a column of numbers on the right
+and labels on the left, then do "chart" from the command line.
+The syntax of the command is like this:
+</p><pre>                   |- h -|  |- b -|
+Syntax: &gt;&gt;- chart ------------------------------------------&gt;&lt;
+                   |- v -| |- fill -| |- axis ------------|
+                                               |- size -|
+</pre>
+<p>
+Where
+</p><dl><dt>"h"
+</dt><dd>means produce a horizontal bar chart (default),
+and "v" means produce a vertical one,
+</dd><dt>
+"fill"
+</dt><dd>
+is the string to fill the bars with.  Any abbreviation
+of the word "blank" will produce blank bars, which is the
+default.  Don't use numbers or H or V.
+</dd><dt>
+"axis"
+</dt><dd>
+is the maximum value for the data axis; if you omit
+this is will be set to the power of ten next above the max
+value in the data.
+</dd><dt>
+"size"
+</dt><dd>
+is the number of columns or rows that the chart
+should fit into.  For a vertical chart this will default to 10
+rows (plus rows for the labels), for a horizontal chart it
+defaults to the higher of 40 or your right margin.
+</dd></dl>
+<p>
+Here is an example:
+</p><pre>First     35    &lt;-- You mark this block
+Second    64        CHART.X produces this chart...
+
+       |------------------------
+First  |                       | 35
+       |------------------------
+       |-------------------------------------------
+Second |                                          | 64
+       |-------------------------------------------
+       |---------------------------------------------------
+        0     10     20    30     40     50    60     70
+</pre>
+
+<!--*************************************************************-->
+<h4><a href="#guide" name="mac:dc">dc.x</a></h4>
+<p>
+A pop-up RPN calculator.
+This is a very simple calculator program implemented in an X2 prompt
+box.  Type <tt>dc</tt> and its prompt will pop up.  It is a simple
+stack based RPN calculator.  If you have never used an RPN
+calculator then this may not be the best one to start with.
+</p><p>
+The stack is all visible in the prompt window.  If you enter a
+number it will be pushed onto the bottom of the stack as you see it
+in the prompt.  If you enter an operator it will operate on the
+bottom two numbers in the prompt and push the result back at the
+bottom.  This may sound upside down, but since the input area of the
+prompt is at the bottom of the window it looks more natural this
+way.  This is the way that most RPN calculators show the stack too.
+However I prefer to call the bottom number the top of the stack, but
+that's just the way I think.
+</p><p>
+So for example, in the prompt you enter 4, (press enter) then 5,
+then +, the stack will now show 9.
+
+</p><p>If you now press the <tt>Esc</tt> key <tt>dc</tt> will go away.
+If you press enter on its own (with nothing in the input area) then
+the number on top of the stack will be duplicated.  Again this is
+the way most real RPN calculators work.  If you would like to copy
+the number at the top of the stack back into your file, enter
+<tt>#</tt>.  If you want the top two numbers enter <tt>##</tt> and
+so on.  The numbers will be written into the file you were editing
+when you called <tt>dc</tt>, and <tt>dc</tt> will close.
+</p><p>
+If your cursor is on a number when you call <tt>dc</tt> then that
+number will be copied onto the stack at the beginning.
+</p><p>Operators implemented are the normal REXX operators (+ - * / % **
+and //).  Note for non-REXX people: % is integer divide and // is
+remainder unlike the rest of the world.  If you don't like it then
+feel free to change the macro.
+</p><p>
+In addition there are these functions built in:
+</p><dl><dt>DUP</dt><dd>duplicate the top entry (that is the one just above the input)
+           <tt>dup *</tt> provides a handy way to square a number
+
+</dd><dt>EXCH or X</dt><dd>swap the top two entries (x&lt;&gt;y)
+</dd><dt>CHS or C</dt><dd>change the sign of the top entry (+/-)
+</dd><dt>INV or V</dt><dd>replace the top entry with its inverse (1/x)
+</dd><dt>ROT or R</dt><dd>rotate the stack down, ie put the top at the bottom
+(R&#8595;)
+</dd><dt>POP</dt><dd>remove the top of the stack
+</dd><dt>CLEAR</dt><dd>remove all of the stack
+
+</dd><dt>SUM</dt><dd>replace the stack with the sum of everything on it
+</dd><dt>PROD</dt><dd>replace the stack with the product of everything on it
+
+</dd><dt>ROUND</dt><dd>replace the top of the stack with <tt>trunc(x+0.5)</tt>
+</dd><dt>FLOOR</dt><dd>replace the top of the stack with truncated to the next
+lowest integer.
+
+</dd></dl>
+If you unpack my <a href="http://www.wildfire.dircon.co.uk/Announcemath.html">bundle of math(s)
+functions for REXX</a> you will also be able to use these math(s)
+functions in the obvious way...
+<pre>SQRT  EXP  LN   LOG   PI
+SIN  COS  TAN  POW    PERM   COMB  etc...
+</pre>
+You can also generate a run of numbers (up to 20 long) by using
+<tt>..</tt> as an operator.  For example <tt>1 8 ..</tt> will push
+<tt>1 2 3 4 5 6 7 8</tt> onto the stack.
+
+<p>You can also store and recall any number of values.  If you enter
+<tt>STO A</tt> the current value of the top of the stack is stored
+as variable A.  To get it back on the top of the stack, enter
+<tt>RCL A</tt>.  You don't have to limit yourself to single
+characters, any valid REXX tail will do.  Note that `A' is the same
+as `a' however.
+
+<!--*************************************************************-->
+</p><h4><a href="#guide" name="mac:hc">hc.x</a></h4>
+<p>
+A simple Hex to Decimal converter and calculator.
+The argument is one or more hex strings.  Anything in the argument
+that does not look like a hex string or a REXX arithmetic operator
+is ignored.  For example you type "<tt>hc F97</tt>" and HC displays
+"<tt>3991 (0F97)</tt>".  You can also do simple sums: "<tt>hc F97 +
+B04</tt>" produces "<tt>6811 (1A9B)</tt>".  You must leave spaces between the
+numbers and the operators.
+
+<!--*************************************************************-->
+</p><h4><a href="#guide" name="mac:m2f">m2f.x</a>,
+    <a href="#guide" name="mac:m2f">m2i.x</a> and
+    <a href="#guide" name="mac:m2f">f2m.x</a></h4>
+<p>
+Converts metres to feet and inches and <i>vice versa</i>.
+You type "<tt>m2f 3.4</tt>" on the command line and m2f inserts: "<tt>11' 2"</tt>".
+You type "<tt>m2i 3.4</tt>" on the command line and m2i inserts: "<tt>134"</tt>".
+You type "<tt>f2m 3 4</tt>" on the command line and f2m inserts: "<tt>1.016m</tt>".
+
+<!--*************************************************************-->
+</p><h4><a href="#guide" name="mac:math">math.x</a></h4>
+<p>
+Math is a simple command line calculator.  You type a sum for it to
+do and it inserts the result at the cursor.  Typical usage:  move
+cursor to where you want the results, ESC to bring up the command
+line, then:
+</p><pre> math 2+3      inputs 5
+ math 2/3.0    inputs 0.7
+ math 2.03 / 3 inputs 0.68
+ math 2,000*34 inputs 68,000
+</pre>
+<p>
+Use any REXX operators <tt>+ - * / % **</tt>, but use "<tt>\\</tt>"
+for "<tt>//</tt>" because of an OS/2 limitation on the REXX cmd
+line, that stops you passing "<tt>//</tt>" to a REXX exec.
+Note that the number of decimal places used in the input determines
+the number used in the output.  Similarly if your numbers have
+commas in them, then the output will have commas too.
+</p><p>
+In addition to this
+if you use a # in the expression then Math.x looks for a mark,
+finds the numbers in it and substitutes them for the #s in the
+input expression.  For example
+</p><pre>math 2+#
+</pre>inputs 2 + the first number in a marked area
+<p>
+You will get an error if there is no mark or it does not contain
+enough numbers.  If the number of numbers in a line matches the
+number of #s <b>AND</b> the mark extends for more than one row down,
+then the operation will be repeated all down the mark.  This
+is good for doings operations on columns of numbers.
+</p><p>
+You can also use REXX BIFs or any other program that you have
+written to be called as a routine.  So for example you have
+two columns of data like this:
+</p><pre>         234   356   and you want the max of each    356
+         123    34   col.  Mark the data move the    123
+         297   403   cursor to where you want the    403
+         123   405   output, ESC to cmd line &amp; do    405
+         117   107   "math max(#,#)" to get ----&gt;    117
+</pre>
+<p>
+Providing you are NOT using a BIF or a function then, K M and
+G can be used for *(2**10), *(2**20) &amp; *(2**30) respectively.
+For example:
+</p><pre> math 2K                 --&gt; 2048
+ math 150 * 300000/(1K)  --&gt; 43945
+</pre>
+<p>
+If you want to use any of the standard maths or trig functions, then
+unpack my <a href="http://www.wildfire.dircon.co.uk/Announcemath.html">bundle of math(s) functions for REXX</a>
+and use them just like BIFs.  You can load them into the
+macro space to speed up performance if you need to.
+
+</p><h4><a href="#guide" name="mac:sen">sen.x</a></h4>
+<p>
+Sen.x lets you cut and paste whole sentences of text.
+To use it put the cursor in middle of the sentence to be
+processed then do
+</p><pre>     sen c  == copy the sentence
+     sen d  == delete the sentence
+     sen x  == cut the sentence (copy &amp; delete)
+</pre>
+<p>
+Once you have copied a sentence (c or x) you can do
+</p><pre>     sen v  == insert the sentence after the sentence that
+               your cursor is currently in.
+     sen p  == (same as sen v)
+</pre>
+<p>
+To see what you have copied look at the file in the ring
+called "Sentence".  If you delete by accident, use "undo" (F9).
+</p><p>
+Restrictions:  You can only paste once, due to a feature of
+"get".  Also I haven't tested what happens with hidden lines.
+
+</p><h4><a href="#guide" name="mac:series">series.x</a></h4>
+<p>
+Series.x generates a sequence of numbers in arithmetic progression.
+To use it you
+put cursor where you want output, then:
+</p><pre>   series 203 . . . 400   inputs 203 252 302 351 400
+   series 2.03 . . 4      inputs 2.03 2.69 3.34 4.00
+</pre>
+<p>
+The decimal places in the output are determined by the decimal
+places used in the input.  The number of intermediate steps is
+controlled by the number of dots.
+
+</p><h4><a href="#guide" name="mac:table">table.x</a></h4>
+<p>
+Table.x lines up rows of data neatly.  To use it you
+mark lines to process, then do "table" from the command line.
+</p><pre>&gt;- table --+-----------+---+------------------------------+-&gt;&lt;
+           |           |   |                              |
+           +-- delim --+   +-- ( -- arrange string -- ) --+
+</pre>
+<dl><dt>delim:</dt><dd>
+either a string that delimits the "cells" or a number.
+A number means "use this number of blanks".  Default is 2.
+</dd><dt>
+arrange string:
+</dt><dd>
+any sequence of "l", "r" or "c", one for each
+column in the table indicating how you want the columns lined
+up (left, centre or right).  By default, TABLE.X will work out
+how to line them up for you.  Use the default normally.
+</dd></dl>
+<p>
+For example: table :c. (l r r r)  or  table (c c c)
+
+</p><h4><a href="#guide" name="mac:transpose">transpose.x</a></h4>
+<p>
+Transpose.x transposes a table of data, that is it swaps round the
+rows and columns.  Like this:  If you start with...
+</p><pre>  High  34  98  45  23  45
+  Low    2  15  -3   0  10
+</pre>
+<p>
+Mark the lines, then do "transpose" from the command line
+and you get it turned round like this:
+</p><pre>   High  Low
+    34    2
+    98   15
+    45   -3
+    23    0
+    45   10
+</pre>
+<p>
+You may like to use Table.x to line up your table of data first, and
+then again afterwards.  (As I have done for these examples here).
+
+<!--*************************************************************-->
+</p><hr>
+<h2><a name="tutor">Writing macros for the X editor</a></h2>
+<p>
+This section is an introduction to writing your own macros for the
+X editor.  It aims to show the user new to macro programming how to
+get started, and also provide a reference of techniques for the more
+experienced user.  A certain familiarity with REXX is assumed.
+Chapter 6 of Daney's <cite><a href="#book">Programming in
+REXX</a></cite> is recommended reading.
+<!--*************************************************************-->
+</p><h3><a name="tut:motive">Motivation</a></h3>
+<p>
+In my personal experience the main motivation for writing macros for
+X is that I have come across a particular problem and found a way
+to solve it using macro:  "I needed it so I wrote it".  Many of
+these macros never get used again, but some become favourites and
+some are good enough to share with others.  Through the Internet it
+is very easy to share macro code with others and get rapid and
+direct feedback.
+</p><p>
+Macros also provide a way to extend the functions of the editor
+almost infinitely, yet still keep the core executable small and
+lightweight.  This elegant approach is one of the main reasons that
+X has found such a loyal and enthusiastic following among technical
+users.
+
+
+<!--*************************************************************-->
+</p><h3><a name="tut:style">Program style</a></h3>
+<p>
+Good macros are easy to use and don't need much explanation.
+Their behaviour conforms closely to what the user expects; in X
+this does not mean slavishly following some coding convention,
+because there isn't one, but it does mean trying to be consistent
+with the behaviour of X's builtin commands.  In practice this
+means:
+</p><ul>
+<li>Respecting marks
+<p>
+If the user has set a mark it is generally good practise to restrict
+the action of a macro to the marked lines or block rather than the
+whole file; this is what most X commands do.
+</p><p>
+It is also normally good practice to ensure that the mark is left
+alone or at least restored at the end of the macro.  This may mean
+adjusting it's position if your macro inserts text or lines.  On the
+other hand, sometimes the removal of the mark can be a useful
+indication that your macro has "done something".
+</p>
+</li><li>Respecting cursor position
+<p>
+Similarly it is generally a good idea to take account of the cursor
+position and to put the cursor back where it was when you have
+finished.  However for many macros it may be appropriate to "start
+at the top" every time, and there may be a more useful position to
+leave the cursor in.  This is important even for macros you write
+only for your own use.  If you find yourself always moving the
+cursor after you run a particular macro, then it may be worth adding
+a couple of lines to the macro to work out a better place to leave
+the cursor.
+</p>
+</li><li>Restoring settings
+<p>
+If you write a macro that changes user settings, like the state of
+search wrapping or the line end character, then it is polite (and
+not difficult) to restore them at the end of the macro.
+</p></li></ul>
+<p>
+If you find yourself writing several similar macros, you will make
+your life easier if you generalize the common elements and extract
+them into a single macro that the other ones call.   Thus my Bold.x
+and Italic.x both call Tagit.x for their common functions.
+</p><p>
+If you are trying to solve a problem with a macro, always review the
+X command list carefully, keeping a look out for innovative ways to
+use the standard commands to solve new problems.  Good examples are
+the way that Grep.x (from the
+<a href="http://www.tangbu.com/">X Editor website</a>)
+uses error lines to mark the found lines within a file.  (But see my
+<a href="#mac:allre">allre</a> macro for another way to do it.)
+</p><p>
+In addition to respecting the users preferences within X it
+is also a good idea (and surprisingly easy) to respect the user's
+preferences as expressed in the operating system settings.  Date.x
+and Cal.x show you how to do this for international date
+preferences.  On a similar theme, but harder to implement, once your
+macro gets beyond a very few lines, it is also worth thinking about
+support of other languages.  There is no easy way to do this in
+REXX, no external messages file where you can store all your
+strings, and indeed any external system is surely overkill for a
+macro.  The simplest approach is to use variables for all the text
+that you display to a user, and to group all these variables near
+the top of the macro so that someone can translate them easily.
+</p><p>
+Cal.x does this.  A French user can then take these lines near the
+top of the macro:
+</p><pre>  <i>calendar</i> = "Calendar"
+  <i>days</i> = "  M  T  W  T  F  S  S"
+  <i>daynames</i> = "Monday Tuesday Wednesday Thursday Friday Saturday Sunday"
+  <i>months</i> = "January February March April May June July" ,
+           "August September October November December"
+</pre>
+and update them like this:
+<pre>  <i>calendar</i> = "Calendrier"
+  <i>days</i> = "  L  M  M  J  V  S  D"
+  <i>daynames</i> = "Lundi Mardi Mercredi Jeudi Vendredi Samedi Dimanche"
+  <i>months</i> = "Janvier Fevrier Mars Avril May Juin Juillet" ,
+           "Aôut Septembre Octobre Novembre Decembre"
+</pre>
+<p>
+While macro programming can be fun, don't get carried away:  if
+there is a generally available function (such as GREP) its pointless
+to try to implement that function as a macro.  A better approach
+is to reuse the function (and use a macro as glue to integrate it into X)
+rather than to reinvent it.
+</p><p>
+Finally a word about comment style and sharing your code.
+It is always helpful to identify yourself in comments at the top of
+a macro, to note any restrictions, prerequisites or level
+dependencies in your code, and to include as much as possible in the
+way of instructions, explanations and syntax diagrams.  You should
+put all of these things inside valid REXX comments so that
+the actual executable code is self-documenting.
+</p><p>
+Here are some points to bear in mind when creating a macro to share.
+</p><ul>
+<li>Keep the line lengths short, in case your code has to be
+processed on an antique system that worries about these things, or in
+case a user looks at it with an editor that wraps long lines without
+asking.
+</li><li>Restrict yourself to the "core character set" to avoid any ASCII
+to EBCDIC conversion problems, and other NLS or codepage problems.
+This means avoiding all box characters (which are useful for syntax
+diagrams, sigh!), square brackets (use &lt; and &gt; instead), the
+backslash character (it is always possible to avoid using this in
+REXX), and as far as possible the vertical bar.   You can (nearly)
+always avoid using the double vertical bar for concatenation, but
+its trickier to avoid using logical or.  If you must use it, add a
+note to warn the user of the potential problem.
+</li></ul>
+
+
+<!--*************************************************************-->
+<h3><a name="tut:types">Type of macros</a></h3>
+<p>
+In this section the different types of macros, some examples
+and their uses are discussed.
+
+</p><h4>One-shot macros</h4>
+<p>
+Once you get the hang of writing macros for X, you will find that it
+is nearly always quicker to write a short macro to do a repetitive
+task than to do it "by hand".  However X makes it very easy to
+produce one-shot macros, with the "<tt>KEYS_RECORD</tt>" and
+"<tt>KEYS_PLAY</tt>" commands.  By default these are assigned to
+ctrl-r and ctrl-t.  The standard way to use these is like this:
+find the first occurrence of the item you want to process; press
+ctrl-r to start recording; do what you need; then find the next
+occurrence; press ctrl-t saves the sequence and then plays it back.
+Repeated presses of ctrl-t will play the sequence again.
+If you like the sequence so much that you want to keep it, then
+issue the "<tt>KEYS_WRITE <var>name.x</var></tt>" command and X
+will save the commands to a file.
+
+</p><h4>Key functions</h4>
+<p>
+The way X handles its commands allows all macros to be assigned to
+a key in your profile or executed as a command from the command
+line.  However there is a large class of macros that only really
+work when assigned to a key.  Examples from the current collection
+are my Accent.x and Italic.x.  Typically the are functions that you
+want to use without interrupting your typing or focus from the data
+area of the editor.
+</p><p>
+For the novice and experienced X user there are a bewildering
+variety of key combinations available.  It's easy to press the wrong
+one, in particular it is easy to press Ctrl instead of Alt,
+especially if you have large fingers and a lap top keyboard.
+The reason that this is never a very large problem in practice is
+that, with very few exceptions, all the standard key combinations
+are non-destructive, and can be undone easily.
+For this reason, when you are designing a macro that will commonly
+be assigned to a key, it is important that you consider how easily
+the results of your macro can be undone.  For example if you are
+updating a sequence of lines, it is probably better to replace them
+one by one, than to read them all first, delete the lot and then
+insert the replacements.  If your user has pressed the key by
+mistake and is undo-ing their way through the results of your macro,
+the one-line-at-a-time approach is likely to be easier to follow.
+</p><p>
+A further point to bear in mind is that your macro will be competing
+for space on your users' keyboards.  The design of my Accent.x was
+primarily influenced by a desire to have all the accented characters
+I ever wanted available through a single key combination.  This has
+a second beneficial effect as well:  not only does the macro not
+"waste space" on my crowded keyboard, but also I only have to
+remember one key combination.
+
+</p><h4>Commands</h4>
+<p>
+If your macro is meant to be used at a natural pause, such as when
+you are ready to proof read what you have written, or you use your
+macro infrequently, or there are a number of different arguments
+that you can supply to it, then your macro will be better executed
+from the command line rather than assigned to a key combination.
+This is also the case for long running macros.
+</p><p>
+It is as well to call your macro something meaningful, even if you
+are the only user; it is remarkable how easy it is to forget what a
+10 month old macro was for.  You should also beware of calling your
+macro by the same name as any command.  If you have a macro with the
+same name as an X command, then the X command will be called
+first which may cause unexpected side effects if you were expecting
+to run a macro.  If you really do want to run a command, then
+write "<tt>COMMAND <var>command_name</var></tt>".  If you really
+wanted to call a macro, you should write
+"<tt>MACRO <var>macro_name</var></tt>".
+</p><p>
+<a name="macvcmd">
+In some ways it would be a useful feature if X worked the other way
+round.  If by writing a macro with the same name as a command you
+were able to intercept calls to that command and insert additional
+processing, we would have a general way to override built in
+commands, but we don't because it doesn't work like that.</a>
+Indeed this is an important design principle of X and the most
+obvious way that it differs from XEDIT.  What it does mean is that
+you can be sure that in a macro when you issue a command then that
+command is what is executed not some other entirely different macro.
+The only exception are commands with synonyms....
+
+</p><h4>Command synonyms</h4>
+<p>
+Although there is no general way to macros to override commands
+X does
+provide a number of exit points for you to provide macro functions
+instead of the standard action.
+These exit points are called "synonyms".  Currently (V1.91) they
+are:
+</p><dl><dt>"<tt>BEEP</tt>"
+</dt><dd>executed when the editor issues a beep
+</dd><dt>"<tt>EDIT</tt>"
+</dt><dd>executed when a file is being added to the editor
+</dd><dt>"<tt>ERROR_PARSE</tt>"
+</dt><dd>executed when error information is to be added to a file
+</dd><dt>"<tt>EXIT</tt>"
+</dt><dd>executed when the editor is terminating, i.e. after the last file has been quit
+</dd><dt>"<tt>QUIT</tt>"
+</dt><dd>executed when a file is being removed from the editor
+</dd><dt>"<tt>SAVE</tt>"
+</dt><dd>executed when a file is to be saved to disk
+</dd><dt>"<tt>STARTUP</tt>"
+</dt><dd>executed when the editor is starting
+</dd></dl>
+<p>
+The idea is that you create a macro that you want to call at one of
+these times --- say a REXX program to play a sound clip --- and then
+add a line to your profile like this:
+</p><pre>  synonym beep        = macro playclip
+</pre>
+<p>
+The most commonly used ones are Hostedit.x and Load.x both of which
+are available from the
+<a href="http://www.tangbu.com/">X Editor website</a>.
+Hostedit.x lets you edit files on
+VM or MVS directly from the PC.  Load.x parses a wide variety
+of input files (such as HPFS directory listings) to allow you to
+load files directly from a list, and many other things.
+You set them up as synonyms for the "<tt>EDIT</tt>" command.
+</p><pre>  synonym edit        = macro hostedit <i>parms</i>
+</pre>
+<p>
+The comments at the top of Load.x show you how they can work
+together.  One useful feature you can add to a edit synonym macro is
+the ability to make X accept input from STDIN directly. So that you
+can do things this from a command line:
+</p><pre>  [C:\] dir | x
+</pre>
+<p>
+This is how it works.  (If you use an edit synonym like Hostedit.x
+already, then you can just add the lines to the top of that,
+otherwise create a new macro and set it up as an edit synonym and
+then recompile your profile.)  Your edit synonym is passed the whole
+of the command line (prefixed by any arguments you put in the
+synonym definition).  If X is being invoked as in the above example
+the command line will be blank, more over there will be data on the
+standard input stream.  Your macro can test for these conditions and
+then load a blank file and read all of STDIN into it, like this:
+<a name="mac:stdin">
+<pre>/******************************************************************/
+/* My edit synonym                                                */
+/******************************************************************/
+<b>parse arg</b> <i>commandline</i>
+<b>if</b> <i>commandline</i> = "" &amp; lines('stdin') &gt; 0
+  <b>then do</b>
+    'command edit .STDIN'              /* edit temp file          */
+    'top'                              /* go to top               */
+    'delete *'                         /* remove any contents     */
+    <b>do while</b> lines('stdin') &gt; 0       /* while there is STDIN    */
+     'input' linein('stdin')           /* input it line by line   */
+    <b>end</b>
+    'top'                              /* back to top             */
+    'alt 0 0'                          /* allow user to quit      */
+  <b>end</b>
+  <b>else</b> 'command edit' <i>commandline</i>
+<b>exit</b>
+</pre>
+</a>
+</p><p>
+Note: This does not work with the Regina Rexx interpreter.  The
+function call to <tt>lines('stdin')</tt> that controls the while
+loop, always returns 1 under Regina, so the loop never terminates
+and X will hang while this endless macro runs.  Using Object Rexx
+for Windows or Classic Rexx on OS/2 the call returns 0 when there
+are no lines actually available to read from <tt>stdin</tt>
+
+</p><p>
+This could be considered a bug in Regina, although I can see why
+it does it as <tt>stdin</tt> is generally always open to the command
+line.  Nevertheless it is not very useful behaviour.  If you can
+find a way of making this work with Regina, please let me know.
+
+
+</p><h4>Syntax assist macros</h4>
+<p>
+The final type of macros are macros for syntax assistance.  In the
+extension specific sections of the profile you can specify lines
+like this:
+</p><pre>  expand_keyword     = "IF"
+  expand_replace     = "if \c"
+  expand_replace     = "  then"
+  expand_replace     = "  else"
+</pre>
+which expand "IF" into three lines and move the cursor into
+position.  This is pretty powerful as it is, especially as you can
+specify "<tt>\1</tt>" to match any line ending, enabling you to do
+neat tricks like this:
+<pre>  expand_keyword     = "++\1"
+  expand_replace     = "\1 = \1 + \c1"
+</pre>
+which is handy if you use "<tt>really_long_variable_names</tt>" in
+your code.  However despite the power on offer here you can take
+things one step further and call a macro to expand a keyword, like
+this:
+<pre>  expand_keyword = &lt;UL
+  expand_macro = "taglist ul"
+</pre>
+<p>
+When the keyword is expanded your macro (in this case Taglist.x) is
+called with the argument specified in your profile (if any).  As an
+example of what you can do, here is my Taglist macro.
+</p><pre>/******************************************************************/
+/* Expand a GML list tag             Toby Thurston - 21 November  */
+/******************************************************************/
+<b>parse</b> <b>arg</b> <i>tag</i>
+<i>stag</i> = "&lt;"tag"&gt;"
+<i>etag</i> = "&lt;/"tag"&gt;"
+'insmode on';'msg'
+'extract /mark/'
+<b>if</b> <i>mark</i>.0 = 0 | <i>mark</i>.6 = 0 <b>then</b> <b>do</b>    /* no mark in this file    */
+  'input' <i>stag</i>
+  'input &lt;li&gt;'
+  'input' <i>etag</i>
+  'cursor -1 5'
+<b>end</b>
+<b>else</b> <b>do</b>                               /* there is a mark         */
+  'cursor begmark'
+  'up'
+  'input' <i>stag</i>
+  <b>do</b> <i>i</i> = <i>mark</i>.2 <b>to</b> <i>mark</i>.3
+    'cursor' i+1 '0'   /* plus 1 because mark moved down by input */
+    'keyin &lt;li&gt;'
+  <b>end</b>
+  'input' <i>etag</i>
+  'cursor begmark'
+  'cursor eol stay'
+<b>end</b>
+<b>exit</b>
+</pre>
+<p>
+Note that the line in the text that is being expanded is deleted
+when your macro gets control, so your macro is responsible only for
+putting things in.  This example here first constructs the tags it
+is going to use; then turns on insert mode and finds out what is
+marked. If there is no mark, or none in this file, it simply inputs
+the start and end tags and positions the cursor in the middle.  This
+is exactly equivalent to having this in the profile.
+</p><pre>  expand_keyword = &lt;UL
+  expand_replace = "&lt;ul&gt;"
+  expand_replace = "  \c"
+  expand_replace = "&lt;/ul&gt;"
+</pre>
+<p>
+On the other hand, if there is a mark in this file, we construct the
+list tags around that and move the cursor to the end of the first
+marked line.  The same behaviour is desired for all sorts of lists
+in HTML so, the macro is made generic and the tag name is passed as
+a parameter defined in the profile.  This approach can be extended
+to generalize the tag start and end characters so that other
+languages (like BookMaster) can be accommodated, but beware that there
+is a restriction on passing "&gt;" as a parameter as this conflicts
+with X's macro tracing facilities.
+</p><p>
+As a final note on syntax assistance, it is also possible to override
+the action of the enter key with a macro.  Possible uses of this are
+to input paragraph tags in HTML or BookMaster files (so that the tag
+is inserted if you press enter in insert mode on a blank line, or
+what ever), however unless you require a very specific function it
+is not worth doing this.  First because your performance will be
+impacted, but mainly because there is no command equivalent to "do
+what the enter key does normally", and programming the equivalent
+functions in complete generality is tricky (not to say nigh on
+impossible).
+
+<!--*************************************************************-->
+</p><h3><a name="tut:sample">Coding techniques and examples</a></h3>
+<p>
+This section review some practical coding techniques.  The
+discussion of each technique is amplified by examples and snippets
+of code, mainly taken from the TTXMACS collection.
+
+</p><h4>User interaction</h4>
+<p>
+X provides two built in ways to
+to interact with the user in a macro, prompts and windows.
+</p><ul>
+<li>Prompts
+</li><li>Windows
+</li></ul>
+<p>
+They both allow you to prompt the user with information and to
+collect a response: with a Prompt X displays your message to the
+user, the user types a response and presses enter; with a Window you
+define the lines to go in a pop up window and the commands associated
+with each line, the user chooses a line and X runs the commands you
+have defined for that line.
+</p><p>
+In addition to these two methods, you can also code your macro to
+redefine all of the Fn keys when it runs.  (And also Enter, PgUp and
+PgDn).  If you do this it is essential to extract all the Fn key
+definitions at the start and to restore them at the end.  You should
+also update the Fn key display line at the bottom.  The Boxes.x
+macro (from the <a href="http://www.tangbu.com/">X Editor
+website</a>) that draws boxes like the old XEDITG macros
+shows you how to do this.
+</p><p>
+If you want full control over all the users keystrokes then you can
+also use the REXXUTIL function "SysGetKey" to read the users
+keyboard, as SysGetKey gets the key stroke before X does.
+Here are two examples, the first is a simpler prompt that lets you
+capture individual keys instead of having to wait for the Enter key;
+the second is a system to intercept all input from the user.
+</p><p>
+The prompt comes from the Chk42.x macro described
+<a href="#mac:chk42">above</a> and it was developed to provide a
+prompt that looked and behaved in the same way as the internal
+prompt used by internal X commands, like "<tt>CHANGE</tt>" in
+selective mode.  The prompt is implemented as a subroutine
+and it can be used like this:
+</p><pre>  &gt;&gt;--- PROMPT(text,values) --------------------------------&gt;&lt;
+</pre>
+<p>
+</p><dl><dt><var>text</var></dt><dd>is the string you want to display as a message.
+This should be short enough to fit on the screen as if it exceeds the
+screen width X simply truncates it to fit
+</dd><dt><var>values</var></dt><dd>are the acceptable values that the prompt
+may return.  You can specify them in upper or lowercase; Prompt()
+always returns them in upper case; you can specify any characters
+you like, not just "A" to "Z"; but don't specify any spaces
+unless space unless space really is a valid thing for your prompt to
+return.
+</dd></dl>
+<p>
+This is how it is used in Chk42.x:
+</p><pre>? = prompt('Word &lt;'word(line,j)'&gt; repeated. Delete/Skip/Edit/Quit ?','DESQ')
+</pre>
+<p>
+And this is how it is implemented:
+</p><pre>   prompt: <b>procedure</b>
+     <b>parse</b> <b>arg</b> <i>message</i>, <i>values</i>
+     ? = ""
+     <i>values</i> = translate(<i>values</i>)
+     <b>do</b> <b>until</b> pos(?,<i>values</i>) &gt; 0
+       'msg' <i>message</i>
+       'refresh'
+       ? = translate(sysgetkey('NOECHO'))
+     <b>end</b>
+     <b>return</b> ?
+</pre>
+<p>
+This is taken a several steps further in Cal.x, also described
+<a href="#mac:cal">above</a>.  Here because of the special nature of
+the application --- displaying the calendar --- normal editing is
+suspended and all key strokes are intercepted, until the macro ends.
+The core of this keyboard handling routine is a large "<tt>do
+forever</tt>" loop, in bare essentials it is like this:
+</p><pre>/******************************************************************/
+/* ...  set up initial values for year month day                  */
+/******************************************************************/
+/* Add the SysGetKey function                                     */
+/******************************************************************/
+<b>call</b> <i>RxFuncAdd</i> "SysGetKey", "RexxUtil", "SysGetKey"
+'x .Calendar'           /* open the edit session for the calendar */
+<b>do</b> <b>forever</b>
+  /* ... fill the buffer with data to draw the screen             */
+  /* ... according to the current year month day values ...       */
+  /****************************************************************/
+  /* Draw the screen                                              */
+  /****************************************************************/
+  'top'
+  'delete *'
+  <b>do</b> <i>i</i> = 1 <b>to</b> <i>bufferlines</i>
+    'input' <i>buffer</i>.<i>i</i>
+  <b>end</b>
+  'alt 0 0'
+  /****************************************************************/
+  /* Position the cursor and refresh the display                  */
+  /****************************************************************/
+  'cursor'                              /* ... detail omitted ... */
+  'msg' <i>msg</i>                    /* Put the Fn key line in as a MSG */
+  'refresh'                                /* Refresh the display */
+  /****************************************************************/
+  /* Get the next key                                             */
+  /****************************************************************/
+  <i>x</i> = c2x(sysgetkey('NOECHO'))
+  <b>if</b> <i>x</i> = "00" | <i>x</i> = "E0" <b>then</b> <i>x</i> = c2x(sysgetkey('NOECHO'))
+  /****************************************************************/
+  /* Act accordingly                                              */
+  /****************************************************************/
+  <b>select</b>
+    <b>when</b> <i>x</i> = "4D" /* Right  */ <b>then</b> <i>day</i> = <i>day</i> + 1
+    <b>when</b> <i>x</i> = "4B" /* Left   */ <b>then</b> <i>day</i> = <i>day</i> - 1
+    <b>when</b> <i>x</i> = "50" /* Down   */ <b>then</b> <i>day</i> = <i>day</i> + 7
+    <b>when</b> <i>x</i> = "48" /* Up     */ <b>then</b> <i>day</i> = <i>day</i> - 7
+    <b>when</b> <i>x</i> = "51" /* PgDn   */ <b>then</b> <i>month</i> = <i>month</i> + 1
+    <b>when</b> <i>x</i> = "49" /* PgUp   */ <b>then</b> <i>month</i> = <i>month</i> - 1
+    <b>when</b> <i>x</i> = "3B" /* F1     */ <b>then</b> <b>parse</b> <b>value</b> date("S") ,
+                                      <b>with</b> <i>year</i> +4 <i>month</i> +2 <i>day</i>
+    <b>when</b> <i>x</i> = "3D" /* F3     */ <b>then</b> <b>do</b> ;'quit'; <b>leave</b> ; <b>end</b>
+    <b>when</b> <i>x</i> = "6D" /* M      */ <b>then</b> <i>wantmoons</i> = 1 - <i>wantmoons</i>
+  <b>otherwise</b>
+  <b>end</b>
+  /* ... adjust the day, month &amp; year values as necessary ... */
+<b>end</b>
+<b>exit</b>
+</pre>
+<p>
+There are several points to note here.
+</p><ul>
+<li>It generally gives a better display if you use a buffer for
+lines and then draw them all at once using the technique shown.
+</li><li>The "<tt>MSG</tt>" line is a good place to put the new key
+definitions because it is in a highlighted colour, drawing attention
+to the change.  The "<tt>REFRESH</tt>" ensures that the display is
+updated at the appropriate moment.
+</li><li>If there is no data in the input buffer the SysGetKey function
+waits until the user enters something.  This provides the implicit
+pause for the user to actually read the Calendar in Cal.x.  If there
+is data already in the buffer (that is the user is holding a key
+down or types fast) then SysGetKey returns with it immediately.
+Unfortunately there is no anticoasting logic (unlike the normal X
+keyboard handling) so it as well to keep the loop as short as
+possible so that it can keep up.
+</li><li>The "<tt>NOECHO</tt>" parameter stops SysGetKey echoing the key
+to the screen (which is generally what you want).
+The output of SysGetKey is slightly easier to deal with if you
+translate it from binary to hex using c2x().
+</li><li>Some keys, notably Fn keys and cursor keys actually generate two
+bytes.  The first byte is always either <tt>'00'x</tt> or
+<tt>'E0'x</tt>, depending on the state of the shift keys (and the
+state of the moon I dare say).  However SysGetKey still only returns
+one byte at a time.  The approach taken here is to ignore any
+<tt>'00'x</tt> or <tt>'E0'x</tt> bytes by simply reading the next
+character, before processing it.  This simplifies things a bit at
+the cost of being unable to distinguish between some key
+combinations.
+</li><li>Finally a select clause chooses the most appropriate action.
+The first six lines deal with cursor moving keys, F1 resets the date
+to today while F3 quits the calendar, returning the user back to the
+file they were editing, leaves the "<tt>do forever</tt>" loop and so
+ends the macro.  The final line shows how to toggle a switch on and
+off.
+</li></ul>
+<p>
+There a several reference books that list all the available values
+from SysGetKey but the online reference doesn't.  I have alway
+relied on a small macro called Showkeys.x to determine what value
+corresponds to each key.
+</p><pre>/******************************************************************/
+/* Showkeys.x                         Toby Thurston - 24 Nov 1997 */
+/******************************************************************/
+<b>call</b> <i>RxFuncAdd</i> "SysGetKey", "RexxUtil", "SysGetKey"
+<b>do</b> <b>forever</b>
+  <i>x</i> = c2x(sysgetkey('NOECHO'))
+  <b>if</b> <i>x</i> = "00" | <i>x</i> = "E0" <b>then</b> <i>x</i> = <i>x</i> c2x(sysgetkey('NOECHO'))
+  'msg' <i>x</i>
+<b>end</b>
+</pre>
+<p>
+If you run this you will discover another feature of SysGetKey, when
+you try to get out of it.  It traps everything even Ctrl-c!  However
+it does not trap Ctrl-Break, which will end it neatly.  If you do
+want to control Ctrl-Break you will have to code a "<tt>HALT:</tt>"
+trap, but this will still end your "<tt>do forever</tt>" loop.
+<!--*************************************************************-->
+</p><h4>Putting the cursor back in place</h4>
+<p>
+Sometimes when you return the cursor at the end of a macro, the page
+may end up in a slightly different place.  The technique shown here
+avoids any distracting movement of the page.
+</p><pre>'extract /cursor/'
+'extract /flscreen/'
+/* ... body of your macro ... */
+'cursor' <i>flscreen</i>.1 - 1
+'pagedown'
+'cursor' <i>cursor</i>.1 <i>cursor</i>.2
+</pre>
+<p>
+Don't ask me why the -1 is needed on the first cursor movement,
+it just is.
+
+<!--*************************************************************-->
+</p><h4>Checking for the right mark</h4>
+<p>
+In order to provide consistent behaviour with respect to marks it is
+important to check that you have the "right kind" of mark before you
+start processing.  Recall that there are two kinds of marks
+provided by X: block marks and line marks; and that the current
+mark may be off the screen or in another file.
+You need to do an "<tt>EXTRACT /MARK/</tt>" to find out about it.
+This command sets the following variables:
+</p><dl><dt>MARK.0 </dt><dd>The number of variables returned.
+</dd><dt>MARK.1 </dt><dd>The marked file name.
+</dd><dt>MARK.2 </dt><dd>The first marked line number.
+</dd><dt>MARK.3 </dt><dd>The last marked line number.
+</dd><dt>MARK.4 </dt><dd>The first marked column number.  This will be 0 if the mark is a line mark.
+</dd><dt>MARK.5 </dt><dd>The last marked column number.  This will be 0 if the mark is a line mark.
+</dd><dt>MARK.6 </dt><dd>1 if the marked file is the current file, or 0 otherwise.
+</dd></dl>
+<p>
+In combination with "<tt>EXTRACT /FLSCREEN/</tt>" which tells you
+the current line numbers of the top and bottom lines on the screen,
+this allows us to define the following generic structure for all
+mark processing macros.
+</p><pre>/******************************************************************/
+/*                                                                */
+/******************************************************************/
+"extract /mark/"
+"extract /flscreen/"
+<b>select</b>
+  <b>when</b> <i>mark</i>.0 = 0 <b>then</b> "msg Nothing marked! You need to mark .... "
+  <b>when</b> <i>mark</i>.2 &gt; <i>flscreen</i>.2 | <i>mark</i>.3 &lt; <i>flscreen</i>.1
+                  <b>then</b> "msg Mark exists off screen in this file"
+  <b>when</b> <i>mark</i>.6 = 0 <b>then</b> "msg Mark exists in another file:" <i>mark</i>.1
+  <b>when</b> <i>mark</i>.4 = 0 <b>then</b> "msg I need a block mark not a line mark!"
+  <b>end</b>
+<b>otherwise</b>
+/* ...now process data confident that you have the right mark     */
+/*    and the user can see it...                                  */
+<b>end</b>
+<b>exit</b>
+</pre>
+<p>
+You can see many examples of this structure in the macros described
+in the section above on <a href="#markmacs">macros that process
+marked text</a>, such as
+<a href="#mac:copydown">Copydown.x</a>.
+
+</p><h4>Looping through a mark</h4>
+<p>
+Once you have found the right mark, typically you will need to loop
+through it one line at a time.  Here is convenient way to do this:
+</p><pre><b>do</b> <i>i</i> = <i>mark</i>.2 <b>to</b> <i>mark</i>.3
+  'cursor' <i>i</i> '1'
+  'extract /curline/'
+  <i>newline</i> = ""
+  <b>do</b> <b>while</b> length(<i>curline</i>.1) &gt; 0
+    /* ... process curline.1 into newline ... */
+  <b>end</b>
+  'replace' <i>newline</i>
+<b>end</b>
+</pre>
+
+<h4>Managing messages</h4>
+<p>
+Messages issued with the "<tt>MSG</tt>" command are the primary way
+of communicating with a user from a macro.  In addition some
+commands issue messages (such as the "<tt>CHANGE</tt>" command) even
+when they are called from a macro.  In order to suppress unwanted
+messages you can do a "<tt>MSGMODE OFF</tt>" command, but this turns
+off all messages, even ones you issue with your own "<tt>MSG</tt>"
+commands.
+To suppress just the current message, issue a "<tt>MSG</tt>" with no
+parameters immediately after the command that is generating the
+unwanted message.  For example you might do:
+</p><pre>  'insmode on';'msg'
+</pre>
+to turn on insert mode, but suppress the message telling the user.
+(Since you are going to put it back again later.)
+<p>
+Conversely if your macro depends on issuing messages to the user
+then it would be good practice to query "<tt>MSGMODE</tt>" at the
+start of the macro and turn it on if necessary.  Cal.x and Chk42.x
+could be improved to do this.
+
+</p><h4>Dismissing the command box</h4>
+<p>
+Normally your macro will run and return you to where you were as
+expected.  Just occasionally and for reasons that are not all that
+easy to fathom, X leaves you on the command line with the command
+box displayed at the end of a macro.  If you get this trouble then
+be sure to move the cursor back into the editing area at some stage
+in your macro (using "<tt>CURSOR DATA</tt>") and refresh the display
+display at appropriate moments using "<tt>REFRESH</tt>".
+
+</p><h4>Flexible arguments</h4>
+<p>
+One of the chief joys of REXX programming is the power and
+simplicity of the "<tt>PARSE</tt>" instruction.  Your macros will be
+very much easier to use (both for you and others) if you exploit its
+power to make the arguments as flexible and as natural as possible.
+Here are some useful techniques
+</p><ul>
+<li>Variable delimiters
+<pre><b>parse</b> <b>arg</b> <i>delim</i> +1 <i>old</i> (<i>delim</i>) <i>new</i> (<i>delim</i>) <i>options</i>
+</pre>
+<p>
+This shows you how to allow delimiters like X's "<tt>CHANGE</tt>"
+command does.  The first character of the argument is used as the
+delimiter to separate the rest of the argument into its parts.
+</p>
+</li><li>Optional arguments
+<pre><b>parse</b> <b>arg</b> <i>name</i> "/" +0 <i>option</i>
+</pre>
+<p>
+The +0 after the pattern match in the parse statement, makes REXX's
+parser back up one.  The effect is that the "/" is included in the
+value of <var>option</var> if there is one, but not if there isn't.
+Yes, that's right.  If you had a macro with the above parse line,
+then
+<br>
+<tt>macame filename</tt> would assign "<tt>filename</tt>" to
+<tt>name</tt> and <tt>option</tt> would be blank, while
+<br>
+<tt>macame filename /o</tt> would assign "<tt>filename</tt>" to
+<tt>name</tt> and "<tt>/o</tt>" to <tt>option</tt>
+</p><p>
+The usefulness of this becomes apparent when you need to pass the
+option on to another program.
+</p></li></ul>
+<p>
+It is also important to apply commonsense to your arguments and
+assume that the user (which may be your self) won't remember a
+complex sequence.  Cal.x takes a flexible approach to its arguments
+which can be "month", "year", "month year" or "year month".  Cal.x
+makes sensible guesses at what the user means.
+
+</p><h4>Loading data lines for display</h4>
+<p>
+Here is a standard technique for loading an edit session with lines
+from an array or some other source that provides lines one at a time
+like the "<tt>linein()</tt>" function
+</p><pre>  'top'
+  'delete *'
+  <b>do</b> <i>i</i> = 1 <b>to</b> <i>line</i>.0
+    'input' <i>line</i>.i
+  <b>end</b>
+  'alt 0 0'
+</pre>
+
+<h4>Giving help</h4>
+<p>
+For most macros a one-line message will be all the help the user
+needs; you can give help if the input is blank or "?" or just
+contains a "?" as appropriate; or if the input is incorrect.
+</p><p>
+If you need to give more help than just one line, you can use the
+editor to display a text file.  Rather than maintain two files, this
+text file can be the macro code itself.  Here is how its done in
+Math.x:
+</p><pre><b>if</b> <i>expr</i> = ?
+  <b>then</b> <b>do</b>
+    <b>parse</b> <b>source</b> . . <i>program</i>
+    'edit' <i>program</i> "/c16"
+    'pagedown'
+    <b>exit</b>
+  <b>end</b>
+</pre>
+<p>
+The "<tt>/c16</tt>" on the "<tt>EDIT</tt>" command makes X scroll
+down to line 16, which happens to be where the help text starts.
+"<tt>PAGEDOWN</tt>" ensures that line 16 is at the top of the
+screen.
+
+</p><h4>Extending standard commands</h4>
+<p>
+As discussed <a href="#macvcmd">above</a> it would be nice if you
+were able to write a macro which overrode the standard command
+simply if you called it by the same name, but as a design principle
+X2 doesn't let you.
+So if you want to extend the function of a command you have to call
+your macro by a different name or prefix the name with
+"<tt>MACRO</tt>" on the command line.  Here is a simple example.
+The built in "<tt>UNDO</tt>" command has no parameters, it just
+undoes one change.  But sometimes it would be convenient to undo
+many lines all at once.  It is easy to write a macro like this:
+</p><pre>/* UNDO LOTS */
+<b>parse</b> <b>arg</b> <i>times</i>
+<b>if</b> \datatype(<i>times</i>,"N")
+  <b>then</b> 'command undo'
+  <b>else</b> <b>do</b> <i>times</i>
+    'command undo'
+  <b>end</b>
+</pre>
+<p>
+that does the right thing, but to invoke it you either have to call
+it something other than UNDO.X or do "MACRO UNDO nn", so the
+preferred way use such commands is to assign them to a key.
+
+</p><h4>Processing depending on filetype</h4>
+<p>
+Often, particularly in a macro that assists with
+text mark up you want to know what type of file you are editing.
+Here is a way to do that that copes with MVS, VM or PC files.
+</p><pre>filetype: <b>procedure</b>
+  <b>arg</b> <i>name</i>
+  <b>if</b> words(<i>name</i>) &gt; 1
+    <b>then</b> <i>ft</i> = word(<i>name</i>,2)                       /* VM file */
+    <b>else</b> <i>ft</i> = substr(<i>name</i>,1+lastpos(".",<i>name</i>))   /* MVS or 8.3 files */
+<b>return</b> strip(left(<i>ft</i>,3))
+</pre>
+<p>
+This routine returns a three letter file type.
+
+</p><h4>Signing your work</h4>
+<p>
+Finally in this techniques section here is how to automatically sign
+your X macros with your name and a date.
+</p><pre>/******************************************************************/
+/* Sig.x                              Toby Thurston - 25 Nov 1997 */
+/******************************************************************/
+<i>me</i> = 'John P. Doe -'                   /* put your name here      */
+<i>sig</i> = <i>me</i> right(date(),11)              /* create the signature    */
+'extract /cursor/'                     /* save cursor position    */
+'top'                                  /* go to the top           */
+'cursor data'
+'cursor 0 0'
+'l /'me'/'                             /* find the signature      */
+<i>verb</i> = "updated"
+<b>if</b> <i>rc</i> &lt;&gt; 0 <b>then</b> <b>do</b>                     /* if not found            */
+  'cursor data'
+  'cursor' <i>cursor</i>.1 <i>cursor</i>.2          /* back to where we started */
+  'extract /curline/'               /* see if we are in a comment */
+  'extract /comments/'               /* &amp; move cursor accordingly */
+  <b>if</b> <i>comments</i>.2 &lt;&gt; "" &amp; right(curline.1,length(comments.2)) == <i>comments</i>.2
+    <b>then</b> 'cursor' <i>cursor</i>.1 max(1,length(curline.1) - length(comments.2) - length(sig)+1)
+  <i>verb</i> = "added"
+<b>end</b>                                    /* cursor is now in place  */
+'insmode off'                          /* don't insert            */
+'msg Signature' <i>verb</i>                   /* warn user               */
+'keyin' <i>sig</i>                            /* write it in             */
+'cursor' <i>cursor</i>.1 <i>cursor</i>.2            /* back to where we started */
+<b>exit</b>
+</pre>
+<p>
+I have this one set to my alt-f12 key.
+<!--*************************************************************-->
+</p><h3><a name="tut:debug">Developing and debugging</a></h3>
+<p>
+The above all else X2 is a great editor for producing programs, this
+section is about macros that help in the development process.
+
+</p><h4>Error parsing</h4>
+<p>
+X2 has built in support for parsing the output from various
+compilers; this support can be easily extended for parsing the
+result of REXX errors by adding an error trap like this one to your
+REXX programs as you develop them.  The idea is that you
+include three signal on lines at the top of your code, like this:
+</p><pre>signal on syntax                       /* trap REXX errors        */
+signal on novalue                      /* trap bad vars           */
+signal on error                        /* trap external cmd errs  */
+</pre>
+and then catch any errors raised with a trap like this, which should
+go at the bottom of your code.
+
+<pre>syntax: novalue: error:
+<b>if</b> datatype(rc,"W")                   /* check RC &amp; set a message */
+  <b>then</b> <b>if</b> <i>rc</i> &lt; 100 &amp; <i>rc</i> &gt; -1
+    <b>then</b> <i>msg</i> = "Rexx error" <i>rc</i> ":" errortext(rc)
+    <b>else</b> <i>msg</i> = "Bad return code" <i>rc</i> condition("D")
+  <b>else</b> <i>msg</i> = "Uninitialized variable:" condition("D")
+<b>parse</b> <i>source</i> <i></i>. <i></i>. <i>program</i>               /* find the program name   */
+<i>errfile</i> = substr(program,1,lastpos(".",program))"err"/* make err file */
+<b>if</b> stream(errfile,"C","Query Exists") &lt;&gt; ""  /* if errfile exists */
+  <b>then</b> '@del' <i>errfile</i>                  /* delete it               */
+<b>call</b> <b>lineout</b> errfile, program"("sigl"):" msg, 1/* write err       */
+<b>call</b> <b>stream</b> errfile, "C", "Close"      /* close errfile           */
+<b>signal</b> <b>off</b> <b>error</b>                       /* turn off error trap as  */
+'x' <i>program</i> '/err'                     /* X gives RC -1 with /err */
+<b>exit</b>
+</pre>
+
+
+<h4>Mini IDEs</h4>
+
+<p>
+X2 is no replacement for WorkFrame/2 or TeamConnection, but if you
+are working on a simple project with only a few source files then a
+mini-IDE macro may be more appropriate.  Included in the examples
+is "<tt>jc.x</tt>" which will call the Java compiler (JC.EXE) on
+your current source file.
+
+
+<!--*************************************************************-->
+</p><h3><a name="tut:extra">Advanced topics</a></h3>
+<p>
+This section contains two example macros that are a little trickier
+than some.
+</p><ul>
+<li>Addressing other environments - PIPE.x
+</li><li>Marking up sample code with HTML
+</li></ul>
+
+<h4>Addressing other environments</h4>
+<p>
+In the TTXMACS collection you will find two programs that are not X
+macros:  "<tt>X.REX</tt>" and "<tt>XMSG.REX</tt>" which are pipeline
+stages for OS2PIPE, an implementation of CMS PIPELINES for OS/2.  You
+will also find a macro called PIPE.X which lets you call OS2PIPE
+from the X2 command line.  You can call any OS2PIPE stage you like,
+"<tt>XMSG</tt>" lets you send the results to the X2 message line,
+the X stage lets you send the results to an X2 session.
+(If you don't have OS2PIPE then you should get it, and its companion
+package PIPESTG2 from OS2TOOLS).
+
+</p><p>
+The only item of interest to the macro programmer is to note how you
+can still address commands to X, even from REXX programs that are
+not X macros (like the two pipeline stages given here), provided
+that the program is called from inside X2.
+
+</p><h4>Marking up sample code with HTML</h4>
+
+<p>
+Finally I present a small utility that I wrote for showing off the
+examples of code in this document, Codemark.x.  This will take a
+snippet of REXX code in a document and "mark it up" with HTML tags
+so that keywords are in bold, variables in italics and so on.
+It assumes that the whole of your code is inside a PRE section.
+
+</p><pre>
+/******************************************************************/
+/* Mark up a piece of rexx code with HTML tags                    */
+/*                                    Toby Thurston - 23 Nov 1997 */
+/******************************************************************/
+<i>keys</i> = "DO ELSE END EXIT EXPOSE IF ITERATE LEAVE OTHERWISE PARSE STREAM ARG",
+"PROCEDURE RETURN SELECT THEN UNTIL WHEN WHILE VALUE VAR BY FOR TO",
+"CHARIN CHAROUT LINEIN LINEOUT LINES WITH SAY LENGTH DATATYPE COPIES",
+"SPACE SUBSTR TRANSLATE CALL MAX MIN LEFT RIGHT CENTRE STRIP",
+"VERIFY REVERSE WORD WORDS SUBWORD INSERT OVERLAY POS WORDPOS LASTPOS",
+"FOREVER XRANGE"
+<i>namechars</i> = "._?1234567890"<b>xrange</b>("A","Z")
+'extract /mark'
+'extract /cursor'
+<b>if</b> <i>mark</i>.0 &gt; 0 &amp; <i>mark</i>.6 &amp; <i>mark</i>.4 = 0
+  <b>then</b> <b>do</b> <i>i</i> = <i>mark</i>.2 <b>to</b> <i>mark</i>.3
+    'cursor' <i>i</i>
+    'extract /curline'
+    <i>newline</i> = ""
+    <b>call</b> <i>tokenize</i> <i>curline</i>.1
+    <b>do</b> <i>j</i> = 1 <b>to</b> <i>token</i>.0
+      <b>select</b>
+        <b>when</b> <i>token</i>.j.0type = "keyword" <b>then</b> <i>token</i>.j = <i>bold</i>(<i>token</i>.j)
+        <b>when</b> <i>token</i>.j.0type = "variable" <b>then</b> <i>token</i>.j = <i>italic</i>(<i>token</i>.j)
+      <b>otherwise</b>
+      <b>end</b>
+      <i>newline</i> = <i>newline</i>""<i>token</i>.j
+    <b>end</b>
+    'replace' <i>newline</i>
+  <b>end</b>
+  <b>else</b> 'msg Mark the lines to be tagged.'
+<b>exit</b>
+<i>bold</i>: <b>return</b> <i>tagit</i>(<b>arg</b>(1),"b")
+<i>italic</i>: <b>return</b> <i>tagit</i>(<b>arg</b>(1),"i")
+<i>tagit</i>: <b>procedure</b>
+  <b>parse</b> <b>arg</b> <i>stem</i> "." +0 <i>tail</i>, <i>tag</i>
+  <b>return</b> "&lt;"<i>tag</i>"&gt;"<i>stem</i>"&lt;/"<i>tag</i>"&gt;"<i>tail</i>
+<i>tokenize</i>: <b>procedure</b> <b>expose</b> <i>token</i>. <i>keys</i> <i>namechars</i>
+  <b>parse</b> <b>arg</b> <i>line</i>
+  <i>count</i> = 0
+  <b>do</b> <i>i</i> = 1 <b>to</b> <b>length</b>(<i>line</i>)
+    <i>c</i> = <b>substr</b>(<i>line</i>,<i>i</i>,1)
+    <b>select</b>
+      <b>when</b> <i>c</i> = "'" | <i>c</i> = '"' <b>then</b> <b>do</b>
+        <i>count</i> = <i>count</i> + 1
+        <i>?</i> = <b>pos</b>(<i>c</i>,<i>line</i>""<i>c</i>,<i>i</i>+1)
+        <i>token</i>.count = <b>substr</b>(<i>line</i>,<i>i</i>,<i>?</i>-<i>i</i>+1)
+        <i>token</i>.count.0type = "literal"
+        <i>i</i> = <i>?</i>
+      <b>end</b>
+      <b>when</b> <i>c</i> = "/" <b>then</b> <b>do</b>
+        <i>c2</i> = <b>substr</b>(<i>line</i>,<i>i</i>+1,1)
+        <i>count</i> = <i>count</i> + 1
+        <b>select</b>
+          <b>when</b> <i>c2</i> = "*" <b>then</b> <b>do</b>
+            <i>?</i> = <b>pos</b>("*/",<i>line</i>,<i>i</i>+2)+1
+            <i>token</i>.count = <b>substr</b>(<i>line</i>,<i>i</i>,<i>?</i>-<i>i</i>+1)
+            <i>token</i>.count.0type = "comment"
+            <i>i</i> = <i>?</i>
+          <b>end</b>
+          <b>when</b> <i>c2</i> = "/" <b>then</b> <b>do</b>
+            <i>token</i>.count = "//"
+            <i>token</i>.count.0type = "op"
+            <i>i</i> = <i>i</i> + 1
+          <b>end</b>
+        <b>otherwise</b>
+          <i>token</i>.count = "/"
+          <i>token</i>.count.0type = "op"
+        <b>end</b>
+      <b>end</b>
+      <b>when</b> <i>c</i> = " " <b>then</b> <b>do</b>
+        <i>count</i> = <i>count</i> + 1
+        <i>token</i>.count.0type = "blank"
+        <i>?</i> = <b>verify</b>(<i>line</i>," ",,<i>i</i>)
+        <i>token</i>.count = <b>copies</b>(" ",<i>?</i>-<i>i</i>)
+        <i>i</i> = <i>?</i> - 1
+      <b>end</b>
+      <b>when</b> <i>c</i> = "(" | <i>c</i> = ")" <b>then</b> <b>do</b>
+        <i>count</i> = <i>count</i> + 1
+        <i>token</i>.count.0type = "paren"
+        <i>token</i>.count = <i>c</i>
+      <b>end</b>
+      <b>when</b> <b>pos</b>(<i>c</i>,"-+=*%&lt;&gt;\,.&amp;|:") &gt; 0 <b>then</b> <b>do</b>
+        <i>count</i> = <i>count</i> + 1
+        <i>token</i>.count.0type = "op"
+        <i>token</i>.count = <i>c</i>
+      <b>end</b>
+    <b>otherwise</b>
+      <i>count</i> = <i>count</i> + 1
+      <i>?</i> = <b>verify</b>(<b>translate</b>(<i>line</i>)" ",<i>namechars</i>,,<i>i</i>)
+      <i>token</i>.count = <b>substr</b>(<i>line</i>,<i>i</i>,<i>?</i>-<i>i</i>)
+      <b>select</b>
+        <b>when</b> <b>wordpos</b>(<b>translate</b>(<i>token</i>.count),<i>keys</i>) &gt; 0
+          <b>then</b> <i>token</i>.count.0type = "keyword"
+        <b>when</b> <b>datatype</b>(<i>token</i>.count,"N")
+          <b>then</b> <i>token</i>.count.0type = "number"
+        <b>when</b> <b>verify</b>(<b>translate</b>(<i>token</i>.count),<i>namechars</i>) = 0
+          <b>then</b> <i>token</i>.count.0type = "variable"
+      <b>otherwise</b>
+        <i>token</i>.count.0type = "other"
+      <b>end</b>
+      <i>i</i> = <i>?</i> - 1
+    <b>end</b>
+  <b>end</b>
+  <i>token</i>.0 = <i>count</i>
+<b>return</b>
+
+</pre>
+
+
+
+</body></html>

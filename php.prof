@@ -10,30 +10,30 @@ margins        = 1 200 20 80
 comment_formatting = NONE;
 
 /* ALT keys */
-a-PFLine = "1=dbCol 2=dbCol2 3={ 4={{ 5=Eval 6=? 7=Css* 8=Css 9=Tag 10=Id 11=Par 12=Sib"
+a-PFLine = "1=dbCol 2=dbCol2 3=inlSnip 4={ 5={{ 6=Eval 7=Css* 8=Css 9=Tag 10=Id 11=arrLen 12=Esp"
 key a-F1 = MACRO fnpick php-data-cmds
 key a-F2 = MACRO fnpick php-data-cmds $table->@(' ');
-key a-F3 = MACRO instr /{~}/
-key a-F4 = MACRO instr /{{~}}/
-key a-F5 = MACRO instr /{{!! ~ !!}}/
-key a-F6 = MSG Alt-F6
+key a-F3 = MACRO instr /<?php echo ~; ?>/
+key a-F4 = MACRO instr /{~}/
+key a-F5 = MACRO instr /{{~}}/
+key a-F6 = MACRO instr /{{!! ~ !!}}/
 key a-F7 = CMDTEXT cssbulma 1
 key a-F8 = MACRO fnpick classes-bulma
 key a-F9 = CMDTEXT wraptag p
 key a-F10 = MACRO instr / id="~"/
-key a-F11 = MACRO navindent parent
-key a-F12 = MACRO navindent sibling
+key a-F11 = MACRO instr /count($~)/
+key a-F12 = MACRO pickdual spanishchars
 
-key a-0 = MSG [Php] 1=Prof 2=Xpdr 3=XpList 4=XpdrH 5=? 6=Link 7=Freq 8=New 9=View
+key a-0 = MSG [Php] 1=Prof 2=Xpdr 3=XpList 4=XpdrH 5=Fns 6=Link 7=Esp 8=New 9=View
 key a-1 = EDIT C:\Users\celes\cjp\x2\php.prof
 key a-2 = MACRO chooser --c xs php --t PHP
 key a-3 = MACRO cmdout xpdr.php xs php
 key a-4 = MACRO cmdout xpdr.html xs html tags
-key a-5 = MSG Alt-5
+key a-5 = MACRO chooser json_encode implode explode --t Php Functions
 key a-6 = MACRO instr ?<a href="~"> </a>?
-key a-7 = MACRO cmdout project.txt lvdir all
+key a-7 = MACRO pickdual spanishchars
 key a-8 = CMDTEXT cmdout new.php merge %cjp%\snips\html5-bulma.tmpl
-key a-9 = CMDTEXT cmdout new.php merge %cjp%\snips\php-view.tmpl
+key a-9 = MSG Alt-9
 
 key a-` = MACRO instr /<?php echo ~; ?>/
 key a-- = MACRO instr /->with(~)/
@@ -42,6 +42,10 @@ key a-; = MACRO instr /->~()/
 key a-' = MACRO instr / class="~"/
 key a-\ = MACRO wrapblock { } outdent
 key a-/ = MACRO wrapit {
+
+/* drupal */
+expand_keyword = log \1
+expand_replace = "watchdog('\1', '\c');"
 
 expand_keyword = fn \1
 expand_replace = 'function \1(\c) {'
@@ -86,6 +90,9 @@ expand_replace = 'public $\1=\c;'
 
 expand_keyword = vpr \1
 expand_replace = 'protected $\1=\c;'
+
+expand_keyword = obj \1
+expand_replace = '$\c\1 = new stdClass;'
 
 expand_keyword = snip
 expand_replace = '<?php'
