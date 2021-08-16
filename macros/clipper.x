@@ -1,7 +1,7 @@
 /* clipper -- Copy contents to the clipboard. */
 arg input
 select
-  when input='-?' then do; 'MSG clipper (F)ile | (V)is'; exit; end
+  when input='?' then do; 'MSG clipper (F)ile | (V)isible lines | (L)ine'; exit; end
   when abbrev('FILE', input, 1) then call copyfile
   when abbrev('VIS', input, 1) then call copyvislines
   otherwise              -- Copy current line

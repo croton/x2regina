@@ -2,7 +2,7 @@
 'EXTRACT /RING/'
 arg cmd options
 select
-  when cmd='-?' then 'MSG ring (S)tatus | (P)rint-file-list'
+  when cmd='?' then 'MSG ring (S)tatus | (P)rint-file-list'
   when cmd='P' then call printRing options
   when cmd='S' then call showChangeStatus
   otherwise call editChangedFile
@@ -72,4 +72,4 @@ getRingStatus: procedure expose RING.
   end i
   return changed.
 
-::requires 'XRoutines.x'
+::requires 'XPopups.x'

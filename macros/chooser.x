@@ -9,7 +9,7 @@
      --p
 */
 parse arg params
-if params='-?' then call help
+if params='?' then call help
 paramsUC=translate(params)
 
 select

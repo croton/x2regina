@@ -1,7 +1,7 @@
 /* cmt -- Comment out the current line or block. */
 arg type params
 select
-  when type='-?' then 'MSG cmt [B col | C col | CR | O | Q ]'
+  when type='?' then 'MSG cmt [B col | C col | CR | O | Q ]'
   when type='C' then call centeredComment params
   when type='CR' then call cursorComment params
   when type='O' then 'MACRO wrapblock |/*|*/|'

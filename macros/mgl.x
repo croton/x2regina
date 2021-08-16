@@ -1,7 +1,7 @@
 /* Wrapper to multiplyline; merge a template with values. */
 parse arg input
 select
-  when input='-?' then do; 'MSG mgl [digit|wordlist]'; exit; end
+  when input='?' then do; 'MSG mgl [digit|wordlist]'; exit; end
   when datatype(input,'W') then 'MACRO multiplyline /@/='abs(input)
   otherwise
     if input='' then do

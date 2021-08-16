@@ -2,7 +2,7 @@
    Usage ... wrapline |before|after|options
 */
 parse arg input
-if input='' | input='-?' then call help
+if abbrev('?', input) then call help
 
 parse var input delim +1 before (delim) after (delim) options
 'EXTRACT /MARK/'

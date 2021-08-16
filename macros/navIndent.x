@@ -47,9 +47,10 @@ findupLesserIndent: procedure
        end
      end
      else do
-       goback=msgYNBox('Return to orig line,' row'?', 'Find Parent')
-       if goback then row
-       else 'MSG Found parent, orig line='row
+       -- goback=msgYNBox('Return to orig line,' row'?', 'Find Parent')
+       -- if goback then row; else 'MSG Found parent, orig line='row
+       'MSG Found parent, orig line='row
+       'CMDTEXT' row
        leave
      end
    end
@@ -68,4 +69,4 @@ help:
   'MSG navIndent [SIBLING | PARENT]'
   return
 
-::requires 'XRoutines.x'
+-- ::requires 'XRoutines.x'

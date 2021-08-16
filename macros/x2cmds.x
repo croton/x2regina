@@ -1,6 +1,6 @@
 /* x2cmds -- Insert an X2 editor variable. */
 arg input
-if input='-?' then do; 'MSG x2cmds [CMD|VAR opt]'; exit; end
+if input='?' then do; 'MSG x2cmds [CMD|VAR opt]'; exit; end
 
 setting=chooser(input)
 if abbrev('CMD',input) then 'KEYIN' quote(setting)

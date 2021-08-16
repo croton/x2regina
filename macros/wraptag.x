@@ -1,6 +1,6 @@
 /* wraptag -- wrap a marked area with a given tag. */
 parse arg options
-if options='' | options='-?' then call help
+if abbrev('?', options) then call help
 w=wordpos('-each',options)
 if w>0 then do; each=1; options=delword(options,w,1); end; else each=0
 

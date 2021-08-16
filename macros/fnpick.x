@@ -8,7 +8,7 @@
    Multiple selections are supported by specifying an option, -m
 */
 parse arg codeType template
-if codeType='-?' then do; 'MSG fnpick [filename][@template][-m]'; exit; end
+if codeType='?' then do; 'MSG fnpick [filename][@template][-m]'; exit; end
 
 w=wordpos('-m',template)
 if w>0 then do; pickmany=1; template=delword(template,w,1); end; else pickmany=0
@@ -78,4 +78,5 @@ getchoice: procedure
   return entry
 
 ::requires 'XEdit.x'
-::requires 'XRoutines.x'
+::requires 'XPopups.x'
+-- ::requires 'XRoutines.x'
