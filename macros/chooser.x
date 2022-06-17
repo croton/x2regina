@@ -7,6 +7,7 @@
      --multi
      --q
      --p
+     --d
 */
 parse arg params
 if params='?' then call help
@@ -28,12 +29,14 @@ select
 end
 parse var params '--t' title '--'
 parse var params '--p' pattern '--'
+parse var params '--d' delim '--'
 
 if wordpos('--MULTI', paramsUC)>0 then do
   choicemade=chooseMulti(title)
   if choicemade then do while queued()>0
     parse pull entry
-    'INPUT' entry
+    'KEYIN' applyPattern(entry, pattern, delim)
+    'INPUT'
   end
   else 'MSG No choice made'
 end
@@ -48,8 +51,7 @@ else do
     end
     if wordpos('--Q', paramsUC)>0 then push choice
     else do
-      if pattern='' then xcmd choice
-      else               xcmd changestr('@', strip(pattern), choice)
+      xcmd applyPattern(choice, pattern, delim)
       -- Uncomment to place cursor at beginning of entry
       -- 'CURSOR +0 -'length(choice)
     end
@@ -161,6 +163,13 @@ initListStatic:
   cmds.MAXENTRYLENGTH=maxlen
   return
 
+applyPattern:
+  parse arg selection, pattern, delim
+  if delim='' then placeholder='@'
+  else             placeholder=strip(delim)
+  if pattern='' then return selection
+  return changestr(placeholder, strip(pattern), selection)
+
 help:
-  'MSG chooser [--c cmd | --f file | wordlist][--multi][--q][--p]'
+  'MSG chooser [--c cmd | --f file | wordlist][--multi][--q][--p][--d]'
   exit

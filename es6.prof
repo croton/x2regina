@@ -8,7 +8,7 @@ comment_formatting = NONE;
 margins            = 1 200 20 80
 bookmarks          = 30
 
-a-PFLine = "1=Dom 2=jQ 3=InFn 4=? 5=Sfy 6=StrT 7=TypeOf 8=Copy 9=ObjKey 10=CmtQ 11=? 12=FnDefs"
+a-PFLine = "1=Dom 2=jQ 3=InFn 4=? 5=Sfy 6=StrT 7=TypeOf 8=Copy 9=ObjKey 10=CmtQ 11=WrapTry 12=FnDefs"
 key a-F1 = MACRO fnpick jdom document.@
 key a-F2 = MACRO fnpick jquery
 key a-F3 = MACRO instr /function() {~}/
@@ -19,7 +19,7 @@ key a-F7 = MACRO instr /(typeof ~)/
 key a-F8 = MACRO instr /Object.assign(~)/
 key a-F9 = MACRO instr /Object.keys(~)/
 key a-F10 = MACRO cmt Q
-key a-F11 = MSG Alt-F11
+key a-F11 = MACRO wrapblock /try {/} catch (err) { throw err; }/i
 key a-F12 = ALL / function/
 
 key a-0 = MSG [ES6] 1=Prof 2=Xp 3=Key 4=FavDir 5=BkmPr 6=BkmCl 7=ClipV 8=RingP 9=RingW
@@ -75,8 +75,8 @@ expand_replace = 'Object.assign(\c, \1)'
 expand_keyword = rem \1
 expand_replace = "delete \1['\c'];"
 
-expand_keyword = "\1["
-expand_replace = '\1[\c]'
+expand_keyword = "\1 ["
+expand_replace = '\1 [\c]'
 
 expand_keyword = "\1("
 expand_replace = '\1(\c)'
@@ -173,6 +173,12 @@ expand_replace = '});'
 
 expand_keyword = \1 -catch
 expand_replace = '\1.catch(\cerror => {'
+expand_replace = '});'
+
+expand_keyword = \1 -prom
+expand_replace = '\1 new Promise((resolve, reject) => {'
+expand_replace = '  if (true) resolve(\c);'
+expand_replace = "  else reject(new Error(''));"
 expand_replace = '});'
 
 expand_keyword = err

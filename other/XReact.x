@@ -26,3 +26,21 @@
   end i
   return alphaOnly
 
+::routine getFilenameFromImport PUBLIC
+  'EXTRACT /CURLINE/'
+  'EXTRACT /FILEINFO/'
+  parse value CURLINE.1 with keyword others
+  if keyword='import' then do
+    -- Parse the filename from the IMPORT statement and construct a valid file path
+    filespec=word(others, words(others))
+    fn=changestr("'", changestr(';', filespec, ''), '')||'.js'
+    fullpath=delstr(FILEINFO.1, lastpos('\', FILEINFO.1)+1)||translate(fn, '\', '/')
+    return fullpath
+  end
+  return ''
+
+::routine showRecent PUBLIC
+  parse arg ext
+  if ext='' then ext='*.js'
+  'MACRO cmdin fd -d src -dy 2 -x' ext '|wordf'
+  return

@@ -4,13 +4,15 @@ if items='' then do
   'MSG usage: qp item-list'
   exit
 end
+-- Insert the selected item into a pattern?
+parse var items '--p' pattern '--'
 key=wordBeforeCursor()
-found=lookup(key, items)
+found=lookup(key, items, pattern)
 if found='' then 'MSG No lookup value found for' key
 exit
 
 lookup: procedure
-  parse arg term, items
+  parse arg term, items, pattern
   if term='' then return ''
   part=translate(term)
   found=0
@@ -21,7 +23,13 @@ lookup: procedure
       'CURSOR DATA'
       'PREVIOUS_WORD'
       'DELWORD'            -- remove abbreviation
-      'KEYIN' curritem     -- insert matched item from list
+      if pattern='' then 'KEYIN' curritem  -- insert matched item from list
+      else do
+        parse var items '--d' delim '--'
+        if delim='' then placeholder='@'
+        else             placeholder=strip(delim)
+        'KEYIN' changestr(placeholder, strip(pattern), curritem)
+      end
       'KEYIN' d2c(32)      -- add a space
     end
   end i

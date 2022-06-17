@@ -32,7 +32,7 @@ build: procedure
     say 'Saved script:' outp
   end
   else do
-    baseprofs=XH'\default.prof' XH'\cjp.prof' XH'\colorsblue.prof'
+    baseprofs=XH'\default.prof' XH'\cjp.prof' XH'\colors.prof'
     if defaultExists then '@copy' defProf 'XDEF.PRO 2>nul'
     'xprof' baseprofs profiles
     '@pause'

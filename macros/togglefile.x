@@ -2,7 +2,7 @@
 arg doPick
 'EXTRACT /CURSOR/'
 'EXTRACT /CODE_TYPE/'
-CURRQ=newq(CODE_TYPE.1'_'FILEQ)
+CURRQ=newq('TOGGLE_FILEQ')
 if doPick=1 then call jump2new filering('Open files'), CURSOR.1, CURSOR.2
 else             call jump2previous CURSOR.1, CURSOR.2
 exit

@@ -7,25 +7,33 @@ code_type      = reactjs
 highlight_tags = "<,>;"
 tag_end        = "/"
 
+a-PFLine = "1=Dom 2=App 3=InFn 4=onChange 5=Sfy 6=StrT 7=TypeOf 8=Copy 9=ObjKey 10=CmtQ 11=Aria 12=FnDefs"
+key a-F2 = CMDTEXT cmdin merge %cjp%\snips\reactapp.tmpl
+key a-F4 = MACRO instr /onChange={(e) => ~}/
+key a-F11 = MACRO fnpick aria aria-@=""
+
 key a-0 = MSG [React] 1=Prof 2=ProfP 3=Xpdr 4=XpdrP 5=XpList 6=SetKey 7=Class 8=Attrib 9=Prop
 key a-1 = EDIT C:\Users\celes\cjp\x2\reactjs.prof
 key a-2 = EDIT C:\Users\celes\cjp\x2\es6.prof
 key a-3 = MACRO chooser --c xs reactjs --t Expanders
 key a-4 = MACRO chooser --c xs es6 --t Expander
-key a-5 = MACRO cmdout xpdr-react.js xs reactjs tags
+key a-5 = MACRO cmdout xpdr-react.js xs reactjs
 key a-6 = MACRO instr /key={~}/
 key a-7 = MACRO instr /className="~"/
-key a-8 = MACRO instr / ~=""/
-key a-9 = MACRO instr / ~={}/
+key a-8 = MACRO instr /~=""/
+key a-9 = MACRO instr /~={}/
 
 /* Ctrl+Alt Keys */
-key AltGr-0 = MSG Ctl-Alt-1=App 2=Aria 3=ImpTag 4=iState 5=iClick 6=LCycle
-key AltGr-1 = CMDTEXT cmdin merge %cjp%\snips\reactapp.tmpl
-key AltGr-2 = MACRO fnpick aria aria-@=""
-key AltGr-3 = MACRO rjstool it
-key AltGr-4 = MACRO instr /this.state.~/
-key AltGr-5 = MACRO instr /onClick={() => { ~ }}/
-key AltGr-6 = MACRO chooser DidMount DidUpdate componentDidCatch --t LifeCycle --p component
+key AltGr-0 = MSG Ctl-Alt-1=ImpTag 2=Context 3=iState 4=onClick 5=onBlur 6=Log 7=WrapTag 8=RingP 9=RingStatus
+key AltGr-1 = MACRO gb it
+key AltGr-2 = CMDTEXT cmdin merge %cjp%\snips\reactctx.tmpl
+key AltGr-3 = MACRO instr /this.state.~/
+key AltGr-4 = MACRO instr /onClick={~}/
+key AltGr-5 = MACRO instr /onBlur={(e) => ~ }/
+key AltGr-6 = MACRO instr /console.log(~);/
+key AltGr-7 = CMDTEXT wraptag p
+key AltGr-8 = MACRO ringwinx P
+key AltGr-9 = MACRO ring S
 
 expand_keyword = co \1
 expand_replace = 'const \1 = \c'
@@ -33,8 +41,28 @@ expand_replace = 'const \1 = \c'
 expand_keyword = v \1
 expand_replace = 'let \1 = \c'
 
-expand_keyword = fnr
-expand_replace = '\c() {'
+expand_keyword = impx \1
+expand_replace = "import \c from '\1';"
+
+expand_keyword = impr
+expand_replace = "import \cReact from 'react';"
+
+expand_keyword = exp
+expand_replace = 'export \c'
+
+expand_keyword = expd
+expand_replace = 'export default \c'
+
+expand_keyword = link \1
+expand_replace = "import { Link } from 'gatsby';"
+expand_replace = '<Link to={\1}>\c</Link>'
+
+expand_keyword = fnc \1
+expand_replace = 'export default function \1(props) {'
+expand_replace = '  return ('
+expand_replace = '    <div>\c{props}</div>'
+expand_replace = '  );'
+expand_replace = '};'
 
 expand_keyword = comp \1
 expand_replace = "import React from 'react';"
@@ -48,60 +76,57 @@ expand_replace = '  }'
 expand_replace = '}'
 expand_replace = 'export default \1;'
 
+expand_keyword = mount
+expand_replace = 'componentDidMount() {\c}'
+expand_replace = 'componentWillUnmount() {}'
+
+expand_keyword = fnr
+expand_replace = '\c() {'
+
+expand_keyword = bind \1
+expand_replace = 'this.\1 = this.\1.bind(\cthis);'
+
 expand_keyword = ctor
 expand_replace = 'constructor(props) {'
 expand_replace = '  super(props);'
-expand_replace = '  this.state = {\c: 0};'
-expand_replace = '  // bindfn'
+expand_replace = '  \cthis.state = {'
+expand_replace = '  };'
 expand_replace = '}'
 
-expand_keyword = fnc \1
-expand_replace = 'function \1(props) {'
-expand_replace = '  return <div>\c {props}</div>'
-expand_replace = '  // ('
-expand_replace = '  // );'
-expand_replace = '}'
-
-expand_keyword = st8 \1
+expand_keyword = set8 \1
 expand_replace = 'this.setState({\1: \c});'
 
-expand_keyword = st8fn \1
+expand_keyword = set8fn \1
 expand_replace = 'this.setState((\c) => ({'
 expand_replace = '  \1: 0'
 expand_replace = '}));'
 
-expand_keyword = bindfn \1
-expand_replace = 'this.\1 = this.\1.bind(\cthis);'
+expand_keyword = st8 \1
+expand_replace = 'const [\1, set\c\1] = useState();'
+
+expand_keyword = fx
+expand_replace = 'useEffect(() => {\c'
+expand_replace = '  return () => { };'
+expand_replace = '});'
+
+expand_keyword = ihook
+expand_replace = "import React, { useState, useEffect } from 'react';"
+
+expand_keyword = hook \1
+expand_replace = "import { useState, useEffect } from 'react';"
+expand_replace = 'function use\1(\c) {'
+expand_replace = '}'
+
+expand_keyword = memo
+expand_replace = 'useMemo(() => {'
+expand_replace = '}, [\c]);'
 
 expand_keyword = pr \1
 expand_replace = '\1={\c\1}'
 
-expand_keyword = mount
-expand_replace = 'componentDidMount() {\c'
-expand_replace = '}'
-
-expand_keyword = umount
-expand_replace = 'componentWillUnmount() {\c'
-expand_replace = '}'
-
-expand_keyword = frag
-expand_replace = '<Fragment\c>'
-expand_replace = '</Fragment>'
-
 expand_keyword = map \1
-expand_replace = '{props.\1.map(item => ('
-expand_replace = '  <\c key={item.id} />'
-expand_replace = '))}'
-
-expand_keyword = fmlabel \1
-expand_replace = '<label htmlFor="\1">\c</label>'
-expand_replace = '<input type="text" name="\1" id="\1">'
-
-expand_keyword = exp
-expand_replace = 'export \c'
-
-expand_keyword = expd
-expand_replace = 'export default \c'
+expand_replace = '{\1.map((item, index) => {\c'
+expand_replace = '})}'
 
 expand_keyword = --
 expand_replace = "/**"
@@ -114,12 +139,49 @@ expand_keyword = \1 -lit
 expand_replace = '\1`\c'
 expand_replace = '`;'
 
+expand_keyword = bro
+expand_replace = "const \cisBrowser = (typeof window !== 'undefined');"
+
+expand_keyword = pq
+expand_replace = "import { graphql } from 'gatsby';"
+expand_replace = 'export const query = graphql`\c'
+expand_replace = '`;'
+
+expand_keyword = usq
+expand_replace = "import { useStaticQuery, graphql } from 'gatsby';"
+expand_replace = 'const data = useStaticQuery(graphql`'
+expand_replace = '  query {'
+expand_replace = '  }'
+expand_replace = '`);'
+
+expand_keyword = fq \1
+expand_replace = 'export const query = graphql`'
+expand_replace = '  fragment \c on \1 {'
+expand_replace = '  }'
+expand_replace = '`;'
+
+expand_keyword = sq
+expand_replace = "import { StaticQuery, graphql } from 'gatsby';"
+expand_replace = '<StaticQuery'
+expand_replace = '  query={\c}'
+expand_replace = '  render={data => ('
+expand_replace = '  )}'
+expand_replace = '/>'
+
 expand_keyword = fallback
 expand_replace = 'static getDerivedStateFromError(error) {'
 expand_replace = '  return { hasError: true };\c'
 expand_replace = '}'
 
 /* TAGS */
+expand_keyword = frag
+expand_replace = '<Fragment\c>'
+expand_replace = '</Fragment>'
+
+expand_keyword = label \1
+expand_replace = '<label htmlFor="\1">\c</label>'
+expand_replace = '<input type="text" name="\1" id="\1" />'
+
 expand_keyword = "?\1"
 expand_replace = '<\1\c>'
 expand_replace = '</\1>'
@@ -138,4 +200,7 @@ expand_replace = '\1 \c="">'
 
 expand_keyword = "\1 c>"
 expand_replace = '\1 className="\c">'
+
+expand_keyword = \1 -xp
+expand_macro = xp_htm
 

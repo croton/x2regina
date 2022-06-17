@@ -2,7 +2,7 @@
 'EXTRACT /RING/'
 arg cmd options
 select
-  when cmd='?' then 'MSG ring (S)tatus | (P)rint-file-list'
+  when cmd='?' then 'MSG ring (S)tatus | (P)rint-file-list | Edit Changed'
   when cmd='P' then call printRing options
   when cmd='S' then call showChangeStatus
   otherwise call editChangedFile
@@ -34,7 +34,8 @@ showChangeStatus: procedure expose RING.
     if status.filepath then output.i=fn '*'
     else                    output.i=fn
   end i
-  call msgBoxFromStem 'Changed Files', output.
+  call msgBoxFromStem 'Open Files', output.
+  'CURSOR DATA'
   return
 
 editChangedFile: procedure expose RING.
