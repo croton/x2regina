@@ -29,12 +29,5 @@
   return copies(' ', blanks)
 
 ::routine currentIndent public
-  'EXTRACT /LINETEXT/'
-  'EXTRACT /FILEINFO/'
-  -- Get current cursor pos
-  parse var FILEINFO.11 row col
-  -- Is current line blank? If so refer to previous line
-  if length(LINETEXT.row)=0 & row>1 then index=row-1
-  else index=row
-  return copies(' ', leadblanks(LINETEXT.index))
-
+  'EXTRACT /CURSOR/'
+  return copies(' ', CURSOR.2-1)

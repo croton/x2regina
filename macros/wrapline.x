@@ -36,14 +36,14 @@ wrapMarkedLines: procedure expose MARK.
 
 /* Add a prefix or suffix to the marked lines. */
 wrapNoAlign: procedure expose MARK.
-  parse arg prefix, suffix
+  parse arg prefix, suffix, doclear
   do i=MARK.2 to MARK.3
     'CURSOR' i '1'
     'EXTRACT /CURLINE/'
     blanks=max(verify(CURLINE.1, ' ')-1,0)
     'REPLACE' insert(prefix, CURLINE.1, blanks)||suffix
   end i
-  'MARK CLEAR'
+  if doclear=1 then 'MARK CLEAR'
   return
 
 /* Append a given string to each of the marked lines at the max line

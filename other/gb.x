@@ -37,11 +37,22 @@ usedBy: procedure
   else do
     if abbrev(option, 'P') then do
       -- Load a selected file into editor
-      call xsay 'Pick a file to edit from' results.0
+      choice=parsePickFiles(results., 'Edit a Component')
+      if choice='' then call xsay 'Ok'
+      else              'EDIT' choice
     end
     else call msgBoxFromStem 'Components using' comp, results.
   end
   return
+
+parsePickFiles: procedure
+  use arg fileinfo., dialogtitle
+  filelist.0=fileinfo.0
+  do i=1 to fileinfo.0
+    parse var fileinfo.i filepath ':' .
+    filelist.i=filepath
+  end i
+  return pick(filelist., dialogtitle)
 
 help: procedure
   helpmsg.1='gb prefix [options]'

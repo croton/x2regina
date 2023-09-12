@@ -27,12 +27,13 @@ if codeType='' then do
   'EXTRACT /CODE_TYPE/'
   codeType=CODE_TYPE.1
 end
-call insertFn codeType, template, pickmany, concat
+leadblanks=currentIndent()
+call insertFn codeType, template, pickmany, concat, leadblanks
 exit
 
 /* Load items from specified file and keyin the selected one within a template.*/
 insertFn: procedure
-  parse arg filestem, tmpl, pickmany, concat
+  parse arg filestem, tmpl, pickmany, concat, indent
   fnfile=getFunctionFile(filestem)
   if fnfile='' then do
     'MSG Function file not found:' filestem
@@ -51,10 +52,9 @@ insertFn: procedure
         else            'KEYIN' changestr('@', tmpl, strip(item))
       end -- concat choices into one line
       else do
-        leadblanks=currentIndent()
         loop item over choices
-          if tmpl='' then 'INPUT' leadblanks||item
-          else            'INPUT' leadblanks||changestr('@', tmpl, item)
+          if tmpl='' then 'INPUT' indent||item
+          else            'INPUT' indent||changestr('@', tmpl, item)
         end
       end
     end -- choices made
@@ -79,4 +79,3 @@ getchoice: procedure
 
 ::requires 'XEdit.x'
 ::requires 'XPopups.x'
--- ::requires 'XRoutines.x'
