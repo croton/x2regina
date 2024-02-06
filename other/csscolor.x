@@ -22,4 +22,3 @@ pickColor: procedure
   return
 
 ::requires 'XPopups.x'
--- ::requires 'XRoutines.x'

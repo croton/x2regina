@@ -1,7 +1,7 @@
 /* filterline -- Macro to show/exclude lines based on custom criteria. */
 parse arg option params
 helpmsg='filterline (I)ndent | (P)refix [params]'
-if option='-?' then do; 'MSG' helpmsg; exit; end
+if option='?' then do; 'MSG ' helpmsg; exit; end
 
 select
   when abbrev('INDENT', translate(option), 1) then call showByIndent params
@@ -18,8 +18,8 @@ showByIndent: procedure
   'TOP'
   do line=1 to SIZE.1
     'EXTRACT /CURLINE/'
-    blanks=leadblanks(CURLINE.1)
-    if blanks=amount then 'SHOW'
+    blanks=getIndent()
+    if length(blanks)=amount then 'SHOW'
     else 'EXCLUDE'
   end
   'MSG Done searching' SIZE.1 'lines'

@@ -27,7 +27,7 @@ if codeType='' then do
   'EXTRACT /CODE_TYPE/'
   codeType=CODE_TYPE.1
 end
-leadblanks=currentIndent()
+leadblanks=getIndent()
 call insertFn codeType, template, pickmany, concat, leadblanks
 exit
 

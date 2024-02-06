@@ -1,10 +1,11 @@
-/* initcss -- CSS profile startup macro. */
+/* cssinit -- CSS profile startup macro. */
 arg stage
 select
   when stage='START' then call go
   when stage='END' then call stop
+  when stage='SHOW' then call showEnv
   otherwise
-  'MESSAGEBOX Macro initcss, step=['stage']'
+  'MESSAGEBOX Macro cssinit, step=['stage']'
 end
 exit
 

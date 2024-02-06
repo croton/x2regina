@@ -19,15 +19,24 @@
   if target='' then return ''
   return subword(target, words(target))
 
-::routine leadblanks public
-  parse arg str
-  return max(verify(str, ' ')-1,0)
-
 ::routine getindent public
   'EXTRACT /CURLINE/'
   blanks=max(verify(CURLINE.1, ' ')-1,0)
   return copies(' ', blanks)
 
-::routine currentIndent public
+/* Get word before cursor between delimiters. */
+::routine wbcBetween public
+  parse arg sdelim, edelim
+  'EXTRACT /CURLINE/'
   'EXTRACT /CURSOR/'
-  return copies(' ', CURSOR.2-1)
+  csrLeft=left(CURLINE.1, CURSOR.2-1)
+  startDelim=lastpos(sdelim, csrLeft)
+  if startDelim=0 then return ''
+  startTarget=startDelim+length(sdelim)
+  if cursor<startTarget then return ''
+  endDelim=pos(edelim, CURLINE.1, startTarget)
+  if CURSOR.2>endDelim then return ''
+  parse var csrLeft (sdelim) term
+  if term='' then return term
+  return word(term, words(term))
+

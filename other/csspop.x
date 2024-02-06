@@ -4,12 +4,11 @@ if pickMany='?' then do; 'MSG csspop [pickMany][src][useHtml][useTagHelper]'; ex
 
 -- tagname shall be last word on current line
 'EXTRACT /CURLINE/'
-'EXTRACT /CURSOR/'
-tagname=getWordBefore(CURLINE.1, CURSOR.2)
+tagname=wordBeforeCursor()
 if tagname='' then tagname='div'
 lastWordRemoved=delword(CURLINE.1, max(words(CURLINE.1), 1))
 
-if sourcefile='' then sourcefile='classes-bulma'
+if sourcefile='' then sourcefile='dev\globalcss'
 fnFile=getFunctionFile(sourcefile)
 if pickMany='' then
   choice=pickFromFile(fnFile, 'CSS class')

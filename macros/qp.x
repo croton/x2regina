@@ -8,7 +8,7 @@ end
 parse var items '--p' pattern '--'
 key=wordBeforeCursor()
 found=lookup(key, items, pattern)
-if found='' then 'MSG No lookup value found for' key
+if found='' then 'MSG No lookup value found for "'key'"'
 exit
 
 lookup: procedure
