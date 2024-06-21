@@ -8,35 +8,31 @@ comment_formatting = NONE;
 margins            = 1 200 20 80
 bookmarks          = 30
 
-a-PFLine = "1=Dom 2=jQ 3=InFn 4=? 5=Sfy 6=StrT 7=TypeOf 8=Copy 9=ObjKey 10=CmtQ 11=WrapTry 12=FnDefs"
-key a-F1 = MACRO fnpick jdom document.@
-key a-F2 = MACRO fnpick jquery
+a-PFLine = "1=? 2=? 3=Fn 4=Fn> 5=Strfy 6=StrT 7=TypeOf 8=Copy 9=ObjKey 10=CmtQ 11=WrapTry 12=FnDefs"
+key a-F1 = MSG Alt-F1
+key a-F2 = MACRO chooser then catch all resolve reject --t Promise Fns --p .@()
 key a-F3 = MACRO instr /function() {~}/
-key a-F4 = MSG Alt-F4
+key a-F4 = MACRO instr /() => {~}/
 key a-F5 = MACRO instr /JSON.stringify(~)/
 key a-F6 = MACRO instr /`${~}`/
 key a-F7 = MACRO instr /(typeof ~)/
 key a-F8 = MACRO instr /Object.assign(~)/
 key a-F9 = MACRO instr /Object.keys(~)/
 key a-F10 = MACRO cmt Q
-key a-F11 = MACRO wrapblock /try {/} catch (err) { throw err; }/i
+key a-F11 = MACRO wrapblock /try {/} catch (err) { }/i
 key a-F12 = ALL / function/
 
-key a-0 = MSG [ES6] 1=Prof 2=Xp 3=Key 4=FavDir 5=BkmPr 6=BkmCl 7=ClipV 8=RingP 9=RingW
+key a-0 = MSG [ES6] 1=Prof 2=Xp 3=Key
 key a-1 = EDIT C:\Users\celes\cjp\x2\es6.prof
 key a-2 = MACRO chooser --c xs es6 --t Expander
 key a-3 = MACRO chooser --c xk es6 --t JS Keys
-key a-4 = MACRO favdir ?
-key a-5 = MACRO bkm PRINT
-key a-6 = MACRO bkm CLEAR
-key a-7 = MACRO clipper VIS
 
 key a-` = MACRO wrapit `
-key a-- = MACRO instr /$(~)/
+key a-- = MACRO instr /="~"/
 key a-= = MACRO instr /${~}/
-key a-; = MACRO instr /() => {~}/
-key a-' = MACRO instr /="~"/
-key a-\ = MACRO wrapblock /{/}/
+key a-; = MACRO instr /await ~/
+key a-' = MACRO wrapblock /{/}/
+key a-\ = MACRO wrapblock /new Promise((resolve, reject) => {/});/i
 
 expand_keyword = say
 expand_replace = "console.log(\c);"
@@ -55,13 +51,13 @@ expand_keyword = fni
 expand_replace = "(function () {"
 expand_replace = "})(\c);"
 
+expand_keyword = fna
+expand_replace = "async function \c() {"
+expand_replace = "}"
+
 expand_keyword = \1 -fs
 expand_replace = '\1 (function(\c) {'
-expand_replace = '  return { };'
 expand_replace = '})();'
-
-expand_keyword = \1 -p
-expand_replace = '\1.prototype\c'
 
 expand_keyword = ofy
 expand_replace = 'JSON.parse(\c);'
@@ -76,14 +72,15 @@ expand_keyword = rem \1
 expand_replace = "delete \1['\c'];"
 
 expand_keyword = "\1 ["
-expand_replace = '\1 [\c]'
-
-expand_keyword = "\1("
-expand_replace = '\1(\c)'
+expand_replace = '\1 [\c'
+expand_replace = '];'
 
 expand_keyword = "\1{"
 expand_replace = '\1 \c{'
 expand_replace = '}'
+
+expand_keyword = "\1("
+expand_replace = '\1(\c)'
 
 expand_keyword = has \1
 expand_replace = "if (\1.hasOwnProperty('\c'))"
@@ -94,8 +91,8 @@ expand_replace = "if (\1 instanceof \c)"
 expand_keyword = type \1
 expand_replace = "if (typeof \1==='\c')"
 
-expand_keyword = isarr \1
-expand_replace = "if (Array.isArray(\1)) \c"
+expand_keyword = isarr
+expand_replace = "Array.isArray(\c)"
 
 expand_keyword = \1 -ea
 expand_replace = '\1.forEach(\c => {'
@@ -154,6 +151,9 @@ expand_replace = '  break'
 expand_replace = '  default:'
 expand_replace = '} // \1'
 
+expand_keyword = defer
+expand_replace = 'setTimeout(\c, 1000);'
+
 expand_keyword = try
 expand_replace = 'try {'
 expand_replace = "  \c"
@@ -162,18 +162,25 @@ expand_replace = '  throw err;'
 expand_replace = '}'
 
 expand_keyword = \1 -then
-expand_replace = '\1.then(function(\c) {'
-expand_replace = '}, function(error) {'
-expand_replace = '});'
+expand_replace = '\1.then(\c => { })'
+
+expand_keyword = \1 -thenfn
+expand_replace = '\1.then(function(\c) { })'
 
 expand_keyword = \1 -thenc
-expand_replace = '\1.then(function(\c) {'
-expand_replace = '}).catch(function(error) {'
+expand_replace = '\1.then(\c => {'
+expand_replace = '}).catch(error => {'
 expand_replace = '});'
 
 expand_keyword = \1 -catch
 expand_replace = '\1.catch(\cerror => {'
 expand_replace = '});'
+
+expand_keyword = prom
+expand_replace = 'new Promise((resolve, reject) => { \cresolve(1); });'
+
+expand_keyword = promfn
+expand_replace = 'new Promise(function(resolve, reject) { \cresolve(1); });'
 
 expand_keyword = \1 -prom
 expand_replace = '\1 new Promise((resolve, reject) => {'
@@ -181,40 +188,34 @@ expand_replace = '  if (true) resolve(\c);'
 expand_replace = "  else reject(new Error(''));"
 expand_replace = '});'
 
+expand_keyword = aw
+expand_replace = '// async function() {}'
+expand_replace = 'try {'
+expand_replace = '  await \c'
+expand_replace = '} catch (err) {'
+expand_replace = '}'
+
 expand_keyword = err
 expand_replace = 'throw new Error(\c);'
 
 expand_keyword = us
 expand_replace = "'use strict';"
 
-expand_keyword = exp
-expand_replace = 'module.exports=\c;'
-
 expand_keyword = req \1
 expand_replace = "const \1 = require('\c\1');"
 
 expand_keyword = imp \1
+expand_replace = "import \c from '\1';"
+
+expand_keyword = impl \1
 expand_replace = "import \1 from '\c./\1';"
 
-/* JS DOM */
-expand_keyword = jclick \1
-expand_replace = "$(\c\1).click(function() {"
-expand_replace = '});'
+expand_keyword = exp
+expand_replace = 'export \c'
 
-expand_keyword = ev
-expand_replace = ".addEventListener('\c', function() {"
-expand_replace = "});"
+expand_keyword = expd
+expand_replace = 'export default \c'
 
-expand_keyword = click
-expand_replace = ".addEventListener('click', \c);"
-
-expand_keyword = load
-expand_replace = "window.addEventListener('load', function(\c) {"
-expand_replace = "});"
-
-expand_keyword = id \1
-expand_replace = "const \c = document.getElementById('\1');"
-
-expand_keyword = qs \1
-expand_replace = "const el = \c.querySelector('\1');"
+expand_keyword = expmo
+expand_replace = 'module.exports=\c;'
 

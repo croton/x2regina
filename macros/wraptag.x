@@ -1,6 +1,10 @@
 /* wraptag -- wrap a marked area with a given tag. */
 parse arg options
-if abbrev('?', options) then call help
+if abbrev('?', options) then do
+  'MSG wraptag name [-each]'
+  exit
+end
+
 w=wordpos('-each',options)
 if w>0 then do; each=1; options=delword(options,w,1); end; else each=0
 
@@ -15,7 +19,3 @@ select
   otherwise                 'MACRO wrapblock |'open'|'closed'|'
 end
 exit
-
-help: procedure
-  'MSG wraptag name [-each]'
-  exit

@@ -5,18 +5,16 @@ expand_keyword = "?\1"
 expand_replace = '<\1\c>'
 expand_replace = '</\1>'
 
+expand_keyword = "@\1"
+expand_replace = '<\1 class="\c">'
+expand_replace = '</\1>'
+
 expand_keyword = "!\1"
 expand_replace = '<\1>\c</\1>'
 
-expand_keyword = "@\1"
+expand_keyword = "#\1"
 expand_replace = '<\1 class="\c"></\1>'
 
 expand_keyword = $\1
 expand_replace = '<\1 \c/>'
-
-expand_keyword = "\1 ?>"
-expand_replace = '\1 \c="">'
-
-expand_keyword = "\1 c>"
-expand_replace = '\1 class="\c">'
 

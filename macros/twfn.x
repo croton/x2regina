@@ -5,10 +5,10 @@ if input='?' then do; 'MSG twfn - look up a TW class'; exit; end
 -- Cursor needs to be between the following delimiters
 s='class="'
 e='"'
-found=wbcBetween(s,e)
+found=filterWordBeforeCursor()
 if found='' then xsay 'Please specify part of a TW class.'
 else do
-  cls=insertClass(found)
+  cls=pickClass(found)
   if cls='' then call xsay 'No such TW class: "'found'".'
   else do
     'CURSOR DATA'
@@ -19,7 +19,7 @@ else do
 end
 exit
 
-insertClass: procedure
+pickClass: procedure
   parse arg part
   classes=.environment['TWClasses']
   if classes=.nil then return ''

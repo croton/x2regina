@@ -6,7 +6,8 @@ if filestem='?' then do; 'MSG fnpickdetail filestem'; exit; end
 if propname='' then propname='transform'
 
 choice=pickFunction(filestem)
-if choice='' then call xsay 'Choice cancelled'
+if choice='NOFILE' then call xsay 'File not found:' filestem
+else if choice='' then call xsay 'Ok, no choice.'
 else do
   'KEYIN' propname':' choice'()'
   'LOCATE /(/-'
@@ -16,9 +17,8 @@ exit
 
 pickFunction: procedure
   parse arg filestem
-  -- filename=filestem'.xfn'
   filename=getFunctionFile(filestem)
-  if \SysFileExists(filename) then return 'oops'
+  if \SysFileExists(filename) then return 'NOFILE'
   ifile=.Stream~new(filename)
   map=.directory~new
   do while ifile~lines>0

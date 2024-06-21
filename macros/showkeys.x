@@ -1,11 +1,12 @@
 /* showkeys -- Show key assignments by meta key. */
 arg metakey
-if metakey='-?' then do; 'MSG showkeys [?|A|AL|C|CL|S]'; exit; end
+if metakey='-H' then do; 'MSG showkeys [?|A|AL|C|CL|S|H]'; exit; end
 
 'EXTRACT /ESCAPE/'
 NL=ESCAPE.1||'N'
-if metakey='?' then do
-  call queryAnyKey
+if abbrev('??',metakey,1) then do
+  if metakey='?' then call queryAnyKey
+  else                call queryAnyKeyReport
   exit
 end
 select
@@ -75,8 +76,8 @@ return msgtxt
 -- Query key assignment until ESCAPE is pressed
 queryAnyKey: procedure expose NL
   do forever
-    msg = 'X2 Editor Key Query Utility' || NL || NL 'Press Escape to end'
-    'MESSAGEBOX' msg ||NL
+    msg = 'X2 Editor Key Query Utility' br(2) 'Press ESC to end'
+    'MESSAGEBOX' msg NL
     if rc<>0 then leave
     'EXTRACT /key' messagebox.1'/'
     if key.1=0 then key.1='undefined'
@@ -84,3 +85,28 @@ queryAnyKey: procedure expose NL
     if result='1b'x | result='ESCAPE' then leave   -- Escape key
   end
   return
+
+queryAnyKeyReport: procedure expose NL
+  'EDIT querykey.rpt'
+  'BOTTOM'
+  do 30
+    msg='X2 Editor Key Tester Utility' br(2)
+    msg=msg' Use this program to determine the key name for any ' br()
+    msg=msg' key on your keyboard.  You can then configure it in ' br()
+    msg=msg' the profile to whatever function you desire. ' br(2)
+    msg=msg' Press any key *except* Ctrl-C, or ESC to end'
+    'MESSAGEBOX' msg br() 'rc' rc 'result' result
+    if rc<>0 then leave
+    if messagebox.1<>'/' then 'EXTRACT /key' messagebox.1'/'
+    else                      'EXTRACT +key' messagebox.1'+'
+    if key.1 = 0 then key.1='undefined'
+    'INPUT key name='Left(messagebox.1,12) 'function='key.1
+    if result='1b'x | result='ESCAPE' then leave    -- Escape key
+  end                                               -- End
+  return
+
+br: procedure expose NL
+  arg count .
+  if datatype(count,'W') then count=min(count,5)
+  else                        count=1
+  return copies(NL,count)

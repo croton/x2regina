@@ -44,7 +44,7 @@ key c-F7 = MACRO hilite BL
 key c-F8 = MACRO hilite HIDE
 key c-F9 = Find restore
 key c-F11 = MACRO ring
-key c-F12 = MACRO ringwinx
+key c-F12 = MACRO ring P
 key c-Tab  = MACRO togglefile
 key c-Space = Expand
 key c-Ins  = Clip copy
@@ -67,7 +67,7 @@ key c-o = MACRO cmt O
 key c-p = MACRO opensearch
 key c-q = MACRO wrapit "
 key c-r = MACRO wrapit (
-key c-s = CMDTEXT showkeys -?
+key c-s = CMDTEXT xkeys -h
 key c-t = MACRO transpose
 key c-u = Mark Upper
 key c-v = MACRO mgl
@@ -75,15 +75,15 @@ key c-x = MACRO hilite BB
 key c-z = CopyToCmd
 
 a-PFLine = ">=Ind <=RvInd"
-key a-0 = MSG [Default] 1=Date 2=KeyRpt 3=MkInfo 4=NavUp 5=WBlockHelp 6=WLineHelp  7=RingH 8=RingWinP 9=RingWin
+key a-0 = MSG [Default] 1=Date 2=KeyInfo 3=CalcIt 4=NavHelp 5=WBlockHelp 6=WLineHelp 7=RingH 8=Ring 9=RingWin
 key a-1 = MACRO ipt left(date('w'),3) space(date(),1,'-')
-key a-2 = MACRO keyrpt
-key a-3 = MACRO mk
-key a-4 = MACRO nav UP
+key a-2 = MACRO xkeys ?
+key a-3 = MACRO cc
+key a-4 = MACRO nav ?
 key a-5 = MACRO wrapblock ?
 key a-6 = MACRO wrapline ?
 key a-7 = MACRO ring ?
-key a-8 = MACRO ringwinx PARTIAL
+key a-8 = MACRO ring P
 key a-9 = ringwin
 key a-/ = MACRO wrapit {
 key a-[ = MACRO nav REV
@@ -104,7 +104,7 @@ key a-q = MACRO wrapit '
 key a-s = MACRO copyword2cmd
 key a-t = CMDTEXT dir %X2HOME%\*.prof
 key a-u = CMDTEXT favdir
-key a-v = split
+key a-v = MACRO cc
 key a-w = MACRO mword
 key a-x = EXCLUDE TOGGLE
 key a-y = MACRO deleter LASTWORD

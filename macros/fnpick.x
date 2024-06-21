@@ -69,7 +69,7 @@ insertFn: procedure
   end
   return
 
-/* Choose from values in specified file (non-OO) */
+/* Choose from values in specified file, alternate method. */
 getchoice: procedure
   parse arg fnfile, filestem
   'MACRO chooser --f' fnfile '--t' filestem '--q'

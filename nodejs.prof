@@ -5,11 +5,11 @@ extension      = JS,JSON
 base_extension = JS
 code_type      = nodejs
 
-a-PFLine = "1=RingW 2=RingP 3=InFn 4=Lint 5=Sfy 6=StrT 7=TypeOf 8=Copy 9=ObjKey 10=CmtQ 11=? 12=FnDefs"
+a-PFLine = "1=RingW 2=RingP 3=InFn 4=Lint 5=Sfy 6=StrT 7=TypeOf 8=Copy 9=ObjKey 10=CmtQ 11=isArr 12=FnDefs"
 key a-F1 = ringwin
-key a-F2 = MACRO ringwinx PARTIAL
+key a-F2 = MACRO ring P PATH
 key a-F4 = MACRO eslint N
-key a-F11 = MACRO ring ?
+key a-F11 = MACRO instr /Array.isArray(~)/
 
 key a-0 = MSG [Node] 1=Prof 2=ProfP 3=Xpdr 4=XpdrP 5=Key 6=WTry 7=StrVar 8=Env 9=Arg
 key a-1 = EDIT C:\Users\celes\cjp\x2\nodejs.prof
@@ -21,9 +21,6 @@ key a-6 = MACRO wrapblock /try {/} catch (err) { throw err; }/i
 key a-7 = MACRO wrapmark /${/}/
 key a-8 = MACRO instr /process.env.~/
 key a-9 = MACRO instr /process.argv[~]/
-
-expand_keyword = log
-expand_replace = "splunker.ctx('\c').out('');"
 
 expand_keyword = readf
 expand_replace = 'fs.readFile(\c, (err, data) => {'
@@ -37,41 +34,10 @@ expand_replace = 'function init() {'
 expand_replace = '  return {'
 expand_replace = '  };'
 expand_replace = '}'
-expand_replace = 'module.exports = { init: init };'
-
-expand_keyword = \1 -prom
-expand_replace = '\1 new Promise((resolve, reject) => {'
-expand_replace = '  if (true) resolve(\c);'
-expand_replace = "  else reject(new Error(''));"
-expand_replace = '});'
-
-expand_keyword = promall
-expand_replace = 'await Promise.all(\c)'
+expand_replace = 'module.exports = { init };'
 
 expand_keyword = arg
 expand_replace = 'process.argv[\c]'
-
-expand_keyword = afn
-expand_replace = "async function \c() {"
-expand_replace = "}"
-
-expand_keyword = fnr
-expand_replace = "function \c() {"
-expand_replace = "  return 1;"
-expand_replace = "}"
-
-expand_keyword = aw
-expand_replace = 'try {'
-expand_replace = '  await \c'
-expand_replace = '} catch (err) {'
-expand_replace = '}'
-
-expand_keyword = awp \1
-expand_replace = 'const \1Promise = \c'
-expand_replace = 'const \1 = await \1Promise;'
-
-expand_keyword = to
-expand_replace = 'setTimeout(\c, 1000);'
 
 expand_keyword = --
 expand_replace = "/**"
@@ -79,4 +45,19 @@ expand_replace = ' * \c'
 expand_replace = ' * @param'
 expand_replace = ' * @return'
 expand_replace = '*/'
+
+expand_keyword = get
+expand_replace = "fetch(\c, {headers: {Accept: 'application/json'}})"
+expand_replace = '  .then(resp => resp.json())'
+expand_replace = '  .then(data => ({statusCode: 200, body: data}))'
+expand_replace = '  .catch(error => ({statusCode: 422, body: error.toString()}));'
+
+expand_keyword = post
+expand_replace = 'fetch(\c, {'
+expand_replace = "    headers: {'Content-Type': 'application/json'},"
+expand_replace = "    method: 'POST',"
+expand_replace = '    body: JSON.stringify({data:1})'
+expand_replace = '  })'
+expand_replace = '  .then(() => ({statusCode: 200, body: 1}))'
+expand_replace = '  .catch(error => ({statusCode: 422, body: error.toString()}));'
 

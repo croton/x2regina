@@ -2,7 +2,10 @@
    Usage ... wrapline |before|after|options
 */
 parse arg input
-if abbrev('?', input) then call help
+if abbrev('?', input) then do
+  'MSG wrapline /prefix/suffix/[n|A]'
+  exit
+end
 
 parse var input delim +1 before (delim) after (delim) options
 'EXTRACT /MARK/'
@@ -70,7 +73,3 @@ wrapWithAlign: procedure expose MARK.
   'CURSOR EOL STAY'
   'MARK CLEAR'
   return
-
-help: procedure
-  'MSG wrapline /prefix/suffix/[n|A]'
-  exit

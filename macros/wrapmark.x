@@ -1,6 +1,9 @@
 /* wrapmark -- Wrap highlighted text of current line in specified tokens. */
 parse arg input
-if abbrev('?', input) then call help
+if abbrev('?', input) then do
+  'MSG wrapmark /prefix/suffix/options'
+  exit
+end
 
 parse var input delim +1 leftside (delim) rightside (delim) options
 'EXTRACT /MARK/'
@@ -22,7 +25,3 @@ else do
   'MARK CLEAR'
 end
 exit
-
-help: procedure
-  'MSG wrapmark /prefix/suffix/options'
-  exit

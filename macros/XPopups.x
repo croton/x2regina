@@ -1,4 +1,6 @@
 -- X2 Routines for Popups, ver. 0.1
+::requires 'XRoutines.x'
+
 ::routine msgBox public
   parse arg title, msg
   'EXTRACT /ESCAPE/'
@@ -393,9 +395,25 @@ return .nil
   ifile~close
   return pickfrom(map, filestem)
 
--- Convenience function to display text on bottom message line
-::routine xsay public
-  parse arg message
-  'REFRESH'
-  'MSG' message
-  return
+::routine pickfromDualSort public
+  parse arg filestem
+  'EXTRACT /SCREEN/'
+  delim='?'
+  filename=getFunctionFile(filestem)
+  if \SysFileExists(filename) then return 'Ooops'
+  ifile=.Stream~new(filename)
+  arr=ifile~makearray~sort
+  ifile~close
+  return getChoice(arr, SCREEN.1, calcMinDialogWidth(maxItemInArray(arr), SCREEN.2), filestem, delim)
+
+::routine getChoice private
+  use arg returnValues, maxrows, winWidth, title, delim
+  totalItems=returnValues~items
+  'WINDOW' min(maxrows%2, totalItems) winWidth totalItems title
+  do i=1 to totalItems
+    parse value returnValues[i] with displayVal (delim) returnVal
+    'WINLINE' displayVal '\n SETRESULT' returnVal
+  end i
+  'WINWAIT'
+  if symbol('RESULT')='LIT' then return ''
+  return result

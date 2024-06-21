@@ -1,12 +1,12 @@
 /* -------------- OREXX profile --------------- */
 extension = ORX,CLS,REX,X
 
-key a-0 = MSG [ooREXX] 1=Prof 2=ProfP 3=Xpdr 4=XpdrP 5=DoEnd 6=Key 7=Meth 8=Rtns 9=Class
+key a-0 = MSG [ooREXX] 1=Prof 2=ProfP 3=Xpdr 4=XpdrP 5=DoEnd 6=Keys 7=Meth 8=Rtns 9=Class
 key a-1 = EDIT C:\Users\celes\cjp\x2\orexx.prof
 key a-2 = EDIT C:\Users\celes\cjp\x2\rexx.prof
-key a-3 = MACRO cmdout xporx.rex xs orexx
-key a-4 = MACRO cmdout xpdrs.rex xs rexx
-key a-6 = MACRO showkeys
+key a-3 = MACRO cmdout xporx.rex xs orexx|sort
+key a-4 = MACRO cmdout xpdrs.rex xs rexx|sort
+key a-6 = MACRO xkeys
 key a-7 = ALL /::method /
 key a-8 = ALL /::routine /
 key a-9 = MACRO chooser directory array stream --t ORX Class --p x=.@~new

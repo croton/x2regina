@@ -2,47 +2,52 @@
 extension      = CSS,SCSS
 code_type      = CSS
 
-a-PFLine = "1=Attr 2=Attr* 3=Psdo 4=Color 5=Font 6=Esc 7=Inl 8=Box1 9=Box 10=Disp 11=Var 12=Favs"
+a-PFLine = "1=Attr 2=Attr* 3=Psdo 4=Color 5=Font 6=Esc 7=FlexHelp 8=Box1 9=Box 10=Disp 11=? 12=VarList"
 key a-F1 = MACRO fnpick css @:
 key a-F2 = MACRO fnpick css @: -m
 key a-F3 = MACRO fnpick csspseudo :@
 key a-F4 = MACRO csscolor
 key a-F5 = MACRO fnpick cssfonts font-family: @;
 key a-F6 = MACRO instr /&~;/
-key a-F7 = MACRO instr /style="~"/
-key a-F8 = MACRO chooser width height top right bottom left margin border padding --t Boxes --p @:
-key a-F9 = MACRO chooser width height top right bottom left margin border padding --t Boxes --multi
-key a-F10 = MACRO chooser block contents flex grid inline inline-block none table --t Display --p display: @;
-key a-F11 = MACRO instr /var(--~);/
-key a-F12 = MACRO chooser thistle tomato firebrick burlywood forestgreen darkorange --t FavColors
+key a-F7 = MACRO cssflex ?
+key a-F8 = MACRO chooser width height top right bottom left margin border padding --t Boxes --p @: 0;
+key a-F9 = MACRO chooser width height top right bottom left margin border padding --t Boxes --multi --p @: 0;
+key a-F10 = MACRO chooser block flex grid inline inline-block none contents table --t Display --p display: @;
+key a-F11 = MSG CSS a-F11
+key a-F12 = MACRO fnpickparse myvars.txt color: var(@); -d :
 
-key a-0 = MSG [CSS] 1=Prof 2=Xpdr 3=XpList 4=LkUp 5=Flex 6=Bts 7=Xfrm 8=Cmt 9=Sheet
+key a-0 = MSG [CSS] 1=Prof 2=Xpdr 3=XpList 4=LkUp 5=Flex 6=AVAILABLE 7=Xfrm 8=Cmt 9=Sheet
 key a-1 = EDIT C:\users\celes\cjp\x2\css.prof
 key a-2 = MACRO chooser --c xs css --t Expanders
 key a-3 = MACRO cmdout xpdr.css xs css
 key a-4 = MACRO cssattr
 key a-5 = MACRO cssflex
-key a-6 = MACRO fnpick bootstrap
-key a-7 = MACRO fnpickdetail csstransform
+key a-6 = MESSAGEBOX Available keys= a-F11, a-backslash, a-slash, a-6
+key a-7 = MACRO fnpickparse csstransform transform: @() -d (
 key a-8 = MACRO cmt CR
 key a-9 = CMDTEXT cmdin merge %cjp%\snips\css.tmpl
 
-key AltGr-0 = MSG CtlAlt-1=FlexParent 2=FlexChild 3=FlexHelp 4=Rgba
-key AltGr-1 = MACRO chooser flex-direction flex-wrap flex-flow justify-content align-items align-content --t FlexParent
-key AltGr-2 = MACRO chooser order flex-grow flex-shrink flex-basis flex align-self --t FlexChild
-key AltGr-3 = MACRO cssflex ?
-key AltGr-4 = MACRO instr /rgba(~100, 100, 100, .5)/
+key AltGr-0 = MSG CtlAlt-1=CssKeys 2=FlexParent 3=FlexChild 4=FlexHelp 5=Rgba 6=FavColors
+key AltGr-1 = MACRO msgFromCmd --t CSS Keys --c xk css
+key AltGr-2 = MACRO chooser flex-direction flex-wrap flex-flow justify-content align-items align-content --t FlexParent
+key AltGr-3 = MACRO chooser order flex-grow flex-shrink flex-basis flex align-self --t FlexChild
+key AltGr-4 = MACRO cssflex ?
+key AltGr-5 = MACRO instr /rgba(~100, 100, 100, .5)/
+key AltGr-6 = MACRO chooser mistyrose tomato darkorange firebrick burlywood thistle royalblue forestgreen --t FavColors
 
 key a-` = MACRO wrapit `
 key a-- = MACRO instr /var(--~);/
 key a-= = MACRO instr /="~"/
 key a-; = MACRO instr /rgba(~100, 100, 100, .5)/
-key a-' = MSG CSS Alt-singlequote
+key a-' = MACRO chooser color image position size --t Background --p background-@:
 key a-\ = MSG CSS Alt-backslash
-key a-/ = MACRO wrapit {
+key a-/ = MSG CSS Alt-slash
 
 synonym startup = MACRO cssinit START
 synonym exit    = MACRO cssinit END
+
+expand_keyword = \1 -x
+expand_macro = xp_css
 
 expand_keyword = "-"
 expand_replace = '\c {'
@@ -53,21 +58,19 @@ expand_replace = '\1 {'
 expand_replace = '  \c'
 expand_replace = '}'
 
-expand_keyword = reset
-expand_replace = 'html { box-sizing: border-box; }'
-expand_replace =  '*, *:before, *:after { box-sizing: inherit; }\c'
+expand_keyword = boxer
+expand_replace =  '*, *::before, *::after { box-sizing: border-box; }'
 
-expand_keyword = media \1
-expand_replace = '@media all and (m\c-width: \1px) {'
+expand_keyword = media
+expand_replace = '@media(min-width:\cpx) {'
 expand_replace = '}'
 
+expand_keyword = mediax
+expand_replace = '@media(min-width:600px) {\c}'
+expand_replace = '@media(min-width:900px) { }'
+expand_replace = '@media(min-width:1200px) { }'
+
 expand_keyword = bor
-expand_replace = 'border: \c1px;'
-
-expand_keyword = bord
-expand_replace = 'border: 2px dotted\c;'
-
-expand_keyword = borde
 expand_replace = 'border: 1px dashed \ctomato;'
 
 expand_keyword = pad
@@ -76,27 +79,15 @@ expand_replace = 'padding: \c'
 expand_keyword = mar
 expand_replace = 'margin: \c'
 
+expand_keyword = xmar
+expand_replace = 'margin: 0;'
+expand_replace = 'padding: 0;\c'
+
 expand_keyword = h
 expand_replace = 'height: \c;'
 
 expand_keyword = w
 expand_replace = 'width: \c;'
-
-expand_keyword = \1 -sa
-expand_replace = '\1 \cV H;'
-expand_replace = '\1 T H B;'
-expand_replace = '\1 T R B L;'
-
-expand_keyword = \1 -s2
-expand_replace = '\1 \cVpx 0px;'
-
-expand_keyword = \1 -s3
-expand_replace = '/* T H B */'
-expand_replace = '\1 \cTpx Hpx Bpx;'
-
-expand_keyword = \1 -s4
-expand_replace = '/* T R B L */'
-expand_replace = '\1 \c0px 0px 0px 0px;'
 
 expand_keyword = pos
 expand_replace = 'position: \crelative absolute ;'
@@ -107,11 +98,35 @@ expand_replace = 'position: \cabsolute;'
 expand_keyword = pr
 expand_replace = 'position: \crelative;'
 
-expand_keyword = fl
-expand_replace = 'float: \cleft;'
+expand_keyword = hover \1
+expand_replace = '\1:hover,'
+expand_replace = '\1:focus { opacity: .75; }'
+expand_replace = '\1:is(:hover, :focus) { opacity: .75; }'
 
 expand_keyword = bg
 expand_replace = 'background-color: \c'
+
+expand_keyword = fg
+expand_replace = 'color: \c'
+
+expand_keyword = bgi \1
+expand_replace = 'background-image: url("\1")\c;'
+expand_replace = "/* background: $color-primary url('\1') no-repeat \c100% center; */"
+expand_replace = '/* background-size: auto 80%; */'
+
+expand_keyword = bgig \1
+expand_replace = 'background-image: linear-gradient(\1, \c);'
+
+expand_keyword = bkgd
+expand_replace = 'background: \cbg-color bg-image position/bg-size bg-repeat bg-origin bg-clip bg-attachment initial|inherit;'
+
+expand_keyword = rgba \1
+expand_replace = 'rgba(\1,\1,\1,0.\c);'
+
+expand_keyword = shadow
+expand_replace = 'box-shadow: 5px 5px 5px \c;'
+expand_replace = 'box-shadow: x y [blur-radius] [spread-radius] [color];'
+expand_replace = 'box-shadow: [inset] color x y;'
 
 expand_keyword = box \1
 expand_replace = 'width: \1px;'
@@ -121,29 +136,35 @@ expand_replace = 'border\c'
 expand_keyword = ff
 expand_replace = 'font-family: \cserif sans-serif cursive fantasy monospace ;'
 
-expand_keyword = xbro \1
-expand_replace = '\1:'
-expand_replace = '-webkit-\1:'
-expand_replace = '-moz-\1:'
-expand_replace = '-o-\1:'
+expand_keyword = fo
+expand_replace = 'font-size: \c1em;'
+expand_replace = 'line-height: 1;'
+
+expand_keyword = \1 -imp
+expand_replace = '\1 !important;'
 
 /* grid */
-expand_keyword = gd
+expand_keyword = grid
 expand_replace = 'display: grid;'
-expand_replace = 'grid-template-columns: \c;'
+expand_replace = 'grid-template-columns: \c1fr 1fr;'
 expand_replace = 'grid-template-rows: 100px;'
+expand_replace = 'column-gap: 10px;'
+expand_replace = 'row-gap: 15px;'
 
-expand_keyword = gr \1
+expand_keyword = grow \1
 expand_replace = 'grid-row: \1/\c;'
 
-expand_keyword = gc \1
+expand_keyword = gcol \1
 expand_replace = 'grid-column: \1/\c;'
 
-expand_keyword = gp
-expand_replace = 'grid-gap: \c;'
+expand_keyword = gap
+expand_replace = 'gap: \crowpx 0px;'
 
 expand_keyword = v \1
 expand_replace = '--\1: \c;'
+
+expand_keyword = tr
+expand_replace = 'transition: \c 250ms ease-out;'
 
 /* flex */
 expand_keyword = flexp
@@ -161,6 +182,13 @@ expand_replace = 'flex-basis: auto;'
 expand_replace = 'order: 0;'
 expand_replace = 'align-self: auto;'
 
-expand_keyword = \1 xpm
-expand_macro = xp_css
+/* animation */
+expand_keyword = anim
+expand_replace = 'animation: \1 1s \cease-in 1s'
+expand_replace = '@keyframes \1 {'
+expand_replace = '  from {}'
+expand_replace = '  to {}'
+expand_replace = '  0% {}'
+expand_replace = '  100% {}'
+expand_replace = '}'
 

@@ -1,6 +1,7 @@
 /* qp -- QuickPick, match the last word typed with items in a list. */
 parse arg items
 if items='' then do
+  'REFRESH'
   'MSG usage: qp item-list'
   exit
 end
@@ -21,8 +22,7 @@ lookup: procedure
     if abbrev(translate(curritem), part) then do
       found=1
       'CURSOR DATA'
-      'PREVIOUS_WORD'
-      'DELWORD'            -- remove abbreviation
+      do length(term); 'BACKSPACE'; end  -- remove abbreviation
       if pattern='' then 'KEYIN' curritem  -- insert matched item from list
       else do
         parse var items '--d' delim '--'

@@ -3,7 +3,7 @@
 */
 parse arg delim +1 topline (delim) bottomline (delim) options
 if abbrev('-?',delim) | topline='' then do
-  'MSG wrapblock /topline/bottomline/doIndent'
+  'MSG wrapblock /topline/bottomline/(I)ndent'
   exit
 end
 
