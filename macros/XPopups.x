@@ -30,7 +30,7 @@
   if command='' then return
   'EXTRACT /SCREEN/'
   output.=cmdOutputStem(command)
-  if output.0>SCREEN.1 then 'MACRO cmdout myfile' command
+  if output.0>SCREEN.1 then 'MACRO cmdout msgBoxFromCmd.txt' command
   else call msgBoxFromStem title, output.
   return
 
@@ -68,14 +68,13 @@ return .nil
   'EXTRACT /SCREEN/'
   'EXTRACT /WRAP/'
   'EXTRACT /CURSOR/'
-  maxrows=SCREEN.1
   maxcols=SCREEN.2
   ctr=0
   found.0=0
   'TOP'
   'WRAP OFF'
   'LOCATE /'searchString'/'
-  do until ctr=maxrows
+  do until ctr=SCREEN.1
     if rc<>0 then leave
     'EXTRACT /CURLINE/'
     ctr=ctr+1
@@ -93,12 +92,7 @@ return .nil
   use arg srclist., title
   if title='' then title='Make a selection'
   'EXTRACT /SCREEN/'
-  maxrows=SCREEN.1
-  maxcols=SCREEN.2
-  mxlen=maxItemInStem(srclist.)
-  if mxlen=0 then mxlen=maxcols%2
-  winwidth=min(maxcols-2, max(mxlen, maxcols%3))
-  return getDialogChoice(srclist., maxrows, winwidth, title)
+  return getDialogChoice(srclist., SCREEN.1, autowidthStem(srclist., SCREEN.2), title)
 
 /* Prompt for multiple choices among items in a stem. */
 ::routine pickmany public
@@ -106,10 +100,8 @@ return .nil
   if title='' then title='Make a selection'
   'EXTRACT /ESCAPE/'
   'EXTRACT /SCREEN/'
-  maxrows=SCREEN.1
-  maxcols=SCREEN.2
   totalitems=srclist.0
-  'WINDOW' min(maxrows%2,totalitems) calcMinDialogWidth(maxItemInStem(srclist.), maxcols) totalitems title
+  'WINDOW' min((SCREEN.1)%2,totalitems) autowidthStem(srclist., SCREEN.2) totalitems title
   do i=1 to totalitems
     'WINLINE' srclist.i '\nSETRESULT' i
   end i
@@ -147,52 +139,81 @@ return .nil
   picks.0=ctr
   return picks.
 
+/* Prompt for multiple choices among items in an array. */
+::routine pickManyFromArray public
+  use arg srclist, title
+  'EXTRACT /SCREEN/'
+  return getChoices(srclist, SCREEN.1, autowidth(srclist, SCREEN.2), title)
+
 /* Prompt for single choice among items in an array. */
 ::routine pickFromArray public
   use arg srclist, title, resultWordIndex
   if title='' then title='Make a selection'
   'EXTRACT /SCREEN/'
-  maxrows=SCREEN.1
-  maxcols=SCREEN.2
-  mxlen=maxItemInArray(srclist)
-  if mxlen=0 then mxlen=maxcols%2
-  winwidth=min(maxcols-2, max(mxlen, maxcols%3))
-  return getDialogAChoice(srclist, maxrows, winwidth, title, resultWordIndex)
+  return getChoiceByIndex(srclist, SCREEN.1, autowidthSlim(srclist, SCREEN.2), title, resultWordIndex)
 
 /* Prompt for single choice among items in a map or directory. */
 ::routine pickfrom public
   use arg map, title
   if title='' then title='Make a selection'
   'EXTRACT /SCREEN/'
-  maxrows=SCREEN.1
-  maxcols=SCREEN.2
-  'WINDOW' min(maxrows%2,map~items) calcMinDialogWidth(maxItemInDirectory(map), maxcols) map~items title
+  'WINDOW' min((SCREEN.1)%2,map~items) autowidth(map, SCREEN.2) map~items title
   do key over map
     'WINLINE' map[key] '\n SETRESULT' key
   end
   'WINWAIT'
-  -- Return blank string if user cancels choice
-  if symbol('RESULT')='LIT' then return ''
+  if symbol('RESULT')='LIT' then return '' -- Return blank string if user cancels choice
   return result
 
-/* Prompt for multiple choices among items in an array. */
-::routine pickManyFromArray public
-  use arg srclist, title
+/* Pick from a dialog whose source items are each a return value and a display item. */
+::routine pickfromDual public
+  parse arg filestem, title, delim, showLabelsOnly
+  filename=getFunctionFile(filestem)
+  if \SysFileExists(filename) then return 'NOFILE-'filename
+  ifile=.Stream~new(filename)
+  map=.directory~new
+  if delim='' then do while ifile~lines>0
+    data=ifile~linein
+    parse var data displayVal returnVal
+    if showLabelsOnly=1 then map~put(displayVal, returnVal)
+    else                     map~put(data, returnVal)
+  end -- No delimiter specified
+  else do while ifile~lines>0
+    data=ifile~linein
+    parse var data displayVal (delim) returnVal
+    if showLabelsOnly=1 then map~put(displayVal, returnVal)
+    else                     map~put(displayVal returnVal, returnVal)
+  end -- Use delimiter to parse each entry
+  ifile~close
+  if title='' then title=filestem
+  return pickfrom(map, title)
+
+::routine pickfromDualSort public
+  parse arg filestem, title, delim
   'EXTRACT /SCREEN/'
-  return getDialogAChoices(srclist, SCREEN.1, calcMinDialogWidth(maxItemInArray(srclist), SCREEN.2), title)
+  if delim='' then delim=';'
+  if title='' then title=filestem
+  filename=getFunctionFile(filestem)
+  if \SysFileExists(filename) then return 'NOFILE-'filename
+  ifile=.Stream~new(filename)
+  arr=ifile~makearray~sort
+  ifile~close
+  maxval=30
+  loop item over arr
+    parse var item displayvalue (delim) .
+    maxval=max(maxval, length(displayvalue))
+  end
+  return getChoice(arr, SCREEN.1, maxval, title, delim)
 
 /* Prompt for single choice among items in a file listing. */
 ::routine pickFile public
   use arg srclist., title, fileListOption
   if title='' then title='Pick a file'
   'EXTRACT /SCREEN/'
-  maxrows=SCREEN.1
-  maxcols=SCREEN.2
   displaytext.=getDisplayNames(srclist., fileListOption)
-  mxlen=maxItemInStem(displaytext.)
-  winwidth=calcMinDialogWidth(mxlen, maxcols)
-  -- call log 'MxDW='maxcols-2 'MedDW='maxcols%2 'TW='length(title)+15 'MxIW='mxIW 'winW='winwidth 'opt='option
-  return getDialogChoice(srclist., maxrows, winwidth, title, displaytext.)
+  winwidth=autowidthStem(displaytext., SCREEN.2)
+  -- call log 'MxDW='SCREEN.2-2 'MedDW='(SCREEN.2)%2 'TW='length(title)+15 'MxIW='mxIW 'winW='winwidth 'opt='option
+  return getDialogChoice(srclist., SCREEN.1, winwidth, title, displaytext.)
 
 /* Prompt for single choice among lines in a given file. */
 ::routine pickFromFile public
@@ -219,7 +240,7 @@ return .nil
   return pickFile(RING., title, option)
 
 /* Display a dialog and return selection */
-::routine getDialogChoice private
+::routine getDialogChoice PRIVATE
   use arg returnValues., maxrows, winWidth, title, displayValues.
   totalItems=returnValues.0
   'WINDOW' min(maxrows%2, totalItems) winWidth totalItems title
@@ -234,7 +255,7 @@ return .nil
   return result
 
 /* Display a dialog and return a selection, using arrays */
-::routine getDialogAChoice private
+::routine getChoiceByIndex PRIVATE
   use arg returnValues, maxrows, winWidth, title, resultWordIndex
   totalItems=returnValues~items
   'WINDOW' min(maxrows%2, totalItems) winWidth totalItems title
@@ -255,8 +276,20 @@ return .nil
   if symbol('RESULT')='LIT' then return ''
   return result
 
+::routine getChoice PRIVATE
+  use arg returnValues, maxrows, winWidth, title, delim
+  totalItems=returnValues~items
+  'WINDOW' min(maxrows%2, totalItems) winWidth totalItems title
+  do i=1 to totalItems
+    parse value returnValues[i] with displayVal (delim) returnVal
+    'WINLINE' displayVal '\n SETRESULT' returnVal
+  end i
+  'WINWAIT'
+  if symbol('RESULT')='LIT' then return ''
+  return result
+
 /* Display a dialog and return one or more selections, using arrays */
-::routine getDialogAChoices private
+::routine getChoices PRIVATE
   use arg returnValues, maxrows, winWidth, title
   totalItems=returnValues~items
   'WINDOW' min(maxrows%2, totalItems) winWidth totalItems title
@@ -314,9 +347,46 @@ return .nil
   end
   return match
 
-::routine calcMinDialogWidth private
-  arg mxItemInList, maxcols
-  return min(maxcols-2, max(mxItemInList, maxcols%2))
+::routine autowidthStem PRIVATE
+  use arg datasource., screenwidth
+  halfscreenw=screenwidth%2
+  maxItemWidth=0
+  do i=1 to datasource.0
+    currlen=length(datasource.i)
+    if currlen>maxItemWidth then maxItemWidth=currlen
+  end i
+  if maxItemWidth<halfscreenw then return maxItemWidth+2
+  return min(maxItemWidth, screenwidth-2)
+
+::routine autowidth PRIVATE
+  use arg datasource, screenwidth
+  sourcetype=datasource~class
+  maxItemWidth=0
+  if sourcetype=.Array  then loop item over datasource
+    currlen=length(item)
+    if currlen>maxItemWidth then maxItemWidth=currlen
+  end
+  else if sourcetype=.Directory then do key over datasource
+    currlen=length(datasource[key])
+    if currlen>maxItemWidth then maxItemWidth=currlen
+  end key
+  return min(screenwidth-2, max(maxItemWidth, screenwidth%2))
+
+-- Alternate calculation that provides for slimmer popups
+::routine autowidthSlim PRIVATE
+  use arg datasource, screenwidth
+  sourcetype=datasource~class
+  maxItemWidth=0
+  if sourcetype=.Array  then loop item over datasource
+    currlen=length(item)
+    if currlen>maxItemWidth then maxItemWidth=currlen
+  end
+  else if sourcetype=.Directory then do key over datasource
+    currlen=length(datasource[key])
+    if currlen>maxItemWidth then maxItemWidth=currlen
+  end key
+  if maxItemWidth<(screenwidth%2) then return maxItemWidth+2
+  return min(maxItemWidth, screenwidth-2)
 
 /* Transform a file listing to show either name-only or partial path */
 ::routine getDisplayNames private
@@ -334,7 +404,7 @@ return .nil
   return newlist.
 
 /* Shorten a full path if it is in the current working directory */
-::routine abbrevPath public
+::routine abbrevPath PRIVATE
   parse arg fullpath, currdir
   if abbrev(fullpath, currdir) then partial='.'substr(fullpath,length(currdir))
   else                              partial=fullpath
@@ -343,77 +413,13 @@ return .nil
 /* Get full path of a file used as datasource for a dialog.
    As convention, dialog datasource files have extension 'XFN'.
 */
-::routine getFunctionFile public
+::routine getFunctionFile PUBLIC
   parse arg filestem
   fnfile=filestem'.xfn'
   x2home=value('X2HOME',,'ENVIRONMENT')
-  filepaths='.\'fnfile x2home'\lists\'fnfile
+  filepaths='.\'fnfile x2home'\lists\'fnfile '.\'filestem
   do w=1 to words(filepaths)
     fn=word(filepaths,w)
     if SysFileExists(fn) then return fn
   end w
   return ''
-
-::routine maxItemInStem private
-  use arg srclist.
-  maxlen=0
-  do i=1 to srclist.0
-    if length(srclist.i)>maxlen then maxlen=length(srclist.i)
-  end i
-  return maxlen
-
-::routine maxItemInArray private
-  use arg srclist
-  maxlen=0
-  loop item over srclist
-    if length(item)>maxlen then maxlen=length(item)
-  end
-  return maxlen
-
-::routine maxItemInDirectory private
-  use arg map
-  maxlen=0
-  do i over map
-    if length(map[i])>maxlen then maxlen=length(map[i])
-  end i
-  return maxlen
-
-/* Pick from a dialog whose source items are each a return value and a display item
-   separated by a space.
-*/
-::routine pickfromDual public
-  parse arg filestem
-  filename=getFunctionFile(filestem)
-  if \SysFileExists(filename) then return 'Ooops'
-  ifile=.Stream~new(filename)
-  map=.directory~new
-  do while ifile~lines>0
-    data=ifile~linein
-    parse var data returnVal displayVal
-    map~put(data, returnVal)
-  end
-  ifile~close
-  return pickfrom(map, filestem)
-
-::routine pickfromDualSort public
-  parse arg filestem
-  'EXTRACT /SCREEN/'
-  delim='?'
-  filename=getFunctionFile(filestem)
-  if \SysFileExists(filename) then return 'Ooops'
-  ifile=.Stream~new(filename)
-  arr=ifile~makearray~sort
-  ifile~close
-  return getChoice(arr, SCREEN.1, calcMinDialogWidth(maxItemInArray(arr), SCREEN.2), filestem, delim)
-
-::routine getChoice private
-  use arg returnValues, maxrows, winWidth, title, delim
-  totalItems=returnValues~items
-  'WINDOW' min(maxrows%2, totalItems) winWidth totalItems title
-  do i=1 to totalItems
-    parse value returnValues[i] with displayVal (delim) returnVal
-    'WINLINE' displayVal '\n SETRESULT' returnVal
-  end i
-  'WINWAIT'
-  if symbol('RESULT')='LIT' then return ''
-  return result

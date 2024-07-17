@@ -1,18 +1,4 @@
--- X2 Routines Library, ver. 0.13
-
-::routine showHelp public
-parse arg params, helpMsg, noblank
-if noblank=.true then do
-  if params='-?' | translate(params)='-H' | params='' then do
-    'MSG' helpMsg
-    return .true
-  end
-end
-if params='-?' | translate(params)='-H' then do
-  'MSG' helpMsg
-  return .true
-end
-return .false
+-- X2 Routines Library, ver. 0.14
 
 -- Return a stem of search results for the current file
 ::routine searchfile public
@@ -41,7 +27,7 @@ return .false
   return found.
 
 /* Pass a given command to the external environment and return results as array */
-::routine cmdOutput public
+::routine cmdOut public
   parse arg command
   if arg(1,'O') then return .nil
   myresults=.Array~new
@@ -54,7 +40,7 @@ return .false
   return myresults
 
 /* Pass a given command to the environment and return results as stem */
-::routine cmdOutputStem public
+::routine cmdOutStem public
   parse arg command
   myresults.0=0
   if arg(1,'O') then return myresults.
@@ -74,7 +60,7 @@ return .false
    output as a string.
    -----------------------------------------------------------------------------
 */
-::routine cmdOutputLine public
+::routine cmdTop public
   parse arg command
   if arg(1,'O') then return ''
   output=cmdOutput(command)
@@ -144,11 +130,4 @@ return .false
   'REFRESH'
   'MSG' message
   return
-
-/* Shorten a full path if it is in the current working directory */
-::routine abbrevPath public
-  parse arg fullpath, currdir
-  if abbrev(fullpath, currdir) then partial='.'substr(fullpath,length(currdir))
-  else                              partial=fullpath
-  return translate(partial, '/', '\')
 

@@ -4,16 +4,46 @@ arg test params
 select
   when test='RING'  then call try_filering 'P'
   when test='WRING' then call print_ring 'sample-open-files-list.txt'
-  when test='PICK'  then call try_pick 'Pick a fish'
+  when test='FIND'     then call try_searchfile 'import '
+  when test='MERGE'   then call try_merge params
+  when test='MSGCMD'   then call try_msgFromCmd params
+  when test='PICK'  then call try_pick 'Pick a fish', params
   when test='PICKF' then call try_pickfrom 'Fish directory'
   when test='PICKMANY' then call try_pickmany 'Pick one or more fish'
-  when test='FIND'     then call try_searchfile 'import '
   when test='PICKFA'   then call try_pickfromfile params
   when test='PICKMO'   then call try_pickManyfromfile params
+  when test='PICKD'   then call try_pickfromDual params
   otherwise
-    call msgBox 'Supported options', 'RING, WRING, PICK, PICKF, PICKMANY, FIND'
+    call msgBox 'Supported options', 'RING, WRING, FIND, MERGE, MSGCMD, PICK, PICKF, PICKMANY, PICKFA, PICKMO, PICKD'
 end
 exit
+
+try_merge: procedure
+  parse arg values
+  tmpl='The ?1 fox jumped over the ?2 ?3'
+  tmplA='The ? fox jumped over the ? ?'
+  mrg=merge(tmpl, values)
+  call msgBox 'Replace values ['values'] into', tmpl '=' mrg
+  value_array=.array~new
+  do w=1 to words(values)
+    value_array~append(word(values,w))
+  end w
+  mrg=mergevalues(tmplA, value_array)
+  call msgBox 'Replace values ['values'] into', tmplA '=' mrg
+  return
+
+try_msgFromCmd: procedure
+  parse arg options
+  'EXTRACT /SCREEN/'
+  if options='' then call xsay 'Please specify a command'
+  else do
+    call msgBoxFromCmd 'My X2 Keys', options
+    /*
+    output.=cmdOutputStem(options)
+    call msgBoxFromStem 'My MsgBox from Cmd', output.
+    */
+  end
+  return
 
 try_filering: procedure
   parse arg options
@@ -41,7 +71,8 @@ try_pickmany: procedure
   fish.2='arctic char'
   fish.3='black nosed dace'
   fish.4='johnny darter'
-  fish.0=4
+  fish.5='rainbow darter'
+  fish.0=5
   items.=pickmany(fish., title)
   do i=1 to items.0
     'INPUT pick no.'i items.i
@@ -49,12 +80,25 @@ try_pickmany: procedure
   return
 
 try_pick: procedure
-  parse arg title
-  fish.1='golden trout'
-  fish.2='arctic char'
-  fish.3='black nosed dace'
-  fish.4='johnny darter'
-  fish.0=4
+  parse arg title, useClipboard
+  if useClipboard=1 then do
+    ADDRESS CMD 'pc|RXQUEUE'
+    ctr=0
+    do while queued()>0
+      parse pull entry
+      if entry='' then iterate
+      ctr=ctr+1
+      fish.ctr=entry
+    end
+    fish.0=ctr
+  end -- use clip board items
+  else do
+    fish.1='golden trout'
+    fish.2='arctic char'
+    fish.3='black nosed dace'
+    fish.4='johnny darter'
+    fish.0=4
+  end
   item=pick(fish., title)
   call xsay 'Your pick: "'item'"'
   return
@@ -66,6 +110,7 @@ try_pickfrom: procedure
   fish['Salvelinus']='arctic char'
   fish['Rhinichthys']='black nosed dace'
   fish['Etheostoma']='johnny darter'
+  fish['Lepomis']='bluegill'
   item=pickfrom(fish, title)
   call xsay 'Your pick: "'item'"'
   return
@@ -86,6 +131,25 @@ try_pickManyfromfile: procedure
     csv=csv item','
   end
   call msgBox 'Your choices from file' fn, '['csv']'
+  return
+
+-- usage: pickfromdual(filestem, title, delim, showLabelsOnly)
+try_pickfromDual: procedure
+  arg sourcefile options
+  if sourcefile='' then do
+    call msgBox 'Please specify parameters as follows:', 'sourcefile [-t title][-d delim][-(s)howlabelsOnly]'
+    return
+  end
+  w=wordpos('-T',options)
+  if w>0 then do; title=word(options,w+1); options=delword(options,w,2); end; else title=''
+  w=wordpos('-D',options)
+  if w>0 then do; delim=word(options,w+1); options=delword(options,w,2); end; else delim=''
+  w=wordpos('-S',options)
+  if w>0 then do; showlabelsOnly=1; options=delword(options,w,1); end; else showlabelsOnly=0
+  if showlabelsOnly=1 then setting='show-labels-only'; else setting='show-labels-AND-returnvalues'
+  choice=pickfromdual(sourcefile, title, delim, showlabelsOnly)
+  -- call msgBox 'Your choice from file' sourcefile, '"'choice'"'
+  'INPUT Your parameters: file='sourcefile 't='title 'd='delim 's='setting '->' choice
   return
 
 try_searchfile: procedure
@@ -159,4 +223,5 @@ try_cmdOut: procedure
   end
   return
 
+::requires 'XPopups.x'
 ::requires 'XRoutines.x'
