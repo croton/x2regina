@@ -65,8 +65,13 @@ insertFn: procedure
     else do
       if tmpl='' then 'KEYIN' choice
       else            'KEYIN' changestr('@', tmpl, choice)
+      if pos('(',choice)>0 then do
+        -- Place cursor right after open parens
+        'LOCATE /(/-'
+        'CURSOR +0 +1'
+      end -- reposition cursor
     end
-  end
+  end -- single choice
   return
 
 /* Choose from values in specified file, alternate method. */

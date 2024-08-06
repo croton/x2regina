@@ -133,23 +133,27 @@ try_pickManyfromfile: procedure
   call msgBox 'Your choices from file' fn, '['csv']'
   return
 
--- usage: pickfromdual(filestem, title, delim, showLabelsOnly)
+-- usage: pickfromdual(filestem, title, returnfield, delim, showReturnval)
 try_pickfromDual: procedure
   arg sourcefile options
+  originaloptions=options
   if sourcefile='' then do
-    call msgBox 'Please specify parameters as follows:', 'sourcefile [-t title][-d delim][-(s)howlabelsOnly]'
+    call msgBox 'Please specify parameters:', 'filename [-t title][-r fieldIndexReturned][-d delim][-(h)ide return value]'
     return
   end
   w=wordpos('-T',options)
   if w>0 then do; title=word(options,w+1); options=delword(options,w,2); end; else title=''
+  w=wordpos('-R',options)
+  if w>0 then do; returnIndex=word(options,w+1); options=delword(options,w,2); end; else returnIndex=2
+  if \datatype(returnIndex,'W') then returnIndex=2
   w=wordpos('-D',options)
   if w>0 then do; delim=word(options,w+1); options=delword(options,w,2); end; else delim=''
-  w=wordpos('-S',options)
-  if w>0 then do; showlabelsOnly=1; options=delword(options,w,1); end; else showlabelsOnly=0
-  if showlabelsOnly=1 then setting='show-labels-only'; else setting='show-labels-AND-returnvalues'
-  choice=pickfromdual(sourcefile, title, delim, showlabelsOnly)
-  -- call msgBox 'Your choice from file' sourcefile, '"'choice'"'
-  'INPUT Your parameters: file='sourcefile 't='title 'd='delim 's='setting '->' choice
+  w=wordpos('-H',options)
+  if w>0 then do; hideReturnval=1; options=delword(options,w,1); end; else hideReturnval=0
+  if hideReturnval=1 then setting='show-display-values-only'; else setting='show-return-values'
+  choice=pickfromdual(sourcefile, title, returnIndex, delim, hideReturnval)
+  'INPUT Call pickfromdual' sourcefile originaloptions '-> "'choice'"'
+  'INPUT file='sourcefile 't='title 'r='returnIndex 'd='delim 's='setting '->' choice
   return
 
 try_searchfile: procedure

@@ -1,7 +1,7 @@
 -- X2 Routines for Popups, ver. 0.1
 ::requires 'XRoutines.x'
 
-::routine msgBox public
+::routine msgBox PUBLIC
   parse arg title, msg
   'EXTRACT /ESCAPE/'
   NL=ESCAPE.1||'N'
@@ -10,7 +10,7 @@
   'MESSAGEBOX' title||NL ruleline||NL||msg
   return result
 
-::routine msgBoxFromStem public
+::routine msgBoxFromStem PUBLIC
   use arg title, textlines.
   'EXTRACT /SCREEN/'
   'EXTRACT /ESCAPE/'
@@ -25,7 +25,7 @@
   call msgBox title, msg
   return
 
-::routine msgBoxFromCmd public
+::routine msgBoxFromCmd PUBLIC
   parse arg title, command
   if command='' then return
   'EXTRACT /SCREEN/'
@@ -38,7 +38,7 @@
    A message box which provides a Yes/No prompt. Returns boolean value.
    -----------------------------------------------------------------------------
 */
-::routine msgYNBox public
+::routine msgYNBox PUBLIC
   parse arg msg, title
   'EXTRACT /ESCAPE/'
   NL=ESCAPE.1||'N'
@@ -55,7 +55,7 @@
   else if abbrev(translate(result), 'Y') then return 1
   return 0
 
-::routine ask public
+::routine ask PUBLIC
 parse arg promptTxt
 'PROMPT' promptTxt
 if rc=0 then
@@ -63,7 +63,7 @@ if rc=0 then
 return .nil
 
 /* Search the current file for a search string and return results as stem */
-::routine searchfile public
+::routine searchfile PUBLIC
   parse arg searchString
   'EXTRACT /SCREEN/'
   'EXTRACT /WRAP/'
@@ -88,14 +88,14 @@ return .nil
   return found.
 
 /* Prompt for single choice among items in a stem. */
-::routine pick public
+::routine pick PUBLIC
   use arg srclist., title
   if title='' then title='Make a selection'
   'EXTRACT /SCREEN/'
   return getDialogChoice(srclist., SCREEN.1, autowidthStem(srclist., SCREEN.2), title)
 
 /* Prompt for multiple choices among items in a stem. */
-::routine pickmany public
+::routine pickmany PUBLIC
   use arg srclist., title
   if title='' then title='Make a selection'
   'EXTRACT /ESCAPE/'
@@ -140,20 +140,20 @@ return .nil
   return picks.
 
 /* Prompt for multiple choices among items in an array. */
-::routine pickManyFromArray public
+::routine pickManyFromArray PUBLIC
   use arg srclist, title
   'EXTRACT /SCREEN/'
   return getChoices(srclist, SCREEN.1, autowidth(srclist, SCREEN.2), title)
 
 /* Prompt for single choice among items in an array. */
-::routine pickFromArray public
+::routine pickFromArray PUBLIC
   use arg srclist, title, resultWordIndex
   if title='' then title='Make a selection'
   'EXTRACT /SCREEN/'
   return getChoiceByIndex(srclist, SCREEN.1, autowidthSlim(srclist, SCREEN.2), title, resultWordIndex)
 
 /* Prompt for single choice among items in a map or directory. */
-::routine pickfrom public
+::routine pickfrom PUBLIC
   use arg map, title
   if title='' then title='Make a selection'
   'EXTRACT /SCREEN/'
@@ -165,48 +165,19 @@ return .nil
   if symbol('RESULT')='LIT' then return '' -- Return blank string if user cancels choice
   return result
 
-/* Pick from a dialog whose source items are each a return value and a display item. */
-::routine pickfromDual public
-  parse arg filestem, title, delim, showLabelsOnly
+/* Pick from a dialog whose return value and display value are NOT the same. */
+::routine pickfromDual PUBLIC
+  parse arg filestem, title, returnfield, delim, hideReturnval
   filename=getFunctionFile(filestem)
-  if \SysFileExists(filename) then return 'NOFILE-'filename
+  if filename='' then return 'NOFILE-'filestem
   ifile=.Stream~new(filename)
-  map=.directory~new
-  if delim='' then do while ifile~lines>0
-    data=ifile~linein
-    parse var data displayVal returnVal
-    if showLabelsOnly=1 then map~put(displayVal, returnVal)
-    else                     map~put(data, returnVal)
-  end -- No delimiter specified
-  else do while ifile~lines>0
-    data=ifile~linein
-    parse var data displayVal (delim) returnVal
-    if showLabelsOnly=1 then map~put(displayVal, returnVal)
-    else                     map~put(displayVal returnVal, returnVal)
-  end -- Use delimiter to parse each entry
+  lines=ifile~makearray~sort
   ifile~close
   if title='' then title=filestem
-  return pickfrom(map, title)
-
-::routine pickfromDualSort public
-  parse arg filestem, title, delim
-  'EXTRACT /SCREEN/'
-  if delim='' then delim=';'
-  if title='' then title=filestem
-  filename=getFunctionFile(filestem)
-  if \SysFileExists(filename) then return 'NOFILE-'filename
-  ifile=.Stream~new(filename)
-  arr=ifile~makearray~sort
-  ifile~close
-  maxval=30
-  loop item over arr
-    parse var item displayvalue (delim) .
-    maxval=max(maxval, length(displayvalue))
-  end
-  return getChoice(arr, SCREEN.1, maxval, title, delim)
+  return getChoice(lines, title, returnfield, delim, hideReturnval)
 
 /* Prompt for single choice among items in a file listing. */
-::routine pickFile public
+::routine pickFile PUBLIC
   use arg srclist., title, fileListOption
   if title='' then title='Pick a file'
   'EXTRACT /SCREEN/'
@@ -216,7 +187,7 @@ return .nil
   return getDialogChoice(srclist., SCREEN.1, winwidth, title, displaytext.)
 
 /* Prompt for single choice among lines in a given file. */
-::routine pickFromFile public
+::routine pickFromFile PUBLIC
   parse arg filename, title
   if \SysFileExists(filename) then return ''
   ifile=.Stream~new(filename)
@@ -225,7 +196,7 @@ return .nil
   return pickFromArray(contents, title)
 
 /* Prompt for multiple choices among lines in a given file. */
-::routine pickManyFromFile public
+::routine pickManyFromFile PUBLIC
   parse arg filename, title
   if \SysFileExists(filename) then return ''
   ifile=.Stream~new(filename)
@@ -234,7 +205,7 @@ return .nil
   return pickManyFromArray(contents, title)
 
 /* Show open files in a dialog, displaying [F]ilename only (default) or [P]artial path */
-::routine filering public
+::routine filering PUBLIC
   parse arg title, option
   'EXTRACT /RING/'
   return pickFile(RING., title, option)
@@ -277,13 +248,40 @@ return .nil
   return result
 
 ::routine getChoice PRIVATE
-  use arg returnValues, maxrows, winWidth, title, delim
-  totalItems=returnValues~items
-  'WINDOW' min(maxrows%2, totalItems) winWidth totalItems title
-  do i=1 to totalItems
-    parse value returnValues[i] with displayVal (delim) returnVal
-    'WINLINE' displayVal '\n SETRESULT' returnVal
-  end i
+  use arg listitems, title, returnfield, delim, hideReturnval
+  'EXTRACT /SCREEN/'
+  totalItems=listitems~items
+  halfscreen=(SCREEN.2)%2
+  maxitemlen=datasourceMaxItemLength(listitems, returnfield, delim, hideReturnval)
+  if maxitemlen<halfscreen then winWidth=maxitemlen+2
+  else                          winWidth=min(maxitemlen, halfscreen-2)
+  'WINDOW' min((SCREEN.1)%2, totalItems) winWidth totalItems title
+  if returnfield=1 then do
+    -- The return value is the first word or delimited string
+    if delim='' then do i=1 to totalItems
+      parse value listitems[i] with returnVal displayVal
+      if hideReturnval=1 then 'WINLINE' displayVal '\n SETRESULT' returnVal
+      else                    'WINLINE' listitems[i] '\n SETRESULT' returnVal
+    end i
+    else do i=1 to totalItems
+      parse value listitems[i] with returnVal (delim) displayVal
+      if hideReturnval=1 then 'WINLINE' displayVal '\n SETRESULT' returnVal
+      else                    'WINLINE' listitems[i] '\n SETRESULT' returnVal
+    end i
+  end -- return values come first
+  else do
+    -- The return value is the second (and subsequent) word(s) or delimited string
+    if delim='' then do i=1 to totalItems
+      parse value listitems[i] with displayVal returnVal
+      if hideReturnval=1 then 'WINLINE' displayVal '\n SETRESULT' returnVal
+      else                    'WINLINE' listitems[i] '\n SETRESULT' returnVal
+    end i
+    else do i=1 to totalItems
+      parse value listitems[i] with displayVal (delim) returnVal
+      if hideReturnval=1 then 'WINLINE' displayVal '\n SETRESULT' returnVal
+      else                    'WINLINE' displayVal returnVal '\n SETRESULT' returnVal
+    end i
+  end -- display values come first
   'WINWAIT'
   if symbol('RESULT')='LIT' then return ''
   return result
@@ -346,6 +344,36 @@ return .nil
     iter~next
   end
   return match
+
+::routine datasourceMaxItemLength PUBLIC
+  use arg datasource, returnfield, delim, hideReturnval
+  maxval=30
+  if hideReturnval=1 then do
+    if delim='' then do
+      if returnfield=1 then loop item over datasource
+        parse var item . displayvalue
+        maxval=max(length(displayvalue), maxval)
+      end
+      else loop item over datasource
+        parse var item displayvalue .
+        maxval=max(length(displayvalue), maxval)
+      end
+    end -- no delimiter specified
+    else do
+      if returnfield=1 then loop item over datasource
+        parse var item . (delim) displayvalue
+        maxval=max(length(displayvalue), maxval)
+      end
+      else loop item over datasource
+        parse var item displayvalue (delim) .
+        maxval=max(length(displayvalue), maxval)
+      end
+    end -- use a delimiter
+  end -- show only display value
+  else loop item over datasource
+    maxval=max(length(item), maxval)
+  end
+  return maxval
 
 ::routine autowidthStem PRIVATE
   use arg datasource., screenwidth
@@ -410,14 +438,13 @@ return .nil
   else                              partial=fullpath
   return translate(partial, '/', '\')
 
-/* Get full path of a file used as datasource for a dialog.
-   As convention, dialog datasource files have extension 'XFN'.
-*/
+/* Filename resolution helper function. */
 ::routine getFunctionFile PUBLIC
   parse arg filestem
-  fnfile=filestem'.xfn'
+  if pos('.',filestem)=0 then fnfile=filestem'.xfn'
+  else                        fnfile=filestem
   x2home=value('X2HOME',,'ENVIRONMENT')
-  filepaths='.\'fnfile x2home'\lists\'fnfile '.\'filestem
+  filepaths='.\'fnfile x2home'\lists\'fnfile fnfile
   do w=1 to words(filepaths)
     fn=word(filepaths,w)
     if SysFileExists(fn) then return fn
