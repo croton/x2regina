@@ -1,7 +1,9 @@
 /* ------------------ jQuery ------------------ */
-#include "es6.prof"
 extension      = JS
-base_extension = JS
+
+key a-F1 = MACRO fnpick jdom document.@
+key a-F2 = MACRO fnpick jquery
+key a-- = MACRO instr /$(~)/
 
 expand_keyword = ref
 expand_replace = '<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>'
@@ -19,4 +21,8 @@ expand_replace = '$(\c)'
 
 expand_keyword = sel2 \1
 expand_replace = "$('\1').\c();"
+
+expand_keyword = jclick \1
+expand_replace = "$(\c\1).click(function() {"
+expand_replace = '});'
 

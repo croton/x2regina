@@ -14,8 +14,8 @@ key a-F11 = MACRO instr /Array.isArray(~)/
 key a-0 = MSG [Node] 1=Prof 2=ProfP 3=Xpdr 4=XpdrP 5=Key 6=WTry 7=StrVar 8=Env 9=Arg
 key a-1 = EDIT C:\Users\celes\cjp\x2\nodejs.prof
 key a-2 = EDIT C:\Users\celes\cjp\x2\es6.prof
-key a-3 = MACRO chooser --c xs nodejs --t Expanders
-key a-4 = MACRO chooser --c xs es6 --t Expander
+key a-3 = MACRO chooser --c xs nodejs|sort --t Expanders
+key a-4 = MACRO chooser --c xs es6|sort --t Expander
 key a-5 = MACRO chooser --c xk es6 --t JS Keys
 key a-6 = MACRO wrapblock /try {/} catch (err) { throw err; }/i
 key a-7 = MACRO wrapmark /${/}/

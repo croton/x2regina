@@ -7,63 +7,55 @@ comment_prefix = "<!-- "
 comment_suffix = " -->"
 
 /* ALT keys */
-a-PFLine = "1=Tag 2=Att 3=Class 4=Esp 5=Aria 6=Icons 7=TwQk 8=Tw 9=Org 10=FdAtt 11=Style 12="
+a-PFLine = "1=Tag 2=Att 3=Class 4=Start 5=FontFam 6=Org 7=Esp 8=Aria 9=Merge 10=Tw 11=TwState 12=TwColor"
 key a-F1 = CMDTEXT wraptag p
 key a-F2 = MACRO instr /~=""/
 key a-F3 = MACRO instr /class="~"/
-key a-F4 = MACRO pickdual spanishchars
-key a-F5 = MACRO fnpick aria aria-@=""
-key a-F6 = MACRO fnpick fa-fonts <i class="fa fa-@"></i>
-key a-F7 = MACRO qp black white gray green blue red yellow indigo purple pink transparent current --p bg-@
-key a-F8 = MACRO chooser black white gray green blue red yellow indigo purple pink transparent current --t TWColors --p bg-@
-key a-F9 = MACRO ht picker
-key a-F10 = CMDTEXT all /id=/
-key a-F11 = MACRO instr /style="~"/
-key a-F12 = LOCATE |>|
+key a-F4 = CMDTEXT cmdin merge %cjp%\snips\html5.tmpl
+key a-F5 = MACRO pickdual fontpairs Font Pairs -d ; -h
+key a-F6 = MACRO ht picker
+key a-F7 = MACRO pickdual spanishchars -d ? -h
+key a-F8 = MACRO pick aria aria-@=""
+key a-F9 = CMDTEXT cmdin merge
+key a-F10 = MACRO twfn
+key a-F11 = MACRO qp active disabled focus hover visited sm md lg 2xl --p @:
+key a-F12 = MACRO twcolor
 
-key a-0 = MSG [HTML] 1=Prof 2=Xp 3=XpList 4=XpTag 5=Keys 6=Esc 7=NxOpen 8=NxClos 9=Esp
+key a-0 = MSG [HTML] 1=Prof 2=Xp 3=XpList 4=XpTag 5=Keys 6=Esc 7=NxOpen 8=NxClos 9=Ring
 key a-1 = EDIT C:\users\celes\cjp\x2\html.prof
-key a-2 = MACRO chooser --c xs html --t HTML-XP
-key a-3 = MACRO cmdout xpdr.html xs html tags
+key a-2 = MACRO chooser --c xs html|sort --t HTML-XP
+key a-3 = MACRO cmdout xpdr.html xs html|sort tags
 key a-4 = MACRO chooser --c xs tags --t Tags-XP
 key a-5 = MACRO msgFromCmd --t HTML Keys --c xk html
 key a-6 = MACRO instr /&~;/
 key a-7 = LOCATE |<|
 key a-8 = LOCATE |>|
-key a-9 = MACRO pickdual spanishchars
+key a-9 = MACRO ring P PATH
 
-key AltGr-0 = MSG 1=FdCss 2=FdJs 3=FdHd 4=FdBody 5=New 6=Page 7=Merge
+key AltGr-0 = MSG 1=FdCss 2=FdJs 3=FdHd 4=FdBody 5=FA-icons 6=TagStruc
 key AltGr-1 = LOCATE |<style|
 key AltGr-2 = LOCATE |<script|
 key AltGr-3 = LOCATE |</head>|
 key AltGr-4 = LOCATE |<body|
-key AltGr-5 = CMDTEXT cmdin merge %cjp%\snips\html5.tmpl
-key AltGr-6 = CMDTEXT cmdin merge %cjp%\snips\html5page.tmpl
-key AltGr-7 = CMDTEXT cmdin merge
+key AltGr-5 = pick fa-fonts <i class="fa fa-@"></i>
+key AltGr-6 = CMDTEXT cmdin tg
+key AltGr-7 = MSG AltGr-7
+key AltGr-8 = MSG AltGr-8
+key AltGr-9 = MSG AltGr-9
 
 key a-` = MSG Available keys=a-backtick a-semicolon, a-quote
 key a-- = MACRO wrapmark /<!-- / -->/
 key a-= = MACRO wrapblock /<!--/-->/
-key a-; = MACRO showkeys CL
-key a-' = MACRO wraptag div
+key a-; = MACRO xkeys
+key a-' = MACRO xkeys AL
 key a-\ = MACRO wraptag div
 key a-/ = MACRO wrapit <
 
 expand_keyword = --
 expand_replace = "\CP\c\CS"
 
-expand_keyword = new
-expand_replace = '<!doctype html><html lang="en">'
-expand_replace = '<head><meta charset="utf-8"><title>\c</title>'
-expand_replace = '  <meta name="viewport" content="width=device-width, initial-scale=1.0">'
-expand_replace = '</head><body>'
-expand_replace = '</body></html>'
-
 expand_keyword = meta \1
 expand_replace = '<meta name="\1" content="\c">'
-
-expand_keyword = vport
-expand_replace = '<meta name="viewport" content="width=device-width, initial-scale=1.0">'
 
 expand_keyword = css
 expand_replace = '<style type="text/css">'
@@ -88,8 +80,8 @@ expand_replace = "</script>"
 expand_keyword = jsr \1
 expand_replace = '<script src="\1.js"></script>'
 
-expand_keyword = div
-expand_replace = '<div class="\c">'
+expand_keyword = .\1
+expand_replace = '<div class="\1\c">'
 expand_replace = '</div>'
 
 expand_keyword = list \1

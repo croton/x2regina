@@ -8,8 +8,8 @@ comment_formatting = NONE;
 margins            = 1 200 20 80
 bookmarks          = 30
 
-a-PFLine = "1=? 2=? 3=Fn 4=Fn> 5=Strfy 6=StrT 7=TypeOf 8=Copy 9=ObjKey 10=CmtQ 11=WrapTry 12=FnDefs"
-key a-F1 = MSG Alt-F1
+a-PFLine = "1=? 2=PromFn 3=Fn 4=Fn> 5=Strfy 6=StrT 7=TypeOf 8=Copy 9=ObjKey 10=CmtQ 11=WrapTry 12=FnDefs"
+key a-F1 = MSG Available keys: Alt-F1
 key a-F2 = MACRO chooser then catch all resolve reject --t Promise Fns --p .@()
 key a-F3 = MACRO instr /function() {~}/
 key a-F4 = MACRO instr /() => {~}/
@@ -24,7 +24,7 @@ key a-F12 = ALL / function/
 
 key a-0 = MSG [ES6] 1=Prof 2=Xp 3=Key
 key a-1 = EDIT C:\Users\celes\cjp\x2\es6.prof
-key a-2 = MACRO chooser --c xs es6 --t Expander
+key a-2 = MACRO chooser --c xs es6|sort --t Expander
 key a-3 = MACRO chooser --c xk es6 --t JS Keys
 
 key a-` = MACRO wrapit `

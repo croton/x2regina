@@ -10,7 +10,7 @@ key AltGr-5 = keyin ¨
 key AltGr-6 = keyin ­
 key AltGr-7 = keyin &Aacute;
 key AltGr-8 = keyin &aacute;
-key AltGr-9 = MACRO pickdual spanishchars
+key AltGr-9 = MACRO pickdual spanishchars -d ?
 
 key AltGr-e = keyin ‚
 key AltGr-o = keyin ¢

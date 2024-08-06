@@ -8,8 +8,8 @@ margins        = 1 200 1 90
 
 key a-0 = MSG [MD] 1=Prof 2=Xpdr 3=XpList 4=Code 5=Italic
 key a-1 = EDIT C:\Users\celes\cjp\x2\md.prof
-key a-2 = MACRO chooser --c xs md --t Markdown
-key a-3 = MACRO cmdout xpdr.md xs md
+key a-2 = MACRO chooser --c xs md|sort --t Markdown
+key a-3 = MACRO cmdout xpdr.md xs md|sort
 key a-4 = MACRO instr /`~`/
 key a-5 = MACRO instr /_~_/
 key a-` = MACRO wrapit `

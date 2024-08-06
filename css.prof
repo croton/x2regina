@@ -3,27 +3,27 @@ extension      = CSS,SCSS
 code_type      = CSS
 
 a-PFLine = "1=Attr 2=Attr* 3=Psdo 4=Color 5=Font 6=Esc 7=FlexHelp 8=Box1 9=Box 10=Disp 11=? 12=VarList"
-key a-F1 = MACRO fnpick css @:
-key a-F2 = MACRO fnpick css @: -m
-key a-F3 = MACRO fnpick csspseudo :@
+key a-F1 = MACRO pick css @:
+key a-F2 = MACRO pick css @: -m
+key a-F3 = MACRO pick csspseudo :@
 key a-F4 = MACRO csscolor
-key a-F5 = MACRO fnpick cssfonts font-family: @;
+key a-F5 = MACRO pick cssfonts font-family: @;
 key a-F6 = MACRO instr /&~;/
 key a-F7 = MACRO cssflex ?
 key a-F8 = MACRO chooser width height top right bottom left margin border padding --t Boxes --p @: 0;
 key a-F9 = MACRO chooser width height top right bottom left margin border padding --t Boxes --multi --p @: 0;
 key a-F10 = MACRO chooser block flex grid inline inline-block none contents table --t Display --p display: @;
-key a-F11 = MSG CSS a-F11
-key a-F12 = MACRO fnpickparse myvars.txt color: var(@); -d :
+key a-F11 = MSG a-F11
+key a-F12 = MACRO pickdual stylevars var(@); -d : -r 1
 
 key a-0 = MSG [CSS] 1=Prof 2=Xpdr 3=XpList 4=LkUp 5=Flex 6=AVAILABLE 7=Xfrm 8=Cmt 9=Sheet
 key a-1 = EDIT C:\users\celes\cjp\x2\css.prof
-key a-2 = MACRO chooser --c xs css --t Expanders
+key a-2 = MACRO chooser --c xs css|sort --t Expanders
 key a-3 = MACRO cmdout xpdr.css xs css
 key a-4 = MACRO cssattr
 key a-5 = MACRO cssflex
 key a-6 = MESSAGEBOX Available keys= a-F11, a-backslash, a-slash, a-6
-key a-7 = MACRO fnpickparse csstransform transform: @() -d (
+key a-7 = MACRO pick csstransform transform: @;
 key a-8 = MACRO cmt CR
 key a-9 = CMDTEXT cmdin merge %cjp%\snips\css.tmpl
 
@@ -34,6 +34,7 @@ key AltGr-3 = MACRO chooser order flex-grow flex-shrink flex-basis flex align-se
 key AltGr-4 = MACRO cssflex ?
 key AltGr-5 = MACRO instr /rgba(~100, 100, 100, .5)/
 key AltGr-6 = MACRO chooser mistyrose tomato darkorange firebrick burlywood thistle royalblue forestgreen --t FavColors
+key AltGr-7 = MACRO pickdual ?
 
 key a-` = MACRO wrapit `
 key a-- = MACRO instr /var(--~);/
