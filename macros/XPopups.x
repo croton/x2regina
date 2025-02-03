@@ -29,7 +29,7 @@
   parse arg title, command
   if command='' then return
   'EXTRACT /SCREEN/'
-  output.=cmdOutputStem(command)
+  output.=cmdOutStem(command)
   if output.0>SCREEN.1 then 'MACRO cmdout msgBoxFromCmd.txt' command
   else call msgBoxFromStem title, output.
   return
@@ -58,8 +58,7 @@
 ::routine ask PUBLIC
 parse arg promptTxt
 'PROMPT' promptTxt
-if rc=0 then
-  if result<>'' then return result
+if (rc=0 & result<>'') then return result
 return .nil
 
 /* Search the current file for a search string and return results as stem */
@@ -145,7 +144,11 @@ return .nil
   'EXTRACT /SCREEN/'
   return getChoices(srclist, SCREEN.1, autowidth(srclist, SCREEN.2), title)
 
-/* Prompt for single choice among items in an array. */
+/* Prompt for single choice among items in an array, display <> return value. */
+::routine pickFromArrayDual PUBLIC
+  use arg srclist, title, returnfield, delim, hideReturnval
+  return getChoice(srclist, title, returnfield, delim, hideReturnval)
+
 ::routine pickFromArray PUBLIC
   use arg srclist, title, resultWordIndex
   if title='' then title='Make a selection'
@@ -165,7 +168,7 @@ return .nil
   if symbol('RESULT')='LIT' then return '' -- Return blank string if user cancels choice
   return result
 
-/* Pick from a dialog whose return value and display value are NOT the same. */
+/* Pick from a file whose return value and display value are NOT the same. */
 ::routine pickfromDual PUBLIC
   parse arg filestem, title, returnfield, delim, hideReturnval
   filename=getFunctionFile(filestem)
@@ -450,3 +453,11 @@ return .nil
     if SysFileExists(fn) then return fn
   end w
   return ''
+
+::routine merge PUBLIC
+  parse arg selection, pattern, delim
+  if delim='' then placeholder='@'
+  else             placeholder=strip(delim)
+  if pattern='' then return selection
+  return changestr(placeholder, strip(pattern), selection)
+

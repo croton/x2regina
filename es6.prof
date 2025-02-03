@@ -34,6 +34,8 @@ key a-; = MACRO instr /await ~/
 key a-' = MACRO wrapblock /{/}/
 key a-\ = MACRO wrapblock /new Promise((resolve, reject) => {/});/i
 
+key AltGr-1 = MESSAGEBOX `=backticks -=attrib eq=strVar ;=await '=wrapblock \=promise /=?
+
 expand_keyword = say
 expand_replace = "console.log(\c);"
 
@@ -107,7 +109,7 @@ expand_replace = '\1.filter(\c => );'
 expand_keyword = \1 -red
 expand_replace = '\1.reduce((orig, curr) => {'
 expand_replace = '  return orig;'
-expand_replace = '  }, \c);'
+expand_replace = '}, \c);'
 
 expand_keyword = do \1
 expand_replace = "for (let i=0; i<\1; i++) {\c"

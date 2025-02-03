@@ -7,41 +7,41 @@ comment_prefix = "<!-- "
 comment_suffix = " -->"
 
 /* ALT keys */
-a-PFLine = "1=Tag 2=Att 3=Class 4=Start 5=FontFam 6=Org 7=Esp 8=Aria 9=Merge 10=Tw 11=TwState 12=TwColor"
+a-PFLine = "1=Tag 2=Att 3=Class 4=PickClass 5=Start 6=FontFam 7=Org 8=Aria 9=Merge 10=Tw 11=TwState 12=TwColor"
 key a-F1 = CMDTEXT wraptag p
 key a-F2 = MACRO instr /~=""/
 key a-F3 = MACRO instr /class="~"/
-key a-F4 = CMDTEXT cmdin merge %cjp%\snips\html5.tmpl
-key a-F5 = MACRO pickdual fontpairs Font Pairs -d ; -h
-key a-F6 = MACRO ht picker
-key a-F7 = MACRO pickdual spanishchars -d ? -h
+key a-F4 = CMDTEXT csspop
+key a-F5 = CMDTEXT cmdin merge %cjp%\snips\html5.tmpl
+key a-F6 = MACRO pickdual fontpairs -d ; -h
+key a-F7 = MACRO ht picker
 key a-F8 = MACRO pick aria aria-@=""
 key a-F9 = CMDTEXT cmdin merge
 key a-F10 = MACRO twfn
 key a-F11 = MACRO qp active disabled focus hover visited sm md lg 2xl --p @:
 key a-F12 = MACRO twcolor
 
-key a-0 = MSG [HTML] 1=Prof 2=Xp 3=XpList 4=XpTag 5=Keys 6=Esc 7=NxOpen 8=NxClos 9=Ring
+key a-0 = MSG [HTML] 1=Prof 2=Xp 3=XpList 4=XpTag 5=Keys 6=Esc 7=ClassInFile 8=? 9=Ring
 key a-1 = EDIT C:\users\celes\cjp\x2\html.prof
 key a-2 = MACRO chooser --c xs html|sort --t HTML-XP
 key a-3 = MACRO cmdout xpdr.html xs html|sort tags
 key a-4 = MACRO chooser --c xs tags --t Tags-XP
 key a-5 = MACRO msgFromCmd --t HTML Keys --c xk html
 key a-6 = MACRO instr /&~;/
-key a-7 = LOCATE |<|
-key a-8 = LOCATE |>|
+key a-7 = MACRO infile B /class="/"/Css Classes
+key a-8 = MACRO csspop 1 dev\globalcss
 key a-9 = MACRO ring P PATH
 
-key AltGr-0 = MSG 1=FdCss 2=FdJs 3=FdHd 4=FdBody 5=FA-icons 6=TagStruc
-key AltGr-1 = LOCATE |<style|
+key AltGr-0 = MSG 1=KeyHelp 2=FdJs 3=FdHd 4=FdBody 5=FA-icons 6=TagStruc 7=Esp 8=NxOpen 9=NxClos
+key AltGr-1 = MESSAGEBOX `=? -=markComment eq=blockComment ;=? '=? \=wrapDiv /=wrapBrackets
 key AltGr-2 = LOCATE |<script|
 key AltGr-3 = LOCATE |</head>|
 key AltGr-4 = LOCATE |<body|
 key AltGr-5 = pick fa-fonts <i class="fa fa-@"></i>
 key AltGr-6 = CMDTEXT cmdin tg
-key AltGr-7 = MSG AltGr-7
-key AltGr-8 = MSG AltGr-8
-key AltGr-9 = MSG AltGr-9
+key AltGr-7 = MACRO pickdual spanishchars -d ? -h
+key AltGr-8 = LOCATE |<|
+key AltGr-9 = LOCATE |>|
 
 key a-` = MSG Available keys=a-backtick a-semicolon, a-quote
 key a-- = MACRO wrapmark /<!-- / -->/

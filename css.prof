@@ -2,47 +2,47 @@
 extension      = CSS,SCSS
 code_type      = CSS
 
-a-PFLine = "1=Attr 2=Attr* 3=Psdo 4=Color 5=Font 6=Esc 7=FlexHelp 8=Box1 9=Box 10=Disp 11=? 12=VarList"
+a-PFLine = "1=Attr 2=Attr* 3=PsClass 4=PsElem 5=Color 6=Font 7=FontNames 8=Box 9=Flex 10=Disp 11=? 12=VarList"
 key a-F1 = MACRO pick css @:
 key a-F2 = MACRO pick css @: -m
 key a-F3 = MACRO pick csspseudo :@
-key a-F4 = MACRO csscolor
-key a-F5 = MACRO pick cssfonts font-family: @;
-key a-F6 = MACRO instr /&~;/
-key a-F7 = MACRO cssflex ?
-key a-F8 = MACRO chooser width height top right bottom left margin border padding --t Boxes --p @: 0;
-key a-F9 = MACRO chooser width height top right bottom left margin border padding --t Boxes --multi --p @: 0;
+key a-F4 = MACRO chooser before after first-line first-letter marker --t Pseudo-elements --p ::@
+key a-F5 = MACRO csscolor
+key a-F6 = MACRO pick cssfonts font-family: @;
+key a-F7 = MACRO pick fonts
+key a-F8 = MACRO chooser width height top right bottom left margin border padding --t Boxes --multi --p @: 0;
+key a-F9 = MACRO cssflex
 key a-F10 = MACRO chooser block flex grid inline inline-block none contents table --t Display --p display: @;
-key a-F11 = MSG a-F11
-key a-F12 = MACRO pickdual stylevars var(@); -d : -r 1
+key a-F11 = MACRO infile s /--/: 1 var(@);/CSS Var
+key a-F12 = MACRO pickdual stylevar var(@); -d : -r 1
 
-key a-0 = MSG [CSS] 1=Prof 2=Xpdr 3=XpList 4=LkUp 5=Flex 6=AVAILABLE 7=Xfrm 8=Cmt 9=Sheet
+key a-0 = MSG [CSS] 1=Prof 2=Xpdr 3=XpList 4=Cmt 5=LkUp 6=Xfrm 7=Brkpoints 8=? 9=Sheet
 key a-1 = EDIT C:\users\celes\cjp\x2\css.prof
 key a-2 = MACRO chooser --c xs css|sort --t Expanders
 key a-3 = MACRO cmdout xpdr.css xs css
-key a-4 = MACRO cssattr
-key a-5 = MACRO cssflex
-key a-6 = MESSAGEBOX Available keys= a-F11, a-backslash, a-slash, a-6
-key a-7 = MACRO pick csstransform transform: @;
-key a-8 = MACRO cmt CR
+key a-4 = MACRO cmt CR
+key a-5 = MACRO cssattr
+key a-6 = MACRO pick csstransform transform: @;
+key a-7 = MACRO chooser 600 900 1200 1500 --t Breakpoints --p @media(min-width: #px) { } --d #
+key a-8 = MSG Alt-8
 key a-9 = CMDTEXT cmdin merge %cjp%\snips\css.tmpl
 
-key AltGr-0 = MSG CtlAlt-1=CssKeys 2=FlexParent 3=FlexChild 4=FlexHelp 5=Rgba 6=FavColors
-key AltGr-1 = MACRO msgFromCmd --t CSS Keys --c xk css
+key AltGr-0 = MSG CtlAlt-1=keyHelp 2=FlexParent 3=FlexChild 4=FlexHelp 5=pickerHelp 6=FavColors 7=Available
+key AltGr-1 = MESSAGEBOX `=escSeq -=var() eq=calc ;=rgba '=bgOptions \=shadow /=?
 key AltGr-2 = MACRO chooser flex-direction flex-wrap flex-flow justify-content align-items align-content --t FlexParent
 key AltGr-3 = MACRO chooser order flex-grow flex-shrink flex-basis flex align-self --t FlexChild
 key AltGr-4 = MACRO cssflex ?
-key AltGr-5 = MACRO instr /rgba(~100, 100, 100, .5)/
-key AltGr-6 = MACRO chooser mistyrose tomato darkorange firebrick burlywood thistle royalblue forestgreen --t FavColors
-key AltGr-7 = MACRO pickdual ?
+key AltGr-5 = MACRO pickdual ?
+key AltGr-6 = MACRO chooser mistyrose tomato darkorange firebrick goldenrod burlywood thistle royalblue yellowgreen --t FavColors
+key AltGr-7 = MESSAGEBOX Available keys= a-8, a-slash
 
-key a-` = MACRO wrapit `
+key a-` = MACRO instr /&~;/
 key a-- = MACRO instr /var(--~);/
-key a-= = MACRO instr /="~"/
-key a-; = MACRO instr /rgba(~100, 100, 100, .5)/
-key a-' = MACRO chooser color image position size --t Background --p background-@:
-key a-\ = MSG CSS Alt-backslash
-key a-/ = MSG CSS Alt-slash
+key a-= = MACRO instr /calc(~)/
+key a-; = MACRO instr /rgba(~0,0,0,0.5)/
+key a-' = MACRO chooser color image position size blend-mode --t Background --p background-@:
+key a-\ = MACRO prompter shadow: x y [blur-radius] [spread-radius] [color] -p box-shadow: @;
+key a-/ = MSG a-slash free
 
 synonym startup = MACRO cssinit START
 synonym exit    = MACRO cssinit END
@@ -54,6 +54,9 @@ expand_keyword = "-"
 expand_replace = '\c {'
 expand_replace = '}'
 
+expand_keyword = "cls"
+expand_replace = '[class|="\c"] {'
+
 expand_keyword = \1 {
 expand_replace = '\1 {'
 expand_replace = '  \c'
@@ -63,13 +66,8 @@ expand_keyword = boxer
 expand_replace =  '*, *::before, *::after { box-sizing: border-box; }'
 
 expand_keyword = media
-expand_replace = '@media(min-width:\cpx) {'
+expand_replace = '@media(min-width:\c) {'
 expand_replace = '}'
-
-expand_keyword = mediax
-expand_replace = '@media(min-width:600px) {\c}'
-expand_replace = '@media(min-width:900px) { }'
-expand_replace = '@media(min-width:1200px) { }'
 
 expand_keyword = bor
 expand_replace = 'border: 1px dashed \ctomato;'
@@ -100,8 +98,7 @@ expand_keyword = pr
 expand_replace = 'position: \crelative;'
 
 expand_keyword = hover \1
-expand_replace = '\1:hover,'
-expand_replace = '\1:focus { opacity: .75; }'
+expand_replace = '\1:hover, \1:focus { opacity: .75; }'
 expand_replace = '\1:is(:hover, :focus) { opacity: .75; }'
 
 expand_keyword = bg
@@ -112,27 +109,18 @@ expand_replace = 'color: \c'
 
 expand_keyword = bgi \1
 expand_replace = 'background-image: url("\1")\c;'
-expand_replace = "/* background: $color-primary url('\1') no-repeat \c100% center; */"
-expand_replace = '/* background-size: auto 80%; */'
+expand_replace = 'background-size: cover;'
 
 expand_keyword = bgig \1
 expand_replace = 'background-image: linear-gradient(\1, \c);'
 
-expand_keyword = bkgd
-expand_replace = 'background: \cbg-color bg-image position/bg-size bg-repeat bg-origin bg-clip bg-attachment initial|inherit;'
-
-expand_keyword = rgba \1
-expand_replace = 'rgba(\1,\1,\1,0.\c);'
-
 expand_keyword = shadow
 expand_replace = 'box-shadow: 5px 5px 5px \c;'
 expand_replace = 'box-shadow: x y [blur-radius] [spread-radius] [color];'
-expand_replace = 'box-shadow: [inset] color x y;'
 
 expand_keyword = box \1
-expand_replace = 'width: \1px;'
-expand_replace = 'height: \1px;'
-expand_replace = 'border\c'
+expand_replace = 'width: \1;'
+expand_replace = 'height: \1;'
 
 expand_keyword = ff
 expand_replace = 'font-family: \cserif sans-serif cursive fantasy monospace ;'
@@ -140,6 +128,12 @@ expand_replace = 'font-family: \cserif sans-serif cursive fantasy monospace ;'
 expand_keyword = fo
 expand_replace = 'font-size: \c1em;'
 expand_replace = 'line-height: 1;'
+
+expand_keyword = bef \1
+expand_replace = '\1::before {'
+expand_replace = "  content: '';"
+expand_replace = '  \c'
+expand_replace = '}'
 
 expand_keyword = \1 -imp
 expand_replace = '\1 !important;'

@@ -1,13 +1,26 @@
 /* ring -- Common tasks related to files in the ring. */
 'EXTRACT /RING/'
 arg cmd options
+if cmd='?' then do
+  'MSG ring (p)ick [F|P] | p(r)int [logfile] | (s)tatus  | Edit Changed'
+  exit
+end
+
 select
-  when cmd='?' then 'MSG ring (S)tatus | (P)rint-file-list | Edit Changed'
-  when cmd='P' then call printRing options
+  when cmd='P' then call pickFromRing options
+  when cmd='R' then call printRing options
   when cmd='S' then call showChangeStatus
   otherwise call editChangedFile
 end
 exit
+
+/* Pick a file from the ring. Display filenames only or (p)artial path */
+pickFromRing: procedure
+  arg options
+  fn=filering('Open files', options)
+  'REFRESH'
+  if fn<>'' then 'EDIT' fn
+  return
 
 printRing: procedure expose RING.
   parse arg filename
@@ -40,11 +53,13 @@ showChangeStatus: procedure expose RING.
 
 editChangedFile: procedure expose RING.
   changedFiles.=getChangedFiles()
-  if changedFiles.0=0 then 'MSG All files in ring are UNCHANGED.'
-  else do
-    choice=pickFile(changedFiles., 'Changed Files')
-    if choice='' then call xsay 'Selection cancelled'
-    else              'EDIT' choice
+  select
+    when changedFiles.0=0 then 'MSG All files in ring are UNCHANGED.'
+    when changedFiles.0=1 then 'EDIT' changedFiles.1
+    otherwise
+      choice=pickFile(changedFiles., 'Changed Files')
+      if choice='' then call xsay 'Selection cancelled'
+      else              'EDIT' choice
   end
   return
 
@@ -74,3 +89,4 @@ getRingStatus: procedure expose RING.
   return changed.
 
 ::requires 'XPopups.x'
+

@@ -1,9 +1,10 @@
 /* hilite -- Mark a paragraph or block. */
 arg input
-if input='-?' then do; 'MSG hilite [BL | BB | HIDE | INDENT]'; exit; end
+if input='?' then do; 'MSG hilite [BL | BT | BB | HIDE | INDENT]'; exit; end
 
 select
   when input='BL' then call markbrackets
+  when input='BT' then call marktags
   when input='BB' then call markbrackets 'block'
   when input='HIDE' then call hideblock
   when input='INDENT' then call indentblock
@@ -54,6 +55,17 @@ markbrackets: procedure
   'INSMODE ON'
   xcmd
   'MATCH'
+  xcmd
+  return
+
+marktags: procedure
+  arg marktype
+  xcmd='MARK BLOCK EXTEND'
+  'CURSOR DATA'
+  'INSMODE ON'
+  xcmd
+  'MATCH'
+  'LOCATE />/' -- Match ending tag character
   xcmd
   return
 

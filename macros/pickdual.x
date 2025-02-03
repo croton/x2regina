@@ -18,8 +18,10 @@ else returnIndex=2
 w=wordpos('-h',options)
 if w>0 then do; hideReturnval=1; options=delword(options,w,1); end; else hideReturnval=0
 pattern=strip(options)
+title=filespec('N',sourcefile)
 
-choice=pickfromdual(sourcefile, filespec('N',sourcefile), returnIndex, delim, hideReturnval)
+choice=pickfromdual(sourcefile, title, returnIndex, delim, hideReturnval)
+-- 'MESSAGEBOX f='sourcefile 'tmpl='pattern 'idx='returnIndex 'delim='delim 'hideRC?' hideReturnval
 select
   when choice='' then call xsay 'Ok, no choice.'
   when abbrev(choice, 'NOFILE') then call xsay 'File not found:' sourcefile

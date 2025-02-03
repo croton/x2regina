@@ -42,5 +42,5 @@
 ::routine showRecent PUBLIC
   parse arg ext
   if ext='' then ext='*.js'
-  'MACRO cmdin fd -d src -dy 2 -x' ext '|wordf'
+  'MACRO cmdin fdp -f src -d 2 -x' ext '|wordf'
   return

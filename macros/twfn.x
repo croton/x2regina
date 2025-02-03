@@ -15,6 +15,7 @@ else do
     'KEYIN' cls
     do length(cls); 'CURSOR LEFT'; end  -- place cursor before new item
     do length(found); 'BACKSPACE'; end  -- remove abbreviation
+    'CURSOR +0 +'length(cls)
   end
 end
 exit

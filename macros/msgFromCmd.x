@@ -1,5 +1,9 @@
 /* msgFromCmd -- Create a message box from output of a command */
 parse arg options
+if abbrev('?', options) then do
+  call xsay 'msgFromCmd [--t title] [--c command]'
+  exit
+end
 
 if wordpos('--t', options)>0 then
   parse var options '--t' title '--'

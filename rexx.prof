@@ -24,11 +24,11 @@ key a-5 = MACRO chooser --c xs rexx|sort --t Expanders
 key a-6 = MACRO chooser --c xs orexx|sort --t Expanders
 key a-7 = MACRO cmdout keys-rexx-prof xk rexx
 key a-8 = MACRO wrapblock /do/end/
-key a-9 = MACRO fnpickparse rexx @()
+key a-9 = MACRO pick rexx
 
 a-PFLine = "1=Fn 2=SysFn 3=Rtns 4=Class"
-key a-F1 = MACRO fnpick rexx
-key a-F2 = MACRO fnpick rexxutil
+key a-F1 = MACRO pick rexx
+key a-F2 = MACRO pick rexxutil
 key a-F3 = ALL /::routine /
 key a-F4 = MACRO chooser directory array stream --t Orx Class --p x=.@~new
 
@@ -47,6 +47,12 @@ expand_replace = 'call lineout \1, \c'
 expand_keyword = if
 expand_replace = "if \c then"
 expand_replace = "else"
+
+expand_keyword = iff
+expand_replace = 'if \c then do'
+expand_replace = 'end'
+expand_replace = 'else do'
+expand_replace = 'end'
 
 expand_keyword = elsedo, edo
 expand_replace = 'else do \c'
@@ -217,10 +223,10 @@ expand_replace = "if stream(\c,'c','query exists')=''"
 expand_keyword = fspec \1
 expand_replace = "filespec('\1', \c)"
 
-expand_keyword = ifnul \1
+expand_keyword = ifno \1
 expand_replace = "if \1='' then \1='\c'"
 
-expand_keyword = ifnum \1
+expand_keyword = ifn \1
 expand_replace = "if datatype(\1,'W') then \c"
 
 expand_keyword = inc

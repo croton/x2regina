@@ -12,20 +12,19 @@ key a-F1 = CMDTEXT cmdin merge %cjp%\snips\reactapp.tmpl
 key a-F2 = CMDText gb
 key a-F12 = MACRO csspop 1 dev\globalcss
 
-key a-0 = MSG [React] 1=Prof 2=ProfP 3=Xpdr 4=XpdrP 5=XpList 6=SetKey 7=Class 8=WrapTag 9=Prop
+key a-0 = MSG [React] 1=Prof 2=ProfP 3=Xpdr 4=XpdrP 5=XpList 6=EditImport 7=Class 8=WrapTag 9=Prop
 key a-1 = EDIT C:\Users\celes\cjp\x2\reactjs.prof
 key a-2 = EDIT C:\Users\celes\cjp\x2\es6.prof
 key a-3 = MACRO chooser --c xs reactjs|sort --t Expanders
 key a-4 = MACRO chooser --c xs es6|sort --t Expander
 key a-5 = MACRO cmdout xpdr-react.js xs reactjs
-key a-6 = MACRO instr /key={~}/
+key a-6 = MACRO gb il
 key a-7 = MACRO instr /className="~"/
 key a-8 = CMDTEXT wraptag
 key a-9 = MACRO instr /~={}/
 
 /* Ctrl+Alt Keys */
-key AltGr-0 = MSG Ctl-Alt-1=ImpTag 2=Aria 3=IsArr 4=onChange 5=Handlers 6=Hook 7=StylesHelp 8=Log 9=RingP
-key AltGr-1 = MACRO gb it
+key AltGr-0 = MSG Ctl-Alt-1=KeyHelp 2=Aria 3=IsArr 4=onChange 5=Handlers 6=Hook 7=StylesHelp 8=Log 9=RingP
 key AltGr-2 = MACRO pick aria aria-@=""
 key AltGr-3 = MACRO instr /Array.isArray(~)/
 key AltGr-4 = MACRO instr /onChange={(e) => ~}/

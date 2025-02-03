@@ -20,7 +20,7 @@ text text-shadow 10px 10px 10px blue
 text text-transform none|capitalize|uppercase|lowercase
 text text-align left|right|center|justify
 text text-indent 10px|10%
-text line-height normal|2|10px|100%
+text line-height 1|1.1|1.6|normal
 box margin-top auto|10px|10%
 box margin-right auto|10px|10%
 box margin-bottom auto|10px|10%

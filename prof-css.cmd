@@ -1,7 +1,7 @@
 @echo off
 :: Backup existing default profile
 copy XW32.PRO XDEF.PRO 2>nul
-xprof default.prof cjp.prof colorz.prof html.prof tags.prof css.prof cssxtra.prof
+xprof default.prof cjp.prof colorz.prof html.prof tags.prof css.prof
 pause
 :: Rename generated profile
 move XW32.PRO CSS.PRO 2>nul

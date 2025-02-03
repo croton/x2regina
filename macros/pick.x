@@ -1,21 +1,19 @@
-/* fnpick -- Present a dialog from which to select functions.
+/* pick -- Present a dialog from which to select functions.
    The first argument, if provided, is the filestem of the text file and
    will be searched in two places - the current directory and
-   in X2HOME\lists. If not provided, the X2 variable CODE_TYPE
-   will be retrieved and a filename <code_type>.xfn will be searched.
+   in X2HOME\lists.
    The choice retrieved from dialog will be inserted into a template
    if provided.
-   Multiple selections are supported by specifying an option, -m
+   Multiple selections are supported by specifying option -m or
+   -M for pick-many-and-concatenate
 */
 parse arg codeType template
-if codeType='?' then do; 'MSG fnpick [filename][@template][-m]'; exit; end
+if abbrev('?', codeType) then do; 'MSG pick [filename][@template][-m]'; exit; end
 
 w=wordpos('-m',template)
 if w>0 then do; pickmany=1; template=delword(template,w,1); end; else pickmany=0
 
-/* Optionally, insert many selections into one line (concatenated) rather than
-   one choice per line
-*/
+--  Optionally, insert many selections into one line (concatenated)
 w=wordpos('-M',template)
 if w>0 then do
   pickmany=1
@@ -23,55 +21,64 @@ if w>0 then do
   template=delword(template,w,1)
 end
 
-if codeType='' then do
-  'EXTRACT /CODE_TYPE/'
-  codeType=CODE_TYPE.1
+if pickmany then do
+  choices=pickMulti(codeType, template)
+  if choices~items=0 then 'MSG No selection'
+  else call insertMany choices, template, concat
 end
-leadblanks=getIndent()
-call insertFn codeType, template, pickmany, concat, leadblanks
+else do
+  choice=pickOne(codeType, template)
+  if choice='' then 'MSG No selection'
+  else call reposCursor choice, template, '@'
+end
 exit
 
-/* Load items from specified file and keyin the selected one within a template.*/
-insertFn: procedure
-  parse arg filestem, tmpl, pickmany, concat, indent
+pickOne: procedure
+  parse arg filestem, tmpl
   fnfile=getFunctionFile(filestem)
   if fnfile='' then do
-    'MSG Function file not found:' filestem
-    return
+    'MESSAGEBOX Function file not found:' filestem
+    return ''
   end
-  if pickmany then do
-    choices=pickManyFromFile(fnfile, filestem)
-    if choices~items=0 then 'MSG No selection made'
-    else do
-      if concat=1 then do
-        item=''
-        do choice over choices
-          item=item choice
-        end
-        if tmpl='' then 'KEYIN' strip(item)
-        else            'KEYIN' changestr('@', tmpl, strip(item))
-      end -- concat choices into one line
-      else do
-        loop item over choices
-          if tmpl='' then 'INPUT' indent||item
-          else            'INPUT' indent||changestr('@', tmpl, item)
-        end
-      end
-    end -- choices made
-  end -- pick many
-  else do
-    choice=pickFromFile(fnfile, filestem)
-    if choice='' then 'MSG Selection cancelled'
-    else do
-      if tmpl='' then 'KEYIN' choice
-      else            'KEYIN' changestr('@', tmpl, choice)
-      if pos('(',choice)>0 then do
-        -- Place cursor right after open parens
-        'LOCATE /(/-'
-        'CURSOR +0 +1'
-      end -- reposition cursor
+  return pickFromFile(fnfile, filestem)
+
+pickMulti: procedure
+  parse arg filestem, tmpl
+  fnfile=getFunctionFile(filestem)
+  if fnfile='' then do
+    'MESSAGEBOX Function file not found:' filestem
+    return ''
+  end
+  return pickManyFromFile(fnfile, filestem)
+
+insertMany: procedure
+  use arg choices, tmpl, concat
+  if concat=1 then do
+    item=''
+    do choice over choices
+      item=item choice
     end
-  end -- single choice
+    if tmpl='' then 'KEYIN' strip(item)
+    else            'KEYIN' changestr('@', tmpl, strip(item))
+  end -- concat choices into one line
+  else do
+    leadblanks=getIndent()
+    loop item over choices
+      if tmpl='' then 'INPUT' leadblanks||item
+      else            'INPUT' leadblanks||changestr('@', tmpl, item)
+    end
+  end
+  return
+
+reposCursor: procedure
+  parse arg choice, tmpl, delim
+  if tmpl='' then 'KEYIN' choice
+  else            'KEYIN' changestr('@', tmpl, choice)
+  if pos('(',choice)>0 then do
+    -- Place cursor right after open parens
+    'LOCATE /(/-'
+    'CURSOR +0 +1'
+  end -- reposition cursor
   return
 
 /* Choose from values in specified file, alternate method. */

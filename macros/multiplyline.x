@@ -8,7 +8,10 @@
              multiplyline /#/=5
 */
 parse arg input
-if input='-?' then call help
+if abbrev('?', input) then do
+  'MSG multiplyline /wildcard/wordlist'
+  exit
+end
 
 parse var input delim +1 wildcard (delim) tokens
 'extract /CURLINE/'
@@ -33,7 +36,3 @@ do w=1 to tokenCount
 end w
 'ALT 0 0'    -- Set file changes to zero to quit without confirm
 exit
-
-help: procedure
-  'MSG multiplyline /wildcard/wordlist'
-  exit

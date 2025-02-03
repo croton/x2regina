@@ -97,6 +97,7 @@ font-weight
 hanging-punctuation
 height
 icon
+inset
 justify-content
 @keyframes
 left
@@ -120,6 +121,7 @@ nav-index
 nav-left
 nav-right
 nav-up
+object-fit
 opacity
 order
 outline

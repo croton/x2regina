@@ -5,7 +5,23 @@
      d .......... matches "flex-direction"
 */
 parse arg name
-if name='?' then do; 'MSG cssflex supports shortcuts: a b c d f g i j l o s w'; exit; end
+if name='?' then do
+  options.1='j = justify content'
+  options.2='c = align content'
+  options.3='i = align items'
+  options.4='a = align self'
+  options.5='g = grow'
+  options.6='s = shrink'
+  options.7='b = flex basis'
+  options.8='f = flex shorthand'
+  options.9='d = direction'
+  options.10='w = flex wrap'
+  options.11='l = flex flow'
+  options.12='o = order'
+  options.0=12
+  call msgBoxFromStem 'css flex options', options.
+  exit
+end
 
 name=wordBeforeCursor()
 if name='' then

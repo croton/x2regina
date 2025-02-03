@@ -10,7 +10,10 @@
      --d
 */
 parse arg params
-if params='?' then call help
+if params='?' then do
+  'MSG chooser [--c cmd | --f file | wordlist][--multi][--q][--p][--d]'
+  exit
+end
 paramsUC=translate(params)
 
 select
@@ -169,7 +172,3 @@ applyPattern:
   else             placeholder=strip(delim)
   if pattern='' then return selection
   return changestr(placeholder, strip(pattern), selection)
-
-help:
-  'MSG chooser [--c cmd | --f file | wordlist][--multi][--q][--p][--d]'
-  exit
