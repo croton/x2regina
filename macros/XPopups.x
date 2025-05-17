@@ -181,10 +181,19 @@ return .nil
 
 /* Prompt for single choice among items in a file listing. */
 ::routine pickFile PUBLIC
-  use arg srclist., title, fileListOption
+  use arg srclist., title, fileNameOnly
   if title='' then title='Pick a file'
   'EXTRACT /SCREEN/'
-  displaytext.=getDisplayNames(srclist., fileListOption)
+  displaytext.0=srclist.0
+  if fileNameOnly='' then do i=1 to srclist.0
+    displaytext.i=filespec('N', srclist.i)
+  end i
+  else do
+    'EXTRACT /CD/'
+    do i=1 to srclist.0
+      displaytext.i=abbrevPath(srclist.i, CD.1)
+    end i
+  end
   winwidth=autowidthStem(displaytext., SCREEN.2)
   -- call log 'MxDW='SCREEN.2-2 'MedDW='(SCREEN.2)%2 'TW='length(title)+15 'MxIW='mxIW 'winW='winwidth 'opt='option
   return getDialogChoice(srclist., SCREEN.1, winwidth, title, displaytext.)
@@ -209,9 +218,9 @@ return .nil
 
 /* Show open files in a dialog, displaying [F]ilename only (default) or [P]artial path */
 ::routine filering PUBLIC
-  parse arg title, option
+  parse arg title, fileNameOnly
   'EXTRACT /RING/'
-  return pickFile(RING., title, option)
+  return pickFile(RING., title, fileNameOnly)
 
 /* Display a dialog and return selection */
 ::routine getDialogChoice PRIVATE
@@ -418,21 +427,6 @@ return .nil
   end key
   if maxItemWidth<(screenwidth%2) then return maxItemWidth+2
   return min(maxItemWidth, screenwidth-2)
-
-/* Transform a file listing to show either name-only or partial path */
-::routine getDisplayNames private
-  use arg srclist., option
-  if abbrev('FILENAME', option) then do i=1 to srclist.0
-    newlist.i=filespec('N', srclist.i)
-  end i
-  else do
-    'EXTRACT /CD/'
-    do i=1 to srclist.0
-      newlist.i=abbrevPath(srclist.i, CD.1)
-    end i
-  end
-  newlist.0=srclist.0
-  return newlist.
 
 /* Shorten a full path if it is in the current working directory */
 ::routine abbrevPath PRIVATE

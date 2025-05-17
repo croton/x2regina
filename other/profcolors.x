@@ -4,7 +4,14 @@
    -----------------------------------------------------------------------------
 */
 arg options
-if showHelp(options, 'linecolors [ALL|S]') then exit
+if abbrev('?', options, 1) then do
+  data.1=' C = show color combos'
+  data.2=' U = show profile colors unsorted'
+  data.3=' default = show profile colors sorted'
+  data.0=3
+  call msgboxFromStem 'profcolors [options]', data.
+  exit
+end
 'extract /flscreen'
 'extract /cursor'
 
@@ -26,13 +33,13 @@ palette.15='White'
 palette.16='Yellow'
 palette.0=16
 
-if options='ALL' then call writeColors options
-else if options='S' then call showProfileColors
-else call showProfileSections
+if options='C' then call colorCombos options
+else if options='U' then call profileColorsNoSort
+else call profileColorsSorted
 exit
 
 /* Write ALL color information to the current file. */
-writeColors:
+colorCombos:
 do b=1 to palette.0
   bg=palette.b
   'input' '-'~copies(80)
@@ -48,7 +55,7 @@ end b
 'cursor' cursor.1 cursor.2
 return
 
-showProfileColors: procedure
+profileColorsNoSort: procedure
 'EXTRACT /colours/'
 'INPUT X2 Color Mapping'
 'INPUT' '='~copies(80)
@@ -59,15 +66,15 @@ do c=1 to colours.0
 end c
 return
 
-showProfileSections: procedure
+profileColorsSorted: procedure
   'EXTRACT /colours/'
   do i=1 to COLOURS.0
     parse value COLOURS.i with zone fgbg
     scheme.zone=fgbg
   end i
 
-  top_section='FILENAME MOD_FILENAME STATUS COMMAND COMMAND_STACK DATA'
-  special_section='QUOTES BRACKETS COMMENT KEYWORDS MARK HIGHLIGHT CSR_LINE MESSAGE PFLINE'
+  top_section='FILENAME MOD_FILENAME STATUS COMMAND COMMAND_STACK'
+  main_section='DATA QUOTES BRACKETS COMMENT KEYWORDS MARK HIGHLIGHT CSR_LINE MESSAGE PFLINE'
   popups='WINDOW_TITLE WINDOW_DATA WINDOW_BOLD WINDOW_EMPHASIS PROMPT PROMPT_INPUT'
   'INPUT *** X2 Color Mapping ***'
   'INPUT Top Section'
@@ -86,13 +93,13 @@ showProfileSections: procedure
     'LINECOLOUR 1 80' scheme.section
   end w
 
-  'INPUT'; 'INPUT Miscellaneous'
-  do w=1 to words(special_section)
-    section=word(special_section,w)
+  'INPUT'; 'INPUT Main Section'
+  do w=1 to words(main_section)
+    section=word(main_section,w)
     parse value scheme.section with fg ' ON ' bg
     'INPUT' left(section,30) left(fg, 15) 'on' bg
     'LINECOLOUR 1 80' scheme.section
   end w
   return
 
-::requires 'XRoutines.x'
+::requires 'XPopups.x'

@@ -6,8 +6,8 @@
 */
 parse arg dirinfo
 tempfile = 'temp.DIR'
-/* Pipe DIR through SED to remove unwanted stats (lines 1-3) */
-ADDRESS CMD 'dir' dirinfo '|sed "1,3 d" >'tempfile
+/* Remove unwanted stats lines, which happen to begin with a space  */
+ADDRESS CMD 'dir' dirinfo '|grep -ve "^[ ]">'tempfile
 
 'EDIT .DIR'
 'TOP'

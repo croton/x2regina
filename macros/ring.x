@@ -2,19 +2,28 @@
 'EXTRACT /RING/'
 arg cmd options
 if cmd='?' then do
-  'MSG ring (p)ick [F|P] | p(r)int [logfile] | (s)tatus  | Edit Changed'
+  optionhelp.1='P = show partial path'
+  optionhelp.2='PF = show full path'
+  optionhelp.3='PFO = show filename only'
+  optionhelp.4='R [logfile] = print current file ring to a file'
+  optionhelp.5='S = show changed status of file ring'
+  optionhelp.6='E = edit first changed file in ring'
+  optionhelp.0=6
+  call msgboxFromStem 'Ring - select files, log current file ring, or edit changed', optionhelp.
   exit
 end
 
 select
-  when cmd='P' then call pickFromRing options
+  when cmd='P' then call pickFromRing
+  when cmd='PF' then 'RINGWIN'
+  when cmd='PFO' then call pickFromRing 'FO'
   when cmd='R' then call printRing options
   when cmd='S' then call showChangeStatus
   otherwise call editChangedFile
 end
 exit
 
-/* Pick a file from the ring. Display filenames only or (p)artial path */
+/* Pick a file from the ring. Display or partial path (default) or filenames only. */
 pickFromRing: procedure
   arg options
   fn=filering('Open files', options)
@@ -89,4 +98,3 @@ getRingStatus: procedure expose RING.
   return changed.
 
 ::requires 'XPopups.x'
-

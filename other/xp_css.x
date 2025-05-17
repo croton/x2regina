@@ -19,18 +19,20 @@ parseStartPattern: procedure
     when trigger='gap' then call insertline getGap(params)
     when trigger='abs' then call insertlines setAbs(params)
     when trigger='ins' then call insertlines string2stem(params)
+    when trigger='pse' then call insertlines pseudoElem(params)
     otherwise call help
   end
   return
 
 help: procedure
-  options.1='span - set grid row/col span'
-  options.2='auto - set grid auto row/col'
-  options.3='gap - set grid row/col gap'
-  options.4='abs - declare class for absolute placement'
-  options.5='ins - insert specified word list'
-  options.0=5
-  call msgBoxFromStem 'xpm, a profile macro: [trigger] xpm', options.
+  prefix.1='pse selector pseudo-element - declare pseudo element'
+  prefix.2='abs [direction] - declare class for absolute placement'
+  prefix.3='ins wordlist - insert specified word list'
+  prefix.4='span - set grid row/col span'
+  prefix.5='auto - set grid auto row/col'
+  prefix.6='gap - set grid row/col gap'
+  prefix.0=6
+  call msgBoxFromStem 'Profile macro: prefix [options] -x', prefix.
   return
 
 /* Parse the expander when the trigger is the last word.
@@ -77,6 +79,20 @@ string2stem: procedure
     lines.w=word(text,w)
   end w
   lines.0=count
+  return lines.
+
+pseudoElem: procedure
+  parse arg text
+  -- Remove last word of argument, the expand-macro trigger
+  parse value delword(text, words(text)) with selector pse .
+  if pse='' then do
+    pse=pick(string2stem('before after first-line first-letter marker'), 'Pseudo elements')
+    if pse='' then pse='before'
+  end
+  lines.1=selector'::'pse '{'
+  lines.2="  content: '';"
+  lines.3='}'
+  lines.0=3
   return lines.
 
 setAbs: procedure
